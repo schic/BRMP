@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.wondersgroup.empi</groupId>
+  <artifactId>BRMP_common</artifactId>
+  <packaging>jar</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>BRMP_common</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<java.version>1.8</java.version>
+		
+  </properties>
+  
+  <dependencies>
+	
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.4</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>1.2.31</version>
+	</dependency>
+	
+    
+  </dependencies>
+  
+  <build>
+    <finalName>BRMP_common</finalName>
+     <plugins>
+		
+        <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.3</version>
+	        <configuration>
+	            <source>${java.version}</source>
+	            <target>${java.version}</target>
+	        </configuration>
+	    </plugin>
+    </plugins>
+    
+  </build>
+</project>

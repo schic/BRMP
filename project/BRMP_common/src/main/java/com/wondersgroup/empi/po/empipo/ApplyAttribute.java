@@ -1,0 +1,35 @@
+package com.wondersgroup.empi.po.empipo;
+
+/**
+ * 用户申请字段属性配置
+ * 
+ * 表名：brmp_apply_attribute
+ */
+public class ApplyAttribute {
+	
+	String applyId;//申请id用于关联对应的申请资源请求
+	String modelId;//字段所属资源id
+	String modelColName;//模型字段名
+	
+	public String getApplyId() {
+		return applyId;
+	}
+	public void setApplyId(String applyId) {
+		this.applyId = applyId;
+	}
+	public String getModelId() {
+		return modelId;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+	public String getModelColName() {
+		return modelColName;
+	}
+	public void setModelColName(String modelColName) {
+		this.modelColName = modelColName;
+	}
+	
+	
+
+}

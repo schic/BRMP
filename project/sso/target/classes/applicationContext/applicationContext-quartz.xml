@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"    
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+         xmlns:p="http://www.springframework.org/schema/p"  
+         xmlns:aop="http://www.springframework.org/schema/aop"   
+         xmlns:context="http://www.springframework.org/schema/context"  
+         xmlns:jee="http://www.springframework.org/schema/jee"  
+         xmlns:tx="http://www.springframework.org/schema/tx"
+         xmlns:mvc="http://www.springframework.org/schema/mvc"  
+         xsi:schemaLocation="    
+             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd  
+             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+             	">
+
+	<bean id="ClearSessionJob" class="cn.ittx.quartz.Quartz"/>  
+	<bean id="ClearSessionJobMethod" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+	    <property name="targetObject">  <!-- 要执行的目标bean -->
+	        <ref bean="ClearSessionJob"/>  
+	    </property>  
+	    <property name="targetMethod">  <!-- 要执行的方法名称 -->  
+	        <value>executeDeleteSession</value>  
+	    </property>  
+	</bean>  
+	  
+	<!-- ======================== 调度触发器 ======================== -->  
+	<bean id="CronTriggerBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+	    <property name="jobDetail" ref="ClearSessionJobMethod"></property> 
+	    <!-- 
+	    <property name="cronExpression" value="0/10 * * * * ?"></property>
+	     -->
+	    <property name="cronExpression" value="0 0/20 * * * ?"></property>  
+	</bean>  
+	  
+	<!-- ======================== 调度工厂 ======================== -->  
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+	    <property name="triggers">  
+	        <list>  
+	            <ref bean="CronTriggerBean"/>  
+	        </list>  
+	    </property>  
+	</bean> 
+	
+</beans>

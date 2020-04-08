@@ -12,7 +12,7 @@ public class QuartzDataComputeJob {
 	
 	public void execute(){
 		System.out.println(new Date());
-		dataComputeMainIntf.DataComputeMain();
+		dataComputeMainIntf.pushDataComputeMain();
 	}
 
 }

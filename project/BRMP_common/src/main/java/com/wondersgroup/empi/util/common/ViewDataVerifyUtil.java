@@ -22,6 +22,9 @@ public class ViewDataVerifyUtil {
 		for(int i=0;i<modelDataAttributes.size();i++){
 			modelDataAttribute = modelDataAttributes.get(i);
 			String modelColName = modelDataAttribute.getModelColName();
+			if(!modelColName.equals(modelColName.trim())) {
+				return "字段不能包含空格:".concat(modelColName);
+			}
 			if(NumberUtils.isNumber(String.valueOf(modelColName.charAt(0))) ){
 				return "字段不能以数字开头:".concat(modelColName);
 			}
@@ -39,7 +42,7 @@ public class ViewDataVerifyUtil {
 			}
 			modelColNames.add(modelColName);//for循环验证字段是否有重复
 			
-			if (modelDataAttribute.getModelColType()==0){//String 字符串类型字段长度应该在 1~499之间
+			if (modelDataAttribute.getModelColType()==0){//String 字符串类型字段长度应该在 1~3999之间
 				
 				modelDataAttribute.setModelColDecimalLenth(-1);//不使用小数
 				if (modelDataAttribute.getModelColLenth() < 1 || modelDataAttribute.getModelColLenth() > 4000) {

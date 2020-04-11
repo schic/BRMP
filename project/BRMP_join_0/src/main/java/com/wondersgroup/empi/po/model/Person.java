@@ -5,7 +5,7 @@ import java.util.Date;
 import com.wondersgroup.empi.util.anotation.ColumnName;
 import com.wondersgroup.empi.util.anotation.Table;
 
-@Table(name="v_emp",cName="")
+@Table(name="v_emp",cName="医护人员信息")
 public class Person {
 	
 	//修改标志
@@ -24,7 +24,7 @@ public class Person {
 	private String orgName;
 	//工号
 	private String jobNumber;
-	//岗位类别 
+	//岗位类别
 	private String postTypeCode;
 	//人员性质
 	private String empTypeCode;

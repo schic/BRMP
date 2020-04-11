@@ -57,17 +57,17 @@ public interface CommonDaoIntf {
 	 * @param attributeNames 模型属性名的List
 	 * @param tableName 模型表名
 	 * @param pageNo 第几页
-	 * @param count 分页数
+	 * @param pageSize 分页数
 	 * @return
 	 */
-	List<Map<String, Object>> selectObj(List<String> attributeNames,String tableName,int pageNo,int count);
+	List<Map<String, Object>> selectObj(List<String> attributeNames,String tableName,int pageNo,int pageSize);
 
 	/**
 	 * 查询获取实体模型数据，实体模型用类封装
 	 * @param clazz 类名的List
 	 * @param tableName 模型表名
 	 * @param pageNo 第几页
-	 * @param count 分页数
+	 * @param pageSize 分页数
 	 * @return
 	 */
 	<T> List<T> selectObj(Class<T> clazz, String tableName, int pageNo, int pageSize);

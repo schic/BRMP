@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.wondersgroup.empi.dao.intf.CommonDaoIntf;
 import com.wondersgroup.empi.po.RequestPo;
-import com.wondersgroup.empi.po.model.Person;
 import com.wondersgroup.empi.service.intf.ReqEMPICenterIntf;
+import com.wondersgroup.empi.util.anotation.Table;
 import com.wondersgroup.empi.util.common.BaseResource;
 import com.wondersgroup.empi.util.common.CommonUtil;
 import com.wondersgroup.empi.util.common.RestCXFClient;
@@ -22,22 +22,35 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 	@Autowired CommonDaoIntf commonDaoIntf;
 
 	@Override
-	public String ReqEMPICenter4Model(String ModelType) {
+	public <T> String ReqEMPICenter4Model(Class<T> clazz) {
 		RequestPo reqPo = new RequestPo();
+		
+		Table table = clazz.getAnnotation(Table.class);
 		
 		reqPo.setUsername(baseResource.getUsername());
 		reqPo.setPassword(baseResource.getPassword());
 		reqPo.setParamType("model");
-		reqPo.setModelType(ModelType);
+		reqPo.setModelType(table.cName());
 		
-		List<Person> persons = commonDaoIntf.selectObj(Person.class, "tableName", 2, 5000);
+		int records = commonDaoIntf.getRecords(table.name());//总记录数
+		int pageSize = 5000;//分页数
+		int totalPage;//总页数
+		if(records % pageSize == 0){
+			totalPage = records / pageSize;
+		}else{
+			totalPage = records / pageSize + 1;
+		}
 		
-		reqPo.setParams(CommonUtil.toJSONString(persons));
-		String json = CommonUtil.toJSONString(reqPo);
-		System.out.println(json);
-		String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-		System.out.println(string);
-		return string;
+		for (int i=0;i<totalPage;i++) {
+			List<T> lists = commonDaoIntf.selectObj(clazz, table.name(), i+1, pageSize);
+			reqPo.setParams(CommonUtil.toJSONString(lists));
+			String json = CommonUtil.toJSONString(reqPo);
+			//System.out.println(json);
+			RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
+			//System.out.println(string);
+			
+		}
+		return "";
 	}
 	/*
 	 {

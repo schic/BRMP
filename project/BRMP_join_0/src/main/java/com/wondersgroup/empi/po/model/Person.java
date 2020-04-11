@@ -5,19 +5,19 @@ import java.util.Date;
 import com.wondersgroup.empi.util.anotation.ColumnName;
 import com.wondersgroup.empi.util.anotation.Table;
 
-@Table(name="v_emp")
+@Table(name="v_emp",cName="")
 public class Person {
 	
 	//修改标志
 	@ColumnName("")
-	private int xgbz;
+	private int xgbz=0;
 	//模型中本记录主键
 	private String Id;
 	//记录关联人(或物)的主键
 	private String originId;
 	//记录生成日期
 	@ColumnName("")
-	private Date updateTime;
+	private Date updateTime=new Date();
 	//机构代码
 	private String orgCode;
 	//机构名称

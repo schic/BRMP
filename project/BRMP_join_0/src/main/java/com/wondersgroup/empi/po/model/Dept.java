@@ -2,10 +2,23 @@ package com.wondersgroup.empi.po.model;
 
 import java.util.Date;
 
+import com.wondersgroup.empi.util.anotation.ColumnName;
+import com.wondersgroup.empi.util.anotation.Table;
+
+@Table(name="t_department",cName="科室信息")
 public class Dept {
 	
-	
+	//修改标志
+	@ColumnName("")
+	private int xgbz=0;
+	//模型中本记录主键
 	private String id;
+	//记录关联人(或物)的主键
+	@ColumnName("")
+	private String originId="-";
+	//记录生成日期
+	@ColumnName("")
+	private Date updateTime=new Date();
 	//机构ID
 	private String orgId;
 	//上一级部门 
@@ -24,6 +37,25 @@ public class Dept {
 	private String active;
 	//创建日期
 	private Date createDate;
+	
+	public int getXgbz() {
+		return xgbz;
+	}
+	public void setXgbz(int xgbz) {
+		this.xgbz = xgbz;
+	}
+	public String getOriginId() {
+		return originId;
+	}
+	public void setOriginId(String originId) {
+		this.originId = originId;
+	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getId() {
 		return id;
 	}

@@ -44,27 +44,27 @@ public class BaseResource {
 		this.jdbcDriverClassName = jdbcDriverClassName;
 	}
 	
-	@Value("${username}")
-	private String username;
-	@Value("${password}")
-	private String password;
+	@Value("${BRMP.username}")
+	private String BRMPUsername;
+	@Value("${BRMP.password}")
+	private String BRMPPassword;
 	/**
 	 * 请求接口用户名
 	 */
-	public String getUsername() {
-		return username;
+	public String getBRMPUsername() {
+		return BRMPUsername;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setBRMPUsername(String BRMPUsername) {
+		this.BRMPUsername = BRMPUsername;
 	}
 	/**
 	 * 请求接口密码
 	 */
-	public String getPassword() {
-		return password;
+	public String getBRMPPassword() {
+		return BRMPPassword;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setBRMPPassword(String BRMPPassword) {
+		this.BRMPPassword = BRMPPassword;
 	}
 	
 

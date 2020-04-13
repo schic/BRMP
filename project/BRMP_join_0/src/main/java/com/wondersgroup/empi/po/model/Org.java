@@ -2,9 +2,23 @@ package com.wondersgroup.empi.po.model;
 
 import java.util.Date;
 
+import com.wondersgroup.empi.util.anotation.ColumnName;
+import com.wondersgroup.empi.util.anotation.Table;
+
+@Table(name="t_organization",cName="机构信息")
 public class Org {
 	
+	//修改标志
+	@ColumnName("")
+	private int xgbz=0;
+	//模型中本记录主键
 	private String Id;
+	//记录关联人(或物)的主键
+	@ColumnName("")
+	private String originId="-";
+	//记录生成日期
+	@ColumnName("")
+	private Date updateTime=new Date();
 	//父机构id
 	private String parentId;
 	//机构代码
@@ -36,7 +50,24 @@ public class Org {
 	//区域代码
 	private String areaCode;
 	
-	
+	public int getXgbz() {
+		return xgbz;
+	}
+	public void setXgbz(int xgbz) {
+		this.xgbz = xgbz;
+	}
+	public String getOriginId() {
+		return originId;
+	}
+	public void setOriginId(String originId) {
+		this.originId = originId;
+	}
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 	public String getId() {
 		return Id;
 	}

@@ -23,13 +23,17 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 
 	@Override
 	public <T> String ReqEMPICenter4Model(Class<T> clazz) {
+		//System.out.println(baseResource.getBRMPUsername());
+		//System.out.println(baseResource.getBRMPPassword());
+
 		RequestPo reqPo = new RequestPo();
+				
+		reqPo.setUsername(baseResource.getBRMPUsername());
+		reqPo.setPassword(baseResource.getBRMPPassword());
+		reqPo.setParamType("model");
 		
 		Table table = clazz.getAnnotation(Table.class);
 		
-		reqPo.setUsername(baseResource.getUsername());
-		reqPo.setPassword(baseResource.getPassword());
-		reqPo.setParamType("model");
 		reqPo.setModelType(table.cName());
 		
 		int records = commonDaoIntf.getRecords(table.name());//总记录数
@@ -45,9 +49,9 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 			List<T> lists = commonDaoIntf.selectObj(clazz, table.name(), i+1, pageSize);
 			reqPo.setParams(CommonUtil.toJSONString(lists));
 			String json = CommonUtil.toJSONString(reqPo);
-			System.out.println(json);
-			RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-			//System.out.println(string);
+			//System.out.println(json);
+			String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
+			System.out.println(string);
 			
 		}
 		return "";

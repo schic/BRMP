@@ -47,7 +47,7 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 			String json = CommonUtil.toJSONString(reqPo);
 			System.out.println(json);
 			RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-			System.out.println(string);
+			//System.out.println(string);
 			
 		}
 		return "";

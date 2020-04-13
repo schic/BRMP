@@ -14,6 +14,7 @@ public class Person {
 	//模型中本记录主键
 	private String Id;
 	//记录关联人(或物)的主键
+	@ColumnName("PERSON_ID")
 	private String originId;
 	//记录生成日期
 	@ColumnName("")
@@ -170,5 +171,22 @@ public class Person {
 	public void setGraduatedSchool(String graduatedSchool) {
 		this.graduatedSchool = graduatedSchool;
 	}
+	
+	/**
+	 
+	CREATE OR REPLACE VIEW V_EMP AS
+	--select e.*,p.*,de.dept_id,o.org_code,o.org_name
+	select e.id, e.person_id, o.org_code, o.org_name, e.job_number, e.post_type_code, e.emp_type_code, e.comments, e.active, e.create_date, 
+	p.name, p.gender_code, p.birth_date, p.marital_st_code, p.id_no, p.live_addr, p.work_date,p.graduated_school, de.dept_id
+	from cen_reg.t_employee e 
+	left join cen_reg.t_reg_person p 
+	on e.person_id=p.id
+	left join (select * from cen_reg.t_department_employee where ismain='1') de
+	on e.id=de.emp_id
+	left join cen_reg.t_organization o
+	on e.org_id=o.id
+	 
+	 
+	 */
 
 }

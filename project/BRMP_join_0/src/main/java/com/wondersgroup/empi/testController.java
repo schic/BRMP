@@ -18,8 +18,8 @@ public class testController {
 	@RequestMapping("/")
 	public String index(){
 		reqEMPICenterIntf.ReqEMPICenter4Model(Person.class);
-		reqEMPICenterIntf.ReqEMPICenter4Model(Dept.class);
-		reqEMPICenterIntf.ReqEMPICenter4Model(Org.class);
+		//reqEMPICenterIntf.ReqEMPICenter4Model(Dept.class);
+		//reqEMPICenterIntf.ReqEMPICenter4Model(Org.class);
 		//reqEMPICenterIntf.ReqEMPICenter4Model();
 		//reqEMPICenterIntf.ReqGir2ForModel();
 		return "index";

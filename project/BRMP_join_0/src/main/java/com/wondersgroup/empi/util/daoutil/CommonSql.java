@@ -27,10 +27,10 @@ public class CommonSql {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			String colName = field.getName();
+			String colName = CommonUtil.camelToUnderline(field.getName());
 			ColumnName columnName = field.getAnnotation(ColumnName.class);
 			if (null != columnName){
-				if ("".equals(colName)){
+				if ("".equals(columnName.value())){
 					continue;
 				} else {
 					colName = columnName.value().toLowerCase();
@@ -45,7 +45,7 @@ public class CommonSql {
 		sBuffer.append("(");
 		
 		for(int i =0;i<objFieldList.size();i++){
-			String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+			String fieldName = objFieldList.get(i);
 			sBuffer.append(fieldName);
 			if (i != objFieldList.size()-1){
 				sBuffer.append(",");
@@ -77,13 +77,13 @@ public class CommonSql {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			String colName = field.getName();
+			String colName = CommonUtil.camelToUnderline(field.getName());
 			ColumnName columnName = field.getAnnotation(ColumnName.class);
 			if (null != columnName){
-				if ("".equals(colName)){
+				if ("".equals(columnName.value())){
 					continue;
 				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(field.getName());
+					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
 				}	
 			}
 			
@@ -92,7 +92,7 @@ public class CommonSql {
 		
 		sBuffer.append("select ");
 		for(int i =0;i<objFieldList.size();i++){
-			String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+			String fieldName = objFieldList.get(i);
 			sBuffer.append(fieldName);
 			if (i != objFieldList.size()-1){
 				sBuffer.append(",");
@@ -142,7 +142,7 @@ public class CommonSql {
 				String colName = field.getName();
 				ColumnName columnName = field.getAnnotation(ColumnName.class);
 				if (null != columnName){
-					if ("".equals(colName)){
+					if ("".equals(columnName.value())){
 						continue;
 					} else {
 						colName = columnName.value().toLowerCase().concat(" as ").concat(field.getName());
@@ -204,13 +204,13 @@ public class CommonSql {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			String colName = field.getName();
+			String colName = CommonUtil.camelToUnderline(field.getName());
 			ColumnName columnName = field.getAnnotation(ColumnName.class);
 			if (null != columnName){
-				if ("".equals(colName)){
+				if ("".equals(columnName.value())){
 					continue;
 				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(field.getName());
+					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
 				}	
 			}
 			
@@ -219,7 +219,7 @@ public class CommonSql {
 		
 		sBuffer.append("select ");
 		for(int i =0;i<objFieldList.size();i++){
-			String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+			String fieldName = objFieldList.get(i);
 			sBuffer.append(fieldName);
 			if (i != objFieldList.size()-1){
 				sBuffer.append(",");
@@ -362,13 +362,13 @@ public class CommonSql {
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			String colName = field.getName();
+			String colName = CommonUtil.camelToUnderline(field.getName());
 			ColumnName columnName = field.getAnnotation(ColumnName.class);
 			if (null != columnName){
-				if ("".equals(colName)){
+				if ("".equals(columnName.value())){
 					continue;
 				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(field.getName());
+					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
 				}	
 			}
 			
@@ -379,7 +379,7 @@ public class CommonSql {
 		if ("com.mysql.jdbc.Driver".equals(dataBaseName)){
 			sBuffer.append("select ");
 			for(int i=0;i<objFieldList.size();i++){
-				String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+				String fieldName = objFieldList.get(i);
 				sBuffer.append(fieldName);
 				if (i!=objFieldList.size()-1){
 					sBuffer.append(",");
@@ -391,7 +391,7 @@ public class CommonSql {
 		} else if ("oracle.jdbc.driver.OracleDriver".equals(dataBaseName)) {
 			sBuffer.append("select ");
 			for(int i=0;i<objFieldList.size();i++){
-				String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+				String fieldName = objFieldList.get(i);
 				sBuffer.append(fieldName);
 				if (i!=objFieldList.size()-1){
 					sBuffer.append(",");
@@ -400,7 +400,11 @@ public class CommonSql {
 			sBuffer.append( " from (");
 			sBuffer.append("select rownum as rowno, ");
 			for(int i=0;i<objFieldList.size();i++){
-				String fieldName = CommonUtil.camelToUnderline(objFieldList.get(i));
+				String fieldName = objFieldList.get(i);
+				if (fieldName.contains(" as ")){
+					int endIndex = fieldName.lastIndexOf(" as ");
+					fieldName = fieldName.substring(0, endIndex);
+				}
 				sBuffer.append(fieldName);
 				if (i!=objFieldList.size()-1){
 					sBuffer.append(",");

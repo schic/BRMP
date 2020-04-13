@@ -45,9 +45,9 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 			List<T> lists = commonDaoIntf.selectObj(clazz, table.name(), i+1, pageSize);
 			reqPo.setParams(CommonUtil.toJSONString(lists));
 			String json = CommonUtil.toJSONString(reqPo);
-			//System.out.println(json);
+			System.out.println(json);
 			RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-			//System.out.println(string);
+			System.out.println(string);
 			
 		}
 		return "";

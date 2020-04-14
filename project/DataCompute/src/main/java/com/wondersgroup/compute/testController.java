@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wondersgroup.compute.service.intf.DataComputeMainIntf;
+import com.wondersgroup.compute.service.execute.ExecuteDataComputeJob;
 
 @Controller
 @RequestMapping("/")
 public class testController {
 	
-	@Autowired DataComputeMainIntf dataComputeMainIntf;
+	@Autowired ExecuteDataComputeJob executeDataComputeJob;
 	
 	@RequestMapping("/")
 	public String index(){
-		dataComputeMainIntf.pushDataComputeMain();
+		executeDataComputeJob.executeJob();
 		return "index";
 	}
 	

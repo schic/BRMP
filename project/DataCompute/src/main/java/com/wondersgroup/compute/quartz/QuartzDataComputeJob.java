@@ -4,15 +4,15 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wondersgroup.compute.service.intf.DataComputeMainIntf;
+import com.wondersgroup.compute.service.execute.ExecuteDataComputeJob;
 
 public class QuartzDataComputeJob {
 	
-	@Autowired DataComputeMainIntf dataComputeMainIntf;
+	@Autowired ExecuteDataComputeJob executeDataComputeJob;
 	
 	public void execute(){
 		System.out.println(new Date());
-		dataComputeMainIntf.pushDataComputeMain();
+		executeDataComputeJob.executeJob();
 	}
 
 }

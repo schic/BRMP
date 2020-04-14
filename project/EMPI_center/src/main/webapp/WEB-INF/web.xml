@@ -7,11 +7,11 @@
     <filter-class>com.wondersgroup.empi.ssofilter.SsoFilter</filter-class>
     <init-param>
       <param-name>ssoUrl</param-name>
-      <param-value>192.168.1.110:8980</param-value>
+      <param-value>192.168.1.106:8980</param-value>
     </init-param>
     <init-param>
       <param-name>localUrl</param-name>
-      <param-value>http://192.168.1.110:8980/EMPI_center</param-value> 
+      <param-value>http://192.168.1.106:8980/EMPI_center</param-value> 
     </init-param>
     <init-param>   
 		<param-name>excludedPages</param-name>    

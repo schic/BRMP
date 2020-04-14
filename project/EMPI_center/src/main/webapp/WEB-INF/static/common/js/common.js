@@ -36,11 +36,11 @@ function longinUser(userName){
 	if (userName) {
 		$.messager.confirm('注销','是否要注销该用户?',function(r){
 			if(r){
-				window.location.href = 'http://192.168.1.110:8980/EMPI_center/ssoLogout';
+				window.location.href = 'http://192.168.1.106:8980/EMPI_center/ssoLogout';
 			}	
 		});
 	} else {
-		window.location.href = 'http://192.168.1.110:8980/EMPI_center/index';
+		window.location.href = 'http://192.168.1.106:8980/EMPI_center/index';
 	}
 	
 	

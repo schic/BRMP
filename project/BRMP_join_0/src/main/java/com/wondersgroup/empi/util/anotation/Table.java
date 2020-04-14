@@ -18,4 +18,10 @@ public @interface Table {
 	
 	String cName() default "";
 	
+	/**
+	 * 字段查数据库使用驼峰
+	 * 默认使用驼峰
+	 */
+	boolean camel() default true;//默认使用驼峰
+	
 }	

@@ -9,9 +9,12 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.wondersgroup.empi.util.anotation.ColumnName;
+import com.wondersgroup.empi.util.anotation.Table;
 import com.wondersgroup.empi.util.common.CommonUtil;
 
 public class CommonSql {
+	
+	
 	
 	/**
 	 * 类转插入语句
@@ -19,26 +22,9 @@ public class CommonSql {
 	 * @param tableName 表名
 	 * @return
 	 */
-	public static <T> String insertSql(Class<T> clz,String tableName){
+	public static <T> String insertSql(Class<T> clazz,String tableName){
 		StringBuffer sBuffer = new StringBuffer();
-		List<String> objFieldList = new ArrayList<String>();
-		
-		Field[] fields = clz.getDeclaredFields();
-		for (Field field : fields) {
-			field.setAccessible(true);
-			
-			String colName = CommonUtil.camelToUnderline(field.getName());
-			ColumnName columnName = field.getAnnotation(ColumnName.class);
-			if (null != columnName){
-				if ("".equals(columnName.value())){
-					continue;
-				} else {
-					colName = columnName.value().toLowerCase();
-				}	
-			}
-			
-			objFieldList.add(new String(colName.getBytes()));
-		}
+		List<String> objFieldList = getConvertColNames(clazz,"insert");
 		
 		sBuffer.append("insert into ");
 		sBuffer.append(tableName);
@@ -71,24 +57,7 @@ public class CommonSql {
 	 */
 	public static <T> String selectSql(Class<T> clazz,String tableName,Map<String,Object> paramMap){
 		StringBuffer sBuffer = new StringBuffer();
-		List<String> objFieldList = new ArrayList<String>();
-		
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			field.setAccessible(true);
-			
-			String colName = CommonUtil.camelToUnderline(field.getName());
-			ColumnName columnName = field.getAnnotation(ColumnName.class);
-			if (null != columnName){
-				if ("".equals(columnName.value())){
-					continue;
-				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
-				}	
-			}
-			
-			objFieldList.add(new String(colName.getBytes()));
-		}
+		List<String> objFieldList = getConvertColNames(clazz, "select");
 		
 		sBuffer.append("select ");
 		for(int i =0;i<objFieldList.size();i++){
@@ -102,86 +71,32 @@ public class CommonSql {
 		sBuffer.append(" from ");
 		sBuffer.append(tableName);
 		
+		Table table = clazz.getAnnotation(Table.class);
 		Iterator<Map.Entry<String, Object>> e = paramMap.entrySet().iterator();
 		if (e.hasNext()){
 			Map.Entry<String, Object> param = e.next();
 			sBuffer.append(" where ");
-			sBuffer.append(CommonUtil.camelToUnderline(param.getKey()) );
+			if (table != null && !table.camel()){
+				sBuffer.append(param.getKey());
+			} else {
+				sBuffer.append(CommonUtil.camelToUnderline(param.getKey()) );
+			}	
 			sBuffer.append(" = :");
 			sBuffer.append(param.getKey());
 		}
 		while (e.hasNext()) {
 			Map.Entry<String, Object> param = e.next();
 			sBuffer.append(" and ");
-			sBuffer.append(CommonUtil.camelToUnderline(param.getKey()) );
+			if (table != null && !table.camel()){
+				sBuffer.append(param.getKey());
+			} else {
+				sBuffer.append(CommonUtil.camelToUnderline(param.getKey()) );
+			}	
 			sBuffer.append(" = :");
 			sBuffer.append(param.getKey());
 		}
 		
 		return sBuffer.toString();
-	}
-	
-	/**
-	 * 类转查询语句 
-	 * @param <T>
-	 * @param tableName 表名
-	 * @param boolean isCamelToUnderline 是否需要驼峰转下划线
-	 * @return
-	 */
-	public static <T> String selectSql(Class<T> clazz, String tableName, Map<String, Object> paramMap, Boolean isCamel) {
-		if (isCamel) {
-			return selectSql(clazz, tableName, paramMap);
-		} else {
-			StringBuffer sBuffer = new StringBuffer();
-			List<String> objFieldList = new ArrayList<String>();
-			
-			Field[] fields = clazz.getDeclaredFields();
-			for (Field field : fields) {
-				field.setAccessible(true);
-				
-				String colName = field.getName();
-				ColumnName columnName = field.getAnnotation(ColumnName.class);
-				if (null != columnName){
-					if ("".equals(columnName.value())){
-						continue;
-					} else {
-						colName = columnName.value().toLowerCase().concat(" as ").concat(field.getName());
-					}	
-				}
-				
-				objFieldList.add(new String(colName.getBytes()));
-			}
-			
-			sBuffer.append("select ");
-			for(int i =0;i<objFieldList.size();i++){
-				String fieldName = objFieldList.get(i);
-				sBuffer.append(fieldName);
-				if (i != objFieldList.size()-1){
-					sBuffer.append(",");
-				}
-			}
-			
-			sBuffer.append(" from ");
-			sBuffer.append(tableName);
-			
-			Iterator<Map.Entry<String, Object>> e = paramMap.entrySet().iterator();
-			if (e.hasNext()){
-				Map.Entry<String, Object> param = e.next();
-				sBuffer.append(" where ");
-				sBuffer.append(param.getKey());
-				sBuffer.append(" = :");
-				sBuffer.append(param.getKey());
-			}
-			while (e.hasNext()) {
-				Map.Entry<String, Object> param = e.next();
-				sBuffer.append(" and ");
-				sBuffer.append(param.getKey());
-				sBuffer.append(" = :");
-				sBuffer.append(param.getKey());
-			}
-			
-			return sBuffer.toString();
-		}
 	}
 	
 	
@@ -198,24 +113,7 @@ public class CommonSql {
 	 */
 	public static <T> String selectSqlParamlist(Class<T> clazz, String tableName, Map<String, Object> paramMap) {
 		StringBuffer sBuffer = new StringBuffer();
-		List<String> objFieldList = new ArrayList<String>();
-		
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			field.setAccessible(true);
-			
-			String colName = CommonUtil.camelToUnderline(field.getName());
-			ColumnName columnName = field.getAnnotation(ColumnName.class);
-			if (null != columnName){
-				if ("".equals(columnName.value())){
-					continue;
-				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
-				}	
-			}
-			
-			objFieldList.add(new String(colName.getBytes()));
-		}
+		List<String> objFieldList = getConvertColNames(clazz, "select");
 		
 		sBuffer.append("select ");
 		for(int i =0;i<objFieldList.size();i++){
@@ -229,14 +127,18 @@ public class CommonSql {
 		sBuffer.append(" from ");
 		sBuffer.append(tableName);
 		
-		
+		Table table = clazz.getAnnotation(Table.class);
 		Iterator<Map.Entry<String, Object>> e = paramMap.entrySet().iterator();
 		boolean flagHasNext = false;
 		if (e.hasNext()){
 			flagHasNext = true;
 			Map.Entry<String, Object> param = e.next();
 			sBuffer.append(" where ");
-			sBuffer.append(CommonUtil.camelToUnderline(param.getKey().substring(0, param.getKey().length()-1) ) );
+			if (table != null && !table.camel()){
+				sBuffer.append(param.getKey().substring(0, param.getKey().length()-1));
+			} else {
+				sBuffer.append(CommonUtil.camelToUnderline(param.getKey().substring(0, param.getKey().length()-1) ) );
+			}
 			sBuffer.append(" in ( :");
 			sBuffer.append(param.getKey());
 		} else {
@@ -356,24 +258,7 @@ public class CommonSql {
 	public static <T> String selectSql4Obj(Class<T> clazz, String tableName, int pageNo, int pageSize,
 			String dataBaseName) {
 		StringBuffer sBuffer = new StringBuffer();
-		List<String> objFieldList = new ArrayList<String>();
-		
-		Field[] fields = clazz.getDeclaredFields();
-		for (Field field : fields) {
-			field.setAccessible(true);
-			
-			String colName = CommonUtil.camelToUnderline(field.getName());
-			ColumnName columnName = field.getAnnotation(ColumnName.class);
-			if (null != columnName){
-				if ("".equals(columnName.value())){
-					continue;
-				} else {
-					colName = columnName.value().toLowerCase().concat(" as ").concat(CommonUtil.camelToUnderline(field.getName()));
-				}	
-			}
-			
-			objFieldList.add(new String(colName.getBytes()));
-		}
+		List<String> objFieldList = getConvertColNames(clazz, "select");
 		
 		
 		if ("com.mysql.jdbc.Driver".equals(dataBaseName)){
@@ -392,6 +277,10 @@ public class CommonSql {
 			sBuffer.append("select ");
 			for(int i=0;i<objFieldList.size();i++){
 				String fieldName = objFieldList.get(i);
+				if (fieldName.contains(" as ")){
+					int beginIndex = fieldName.lastIndexOf(" as ")+4;
+					fieldName = fieldName.substring(beginIndex);
+				}
 				sBuffer.append(fieldName);
 				if (i!=objFieldList.size()-1){
 					sBuffer.append(",");
@@ -401,10 +290,6 @@ public class CommonSql {
 			sBuffer.append("select rownum as rowno, ");
 			for(int i=0;i<objFieldList.size();i++){
 				String fieldName = objFieldList.get(i);
-				if (fieldName.contains(" as ")){
-					int endIndex = fieldName.lastIndexOf(" as ");
-					fieldName = fieldName.substring(0, endIndex);
-				}
 				sBuffer.append(fieldName);
 				if (i!=objFieldList.size()-1){
 					sBuffer.append(",");
@@ -497,6 +382,45 @@ public class CommonSql {
 	
 
 	
+	
+		
+	/**
+	 * 判断类属性名如何转换成数据库字段名
+	 * @param clazz
+	 * @param dbType 数据库操作方式 insert 和 select
+	 * @return List<String>
+	 */
+	private static <T> List<String> getConvertColNames(Class<T> clazz,String dbType){
+		List<String> objFieldList = new ArrayList<String>();
+		Table table = clazz.getAnnotation(Table.class);
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			String colNameCamel;
+			if (table != null && !table.camel()){
+				colNameCamel = field.getName().toLowerCase();
+			} else {
+				colNameCamel = CommonUtil.camelToUnderline(field.getName());
+			}
+			String colName = colNameCamel;
+			ColumnName columnName = field.getAnnotation(ColumnName.class);
+			if (null != columnName){
+				if ("".equals(columnName.value())){
+					continue;
+				} else {
+					if ("select".equals(dbType)) {
+						colName = columnName.value().toLowerCase().concat(" as ").concat(colNameCamel);
+					}  else {
+						colName = columnName.value().toLowerCase();
+					}
+				}	
+			}
+			
+			objFieldList.add(new String(colName.getBytes()));
+		}
+		
+		return objFieldList;
+	}
 
 	
 

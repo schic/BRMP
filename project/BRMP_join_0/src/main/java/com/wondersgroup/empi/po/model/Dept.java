@@ -12,7 +12,7 @@ public class Dept {
 	@ColumnName("")
 	private int xgbz=0;
 	//模型中本记录主键
-	private String id;
+	private String Id;
 	//记录关联人(或物)的主键
 	@ColumnName("")
 	private String originId="-";
@@ -57,10 +57,10 @@ public class Dept {
 		this.updateTime = updateTime;
 	}
 	public String getId() {
-		return id;
+		return Id;
 	}
 	public void setId(String id) {
-		this.id = id;
+		this.Id = id;
 	}
 	public String getOrgId() {
 		return orgId;

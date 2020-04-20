@@ -58,8 +58,8 @@ public class ViewDataVerifyUtil {
 				}
 			} else if (modelDataAttribute.getModelColType()==2) {//float
 				
-				if (modelDataAttribute.getModelColLenth() < 2 || modelDataAttribute.getModelColLenth() > 7) {
-					return "字段长度不在范围(".concat(modelColName).concat("):应该在 2~7之间,长度超过7请使用double");
+				if (modelDataAttribute.getModelColLenth() < 2 || modelDataAttribute.getModelColLenth() > 6) {
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 2~6之间,长度超过7请使用double");
 				}
 				if (modelDataAttribute.getModelColDecimalLenth() < 1 ||  modelDataAttribute.getModelColDecimalLenth() >= modelDataAttribute.getModelColLenth() ){
 					return "字段长度不在范围(".concat(modelColName).concat("):小数位数不在合适的范围");
@@ -71,12 +71,12 @@ public class ViewDataVerifyUtil {
 			} else if (modelDataAttribute.getModelColType()==4) {//long
 				
 				modelDataAttributes.get(i).setModelColDecimalLenth(-1);//不使用小数位数
-				if (modelDataAttribute.getModelColLenth() < 9 || modelDataAttribute.getModelColLenth() > 18) {
-					return "字段长度不在范围(".concat(modelColName).concat("):应该在 9~18之间");
+				if (modelDataAttribute.getModelColLenth() < 9 || modelDataAttribute.getModelColLenth() > 19) {
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 9~19之间");
 				}
-			} else if (modelDataAttribute.getModelColType()==5) {//double
-				if (modelDataAttribute.getModelColLenth() < 8 || modelDataAttribute.getModelColLenth() > 18) {
-					return "字段长度不在范围(".concat(modelColName).concat("):应该在 8~18之间");
+			} else if (modelDataAttribute.getModelColType()==5) {//double  2^52=4503599627370496 【15】
+				if (modelDataAttribute.getModelColLenth() < 7 || modelDataAttribute.getModelColLenth() > 19) {
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 7~19之间");
 				}
 				if (modelDataAttribute.getModelColDecimalLenth() < 1 ||  modelDataAttribute.getModelColDecimalLenth() >= modelDataAttribute.getModelColLenth() ){
 					return "字段长度不在范围(".concat(modelColName).concat("):小数位数不在合适的范围");

@@ -121,6 +121,7 @@ public class ModelDataImpl implements ModelDataIntf {
 	@Override
 	public String insertModelData(List<ModelDataAttribute> modelDataAttributes, ModelData modelData) {
 		//TODO 准备添加主索引字段 选择，判断是否是索引模型
+		//TODO 准备添加值域字段，判断是否是需要值域转码的模型
 		String viewDataVerify = ViewDataVerifyUtil.verifyModelDataAttributes(modelDataAttributes);
 		if (!viewDataVerify.equals("pass")){
 			return viewDataVerify;

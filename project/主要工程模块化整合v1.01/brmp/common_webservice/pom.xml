@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+	<groupId>com.wondersgroup.brmp</groupId>
+	<artifactId>brmp</artifactId>
+	<version>1.01</version>
+	<relativePath>../pom.xml</relativePath>
+  </parent>
+	
+  <artifactId>brmp-common-webservice</artifactId>
+  <packaging>jar</packaging>
+
+  <name>brmp-common</name>
+  <url>http://maven.apache.org</url>
+  
+  <description>用于webservice的常用工程，包含用于webservice的常用工具方法，常用类。需要引入一般常用工程。</description>
+  
+  <dependencies>
+	<dependency>
+		<groupId>com.wondersgroup.brmp</groupId>
+		<artifactId>brmp-common</artifactId>
+		<version>${brmp.version}</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-core -->
+	<dependency>
+	    <groupId>org.apache.cxf</groupId>
+	    <artifactId>cxf-core</artifactId>
+	    <version>${cxf.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.cxf</groupId>
+	    <artifactId>cxf-rt-transports-http</artifactId>
+	    <version>${cxf.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.cxf</groupId>
+	    <artifactId>cxf-rt-frontend-jaxws</artifactId>
+	    <version>${cxf.version}</version>
+	    <exclusions>
+	    	<exclusion>
+	    		<groupId>org.apache.cxf</groupId>
+	    		<artifactId>cxf-rt-bindings-xml</artifactId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<groupId>org.apache.cxf</groupId>
+	    		<artifactId>cxf-rt-ws-addr</artifactId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<groupId>org.apache.cxf</groupId>
+	    		<artifactId>cxf-rt-ws-policy</artifactId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<groupId>com.sun.xml.bind</groupId>
+	    		<artifactId>jaxb-core</artifactId>
+	    	</exclusion>
+	    	<exclusion>
+	    		<groupId>com.sun.xml.bind</groupId>
+	    		<artifactId>jaxb-impl</artifactId>
+	    	</exclusion>
+	    </exclusions>
+	</dependency>
+	<!-- cxf restful  -->
+	<dependency>
+		<groupId>org.apache.cxf</groupId>
+		<artifactId>cxf-rt-rs-security-cors</artifactId>
+		<version>${cxf.version}</version>
+	</dependency>
+	<!-- cxf restful client  -->
+	<dependency>
+	    <groupId>org.apache.cxf</groupId>
+	    <artifactId>cxf-rt-rs-client</artifactId>
+	    <version>${cxf.version}</version>
+	</dependency>
+	
+	
+  </dependencies>
+  
+  
+</project>

@@ -9,15 +9,15 @@ import java.util.Date;
  */
 public class ModelData {
 	
-	String originSystemId;//源系统名称编号
-	String modelId;//源系统建立的模型编号
-	String modelName;//源系统建立的模型名称
-	String modelTabName;//源系统建立的模型表名
-	Date modelCreateTime;//模型创建时间
-	Date modelUpdeteTime;//模型更新时间
-	String modelDescription;//模型描述
-	int status;//状态  0:停用 1:启用
-	int auditStatus;//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
+	private String originSystemId;//源系统名称编号
+	private String modelId;//源系统建立的模型编号
+	private String modelName;//源系统建立的模型名称
+	private String modelTabName;//源系统建立的模型表名
+	private Date modelCreateTime;//模型创建时间
+	private Date modelUpdeteTime;//模型更新时间
+	private String modelDescription;//模型描述
+	private int status;//状态  0:停用 1:启用
+	private int auditStatus;//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 	
 	public String getOriginSystemId() {
 		return originSystemId;

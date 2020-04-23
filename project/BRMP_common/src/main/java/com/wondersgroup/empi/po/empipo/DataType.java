@@ -6,9 +6,9 @@ package com.wondersgroup.empi.po.empipo;
  * brmp_dic_datatype
  */
 public class DataType {
-	int modelColType;
-	String datatype;
-	String javaDatatype;
+	private int modelColType;
+	private String datatype;
+	private String javaDatatype;
 	
 	public int getModelColType() {
 		return modelColType;

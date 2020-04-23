@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+	<groupId>com.wondersgroup.brmp</groupId>
+	<artifactId>brmp</artifactId>
+	<version>1.01</version>
+	<relativePath>../pom.xml</relativePath>
+  </parent>
+	
+  <artifactId>brmp-web</artifactId>
+  <packaging>war</packaging>
+  
+  <name>brmp-web</name>
+  <url>http://maven.apache.org</url>
+  
+  <description>网页工程，处理前端操作，需要引入核心工程。</description>
+  
+  <dependencies>
+	<dependency>
+		<groupId>com.wondersgroup.brmp</groupId>
+		<artifactId>brmp-core</artifactId>
+		<version>${brmp.version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.wondersgroup.brmp</groupId>
+		<artifactId>brmp-ssofilter</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+  </dependencies>
+  
+  
+  
+</project>

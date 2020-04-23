@@ -1,0 +1,60 @@
+<!-- 单点登录  在web.xml配置拦截 -->
+  <filter>
+    <filter-name>ssoFilter</filter-name>
+    <filter-class>com.wondersgroup.empi.ssofilter.SsoFilter</filter-class>
+    <init-param>
+      <param-name>ssoUrl</param-name><!-- 单点登录的url -->
+      <param-value>192.168.1.179:8980</param-value><!-- ip : port  -->
+    </init-param>
+    <init-param>
+      <param-name>localUrl</param-name><!-- 本系统的url -->
+      <param-value>http://192.168.1.179:8980/EMPI_center</param-value> <!-- 完整url -->
+    </init-param>
+    <init-param><!-- 配置不拦截的url,多个用;分隔 -->    
+		<param-name>excludedPages</param-name>    
+		<param-value>/index;/</param-value>    
+	</init-param>  
+  </filter>
+  <filter-mapping><!-- 需要拦截的url -->
+    <filter-name>ssoFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>	
+
+  
+<!-- 拦截器使用了的jar包如缺失需要单独引入 
+commons-lang3-3.4.jar
+fastjson-1.2.31.jar
+javax.servlet-api-3.1.0.jar
+
+	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.4</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	    <version>1.2.31</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.1.0</version>
+	    <scope>provided</scope>
+	</dependency>
+
+-->  
+
+<!-- 用户信息的使用
+在jsp可以直接获取使用el表达式    ${ sessionScope.ssoUser.uname}
+在servlet使用    request.getSession().getAttribute("ssoUser");
+Map<String,Object> ssoUser = (Map<String, Object>)  request.getSession().getAttribute("ssoUser");
+或者调用单点登录封装的方法：
+Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+
+
+注销logout的方法，调用本系统主路径下的 /ssoLogout,
+使用了前端框架的系统,比如springMvc请配置一个指向 /ssoLogout的Controller 或者复制 ssoLogout.jsp 到 web根目录(不受前端框架拦截)
+-->

@@ -1,5 +1,8 @@
 package com.wondersgroup.empi.po.common;
 
+/**
+ * 已验证
+ */
 public class VerifiedPo {
 	
 	private String msg;

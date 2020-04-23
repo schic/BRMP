@@ -7,9 +7,9 @@ package com.wondersgroup.empi.po.empipo;
  */
 public class ApplyAttribute {
 	
-	String applyId;//申请id用于关联对应的申请资源请求
-	String modelId;//字段所属资源id
-	String modelColName;//模型字段名
+	private String applyId;//申请id用于关联对应的申请资源请求
+	private String modelId;//字段所属资源id
+	private String modelColName;//模型字段名
 	
 	public String getApplyId() {
 		return applyId;

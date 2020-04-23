@@ -6,12 +6,12 @@ package com.wondersgroup.empi.po.empipo;
  *表名：brmp_conf_origin_system_info
  */
 public class OriginSystemInfo {
-	String originSystemId;//源系统名称编号
-	String originSystemName;//源系统名称
-	String originSystemCname;//源系统名称中文或别名
-	String originSystemUrl;//接入系统接口的URL
-	String username;//接入系统用户名
-	String password;//接口验证码
+	private String originSystemId;//源系统名称编号
+	private String originSystemName;//源系统名称
+	private String originSystemCname;//源系统名称中文或别名
+	private String originSystemUrl;//接入系统接口的URL
+	private String username;//接入系统用户名
+	private String password;//接口验证码
 	
 	public String getOriginSystemId() {
 		return originSystemId;

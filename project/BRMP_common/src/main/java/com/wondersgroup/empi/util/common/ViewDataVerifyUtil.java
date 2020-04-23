@@ -17,6 +17,9 @@ public class ViewDataVerifyUtil {
 	 * 验证页面的建立的模型字段数据
 	 */
 	public static String verifyModelDataAttributes(List<ModelDataAttribute> modelDataAttributes){
+		//TODO 准备添加主索引字段 选择，判断是否是索引模型
+		//TODO 准备添加值域字段，判断是否是需要值域转码的模型
+		
 		List<String> modelColNames = new ArrayList<String>(); 
 		ModelDataAttribute modelDataAttribute;
 		for(int i=0;i<modelDataAttributes.size();i++){

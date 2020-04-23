@@ -6,14 +6,16 @@ package com.wondersgroup.empi.po.empipo;
  * 表名：brmp_conf_origin_system_model
  */
 public class ModelDataAttribute {
-	String originSystemId;//源系统名称编号
-	String modelId;//源系统建立的模型编号
-	String modelColName;//模型提供的字段
-	String modelColDisplayName;//模型字段展示名称
-	int modelColType;//字段类型 0:字符串 1:整数 2:浮点数 3:日期
-	int modelColLenth;//字段长度
-	int modelColDecimalLenth;//小数长度(用于有小数的字段)
-	int displayOrder;//页面展示顺序
+	private String originSystemId;//源系统名称编号
+	private String modelId;//源系统建立的模型编号
+	private String modelColName;//模型提供的字段
+	private String modelColDisplayName;//模型字段展示名称
+	private int modelColType;//字段类型 0:字符串 1:整数 2:浮点数 3:日期
+	private int modelColLenth;//字段长度
+	private int modelColDecimalLenth;//小数长度(用于有小数的字段)
+	private int displayOrder;//页面展示顺序
+	
+	private int pk;//是否源系统主键 (0否 1是)
 	
 	public String getOriginSystemId() {
 		return originSystemId;
@@ -62,6 +64,13 @@ public class ModelDataAttribute {
 	}
 	public void setDisplayOrder(int displayOrder) {
 		this.displayOrder = displayOrder;
+	}
+	
+	public int getPk() {
+		return pk;
+	}
+	public void setPk(int pk) {
+		this.pk = pk;
 	}
 	
 	

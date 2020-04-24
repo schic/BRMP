@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.wondersgroup.base.login.model.TbAuthDepartment" table="TB_AUTH_DEPARTMENT">
+        <id name="depid" type="java.lang.String">
+            <column name="DEPID"   length="36"/>
+            <generator class="assigned" />
+        </id>
+
+        <property name="depbm" type="java.lang.String">
+            <column name="DEPBM" length="30" />
+        </property>
+        <property name="depmc" type="java.lang.String">
+            <column name="DEPMC" length="60"  />
+        </property>
+        <set name="users" inverse="true">
+            <key>
+                <column name="depid" precision="22" scale="0" />
+            </key>
+            <one-to-many class="com.wondersgroup.base.login.model.TbAuthUser" />
+        </set>
+    </class>
+</hibernate-mapping>

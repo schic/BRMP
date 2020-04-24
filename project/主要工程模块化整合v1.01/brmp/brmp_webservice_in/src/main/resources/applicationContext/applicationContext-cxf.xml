@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"    
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+         xmlns:p="http://www.springframework.org/schema/p"  
+         xmlns:aop="http://www.springframework.org/schema/aop"   
+         xmlns:context="http://www.springframework.org/schema/context"  
+         xmlns:jee="http://www.springframework.org/schema/jee"  
+         xmlns:tx="http://www.springframework.org/schema/tx"
+         xmlns:mvc="http://www.springframework.org/schema/mvc"
+         xmlns:util="http://www.springframework.org/schema/util"  
+         
+         xmlns:jaxws="http://cxf.apache.org/jaxws"
+         xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+         xmlns:cxf="http://cxf.apache.org/core"
+         xmlns:soap="http://cxf.apache.org/bindings/soap"
+           
+         xsi:schemaLocation="    
+             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+             http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd  
+             http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+             http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+             http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+             
+             http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+             http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+             http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+             http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+             	">
+             	
+    <!-- import resource="../../META-INF/cxf/cxf.xml" /> -->
+    <bean id="cxf" class="org.apache.cxf.bus.spring.SpringBus" destroy-method="shutdown"/>
+    <bean id="org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor" class="org.apache.cxf.bus.spring.BusWiringBeanFactoryPostProcessor"/>
+    <bean id="org.apache.cxf.bus.spring.Jsr250BeanPostProcessor" class="org.apache.cxf.bus.spring.Jsr250BeanPostProcessor"/>
+    <bean id="org.apache.cxf.bus.spring.BusExtensionPostProcessor" class="org.apache.cxf.bus.spring.BusExtensionPostProcessor"/>
+	
+	<!-- 全员人口基本信息 
+	<bean id="health"  class="com.wondersgroup.empi.webservice.impl.brithinfo.HealthImpl"/>
+    <jaxws:endpoint id="healthWebservice" implementor="#health" address="/public_health" />
+	--> 
+	
+	<!-- service restful风格
+	@POST –服务接受处理POST 请求
+	@Path – web服务的URL路径，抓取URL Url <base_url>/bookservice/getbook/{name} , 增加:<base_url>/bookservice/addbook
+	@Produces – 指示响应的MIME类型，在案例中是 application/xml 和 application/json.
+	@Consumes – 这个服务能消费的请求的MIME类型
+	-->
+    <bean id="BrmpObj" class="com.wondersgroup.brmp.webservice.impl.BrmpImpl" />
+    <!-- 通过jaxrs:server方式来配置webservice -->
+    <jaxrs:server  address="/BrmpObj">
+        <jaxrs:serviceBeans>
+            <ref bean="BrmpObj" />
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+    
+    <!-- 
+    <bean id="ApplyData" class="com.wondersgroup.empi.webservice.impl.ApplyDataImpl" />
+    <jaxrs:server  address="/ApplyData">
+        <jaxrs:serviceBeans>
+            <ref bean="ApplyData" />
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+     -->
+	
+		
+</beans>

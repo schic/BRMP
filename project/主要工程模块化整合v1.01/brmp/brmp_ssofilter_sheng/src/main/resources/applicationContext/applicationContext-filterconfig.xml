@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation=" 
+		http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/aop  http://www.springframework.org/schema/aop/spring-aop.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+		
+	<!--本地登录bean-->
+	<!--  <bean id="localLoginAction" class="com.wondersgroup.base.login.web.LoginController"></bean> --> 
+	
+	<bean id="loginController" class="com.wondersgroup.base.login.web.LoginController"></bean>
+	
+	<!-- 登录验证过滤器，放于struts前  -->
+	<bean id="wondersLoginFilter" class="com.wondersgroup.base.login.filter.LoginFilter">
+	<!-- 不进过滤器的URL，尤其是登录页面的处理 -->
+		<property name="myMatchUrl"
+			value=".*/nativelogin.action,.*/TOLOGIN.*,.*/LOGOUT.*,.*/SSOLOGOUT.*,.*/login.*,.*/*.gif,.*/*.GIF,.*/*.jpg,.*/*.JPG,.*/*.png,.*/*.js,.*/*.css"></property>
+		<property name="loginAction" ref="loginController"></property>
+		<property name="returnPage" value="/login.jsp"></property>
+		<!-- 地址列表 -->
+		<property name="innerUrl">
+			<!-- 内网地址 -->
+			<list>
+				<value>localhost</value>
+				<value>192.*.*.*</value>
+				<value>10.*.*.*</value>
+				<value>127.0.0.1</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="noneFilter" class="com.wondersgroup.base.login.filter.NoneFilter"></bean>
+	
+	<bean id="filterChainProxy" class="com.wondersgroup.base.login.filter.FilterChainProxy">
+		<property name="redirectAddressMap">
+			<map>
+				<!-- 如果这里是true，下面两个entry用不到（可以不写正确），true表示sso和rhip等应用部署到了同一台电脑上，反之是分开部署的 -->
+				<entry key="relativeAddress" value="false" />
+				<!-- 应用服务访问地址及对应单点服务器访问地址地址，以下是示例 -->
+				<entry key="192.168.1.110:8080" value="192.168.1.120:8080" />
+				<entry key="192.168.2.107:8080" value="192.168.2.107:8080" />
+				<entry key="127.0.0.1:8980" value="59.225.200.64:8080" />
+				<entry key="localhost:8980" value="59.225.200.64:8080"/>
+				<entry key="192.168.1.111:8980" value="59.225.200.64:8080"/>
+			</map>
+		</property>
+
+		<property name="serverName" value="http://192.168.1.111:8980" />
+		<property name="casServerLoginUrl" value="/sso/login" />
+		<property name="casServerLogoutUrl" value="/sso/logout"/>
+		<property name="casServerUrlPrefix" value="http://59.225.200.64:8080/sso"/>
+	</bean>
+	<!-- 过滤器设置 -->
+	<bean id="wondersCommonFilter" class="net.sf.acegisecurity.util.FilterChainProxy">
+		<property name="filterInvocationDefinitionSource">
+			<value>
+				CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+				PATTERN_TYPE_APACHE_ANT
+
+				/**/*.gif=noneFilter
+				/**/*.png=noneFilter
+				/**/*.jpg=noneFilter
+				/**/*.css=noneFilter
+				/**/*.js=noneFilter
+				/**/*.html=noneFilter 
+				
+				<!--单点登录 -->
+				/**/*.jsp*=filterChainProxy,wondersLoginFilter
+				/**/*.action*=filterChainProxy,wondersLoginFilter
+				/**/*.*=filterChainProxy,wondersLoginFilter
+				/**/*=filterChainProxy,wondersLoginFilter
+				/=filterChainProxy,wondersLoginFilter
+				<!--非单点登录 -->
+<!--				/**/*.jsp*=hibernateFilter,wondersLoginFilter,characterEncodingFilter,parameterModifyFilter-->
+<!--				/**/*.action*=hibernateFilter,wondersLoginFilter,characterEncodingFilter,parameterModifyFilter-->
+<!--				/**/*.*=hibernateFilter,wondersLoginFilter,characterEncodingFilter,parameterModifyFilter-->
+				
+			</value>
+		</property>
+	</bean>
+	
+	<!-- SESSION 缓存配置 -->
+	<beans profile="session_cache">
+		<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+			<!-- 最大实例数 -->
+	        <property name="maxTotal" value="${redis.pool.maxTotal}"/>
+			<!-- 最大空闲实例数 -->
+	        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+			<!-- 最大等待时间 -->
+	        <property name="maxWaitMillis" value="${redis.pool.maxWaitMillis}"/>
+			<!-- 是否验证 -->
+	        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/> 
+	    </bean>
+	    
+		<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+			<!-- Redis服务器IP -->
+			<property name="hostName" value="${redis.host}"/>
+			<!-- Redis的端口号 -->
+	        <property name="port" value="${redis.port}"/>
+	        <!-- 是否使用池 -->
+	        <property name="usePool" value="true"/>
+	        <property name="poolConfig" ref="jedisPoolConfig"/>
+		</bean>
+		
+		<bean id="redisJDKTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+	        <property name="defaultSerializer">
+	            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+	        </property>
+	    </bean>
+		
+		<bean id="redisStringTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+	        <property name="defaultSerializer">
+	            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+	        </property>
+	    </bean>
+	    
+	    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+	
+		<bean id="redisBackedSessionMappingStorage" class="org.jasig.cas.client.session.RedisBackedSessionMappingStorage">
+			<property name="MANAGED_SESSIONS" ref="sessionRepository"/>
+			<property name="ID_TO_SESSION_KEY_MAPPING" ref="redisStringTemplate"/>
+		</bean>
+	</beans>
+	
+	
+	
+	
+	
+	
+</beans>

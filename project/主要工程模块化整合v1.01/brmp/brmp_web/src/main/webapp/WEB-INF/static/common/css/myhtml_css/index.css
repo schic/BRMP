@@ -1,0 +1,290 @@
+
+body{
+    width: 100%;
+    min-width: 1366px;
+}
+.headBox{
+    height: 476px;
+    width: 100%;
+    position: relative;
+}
+.headBox > .headBoxBg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.headBox > .headTop{
+    background: none;
+}
+.headBox > .headCon .conFont{
+    width: 61%;
+    margin-top: 60px;
+}
+.headBox > .headCon .conFont .conBg{
+    height: 82px;
+    width: 627px;
+    margin: 0 auto;
+    border-radius: 41px;
+    background-image: linear-gradient(to right ,rgba(91,164,239,0.3),rgba(91,164,239,0));
+}
+.headBox > .headCon .conFont .conBg p{
+    text-align: center;
+    color: #eafbff;
+    font-size: 20px;
+}
+.headBox > .headCon .conFont .conBg p label{
+    color: #00ffff;
+    font-size: 24px;
+    margin: 0 6px;
+}
+.headBox > .headCon .conFont .conBg p i{
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00ffff;
+    border-radius: 50%;
+    vertical-align: 4px;
+    margin: 0 3px 0 9px;
+}
+.headBox > .headCon .conFont .conBg .p1{
+    padding-top: 13px;
+}
+.headBox > .headCon .conFont .conBg .p2{
+    padding-top: 2px;
+}
+.headBox > .headCon .conFont .conBgTwo{
+    background-image: linear-gradient(to left ,rgba(91,164,239,0.3),rgba(91,164,239,0));
+    margin-top: 30px;
+}
+.headBox > .headCon .conFont .conBgTwo p i{
+    width: 3px;
+    height: 14px;
+    margin: 0 15px;
+    vertical-align: 0;
+}
+.headBox > .headBot .botSer{
+    width: 660px;
+    height: 42px;
+    margin: 0 auto;
+    margin-top: 70px;
+}
+.headBox > .headBot .botSer .inStyle{
+    display: inline-block;
+    width: 534px;
+    height: 40px;
+    border: 1px solid #5284e8;
+    background: #061e60;
+    border-radius: 21px;
+}
+.headBox > .headBot .botSer .inStyle img{
+    margin-top: 11px;
+    margin-left: 24px;
+}
+.headBox > .headBot .botSer .inStyle input{
+    width: 463px;
+    height: 37px;
+    border: none;
+    margin-left: 6px;
+    font-size: 16px;
+    color: white;
+    vertical-align: 4px;
+    background: transparent;
+}
+.headBox > .headBot .botSer .inStyle input::-webkit-input-placeholder{
+    color:#5e7dd5;
+}
+.headBox > .headBot .botSer .inStyle input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+    color:#5e7dd5;
+}
+.headBox > .headBot .botSer .inStyle input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+    color:#5e7dd5;
+}
+.headBox > .headBot .botSer .inStyle input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+    color:#5e7dd5;
+}
+.headBox > .headBot .botSer .serFont{
+    width: 90px;
+    line-height: 42px;
+    vertical-align: 3px;
+    margin-left: 20px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.main .oneCloude{
+    padding: 70px 92px 42px 92px;
+}
+.main > .one {
+    margin-left: -12px;
+    margin-right: -12px;
+}
+.main .one .same{
+    float: left;
+    width: 33.33%;
+}
+.main .one .same .sameBg{
+    margin-left: 12px;
+    margin-right: 12px;
+}
+.main .one .same .sameBg .topImg{
+    text-align: center;
+}
+.main .one .same .sameBg .topImg div{
+    margin-top: 5px;
+}
+.main .one .same .sameBg .topImg div span{
+    color: #376eba;
+    font-size: 18px;
+}
+.main .one .same .sameBg .topImg div p{
+    height: 2px;
+    margin: 0 auto;
+    margin-top: 8px;
+}
+.main .one .sameOne .sameBg .topImg div p{
+    width: 72px;
+    background: #376eba;
+}
+.main .one .sameTwo .sameBg .topImg div span{
+    color: #0e809f;
+}
+.main .one .sameTwo .sameBg .topImg div p{
+    width: 144px;
+    background: #0e809f;
+}
+.main .one .sameThree .sameBg .topImg div span{
+    color: #0b805b;
+}
+.main .one .sameThree .sameBg .topImg div p{
+    width: 72px;
+    background: #0b805b;
+}
+.main .one .same .sameBg .botCon{
+    height: 300px;
+    width: 100%;
+    border-radius: 3px;
+    margin-top: 19px;
+    position: relative;
+}
+.main .one .same .sameBg .botCon ul{
+    margin: 28px 23px 14px 16px;
+}
+.main .one .same .sameBg .botCon ul li{
+    height: 22px;
+    margin-top: 25px;
+}
+.main .one .same .sameBg .botCon ul .liOne{
+    margin-top: 0;
+}
+.main .one .same .sameBg .botCon ul li .sp1{
+    float: left;
+}
+.main .one .same .sameBg .botCon ul li .sp1 img{
+    vertical-align: -1px;
+    margin-right: 5px;
+}
+.main .one .same .sameBg .botCon ul li .sp2{
+    float: right;
+    font-size: 16px;
+}
+.main .one .same .sameBg .botCon ul li .sp2 label{
+    margin-right: 2px;
+}
+.main .one .same .sameBg .botCon .more{
+    width: 89px;
+    height: 28px;
+    background: #376eba;
+    border-radius: 14px;
+    position: absolute;
+    left: 50%;
+    margin-left: -44px;
+    bottom: 16px;
+}
+.main .one .same .sameBg .botCon .more a{
+    display: inline-block;
+    width: 100%;
+    height: 28px;
+    line-height: 28px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+}
+.main .one .same .sameBg .botCon .more a img{
+    vertical-align: -1px;
+    margin-right: 2px;
+}
+.main .one .sameOne .sameBg .botCon{
+    background: #f1f7ff;
+    border: 1px solid #bdcfe7;
+}
+.main .one .sameTwo .sameBg .botCon{
+    background: #f5fdff;
+    border: 1px solid #b9e3ef;
+}
+.main .one .sameTwo .sameBg .botCon .more{
+    background: #0e809f;
+} 
+.main .one .sameThree .sameBg .botCon{
+    background: #f5fffc;
+    border: 1px solid #b7e2d4;
+}
+.main .one .sameThree .sameBg .botCon .more{
+    background: #0b805b;
+}
+.main .two{
+    width: 100%;
+    height: 395px;
+    position: relative;
+}
+.main .two > .twoBg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.main .two > .top{
+    width: 465px;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 40px;
+}
+.main .two > .top span{
+    font-size: 22px;
+    color: #278ec9;
+    margin: 0 10px;
+    vertical-align: -7px;
+}
+.main .two > .con{
+    padding: 48px 62px 39px 62px;
+}
+.main .two > .con .conLi{
+    margin-left: -8.5px;
+    margin-right: -8.5px;
+    margin-bottom: 38px;
+}
+.main .two > .con .conLi .item{
+    float: left;
+    width: 25%;
+}
+.main .two > .con .conLi .item .itemBg{
+    margin-left: 8.5px;
+    margin-right: 8.5px;
+    height: 80px;
+    line-height: 80px;
+    background: #f0faff;
+    border-radius: 10px;
+    text-align: center;
+}
+.main .two > .con .conLi .item .itemBg img{
+    vertical-align: -12px;
+    margin-right: 3px;
+}
+.main .two > .con .conLi .item .itemBg span{
+    font-size: 16px;
+    color: #225080;
+}
+.main .two > .con .conLiTwo .itemDiff .itemBg img{
+    vertical-align: -1px;
+}

@@ -1,0 +1,136 @@
+html,body{
+    height: 100%;
+    background: #f4f7f9;
+}
+body{
+    min-width: 1366px;
+}
+.main{
+    padding: 32px 49px 66px 49px;
+}
+.main .top{
+    height: 98px;
+    border: 1px solid #dee9f0;
+    background: white;
+    border-radius: 2px;
+}
+.main .top .same{
+    float: left;
+    width: 25%;
+    text-align: center;
+    height: 100%;
+    position: relative;
+}
+.main .top .same .styOne{
+    margin-top: 21px;
+    margin-right: 12px;
+}
+.main .top .same .styTwo{
+    display: inline-block;
+    text-align: left;
+    vertical-align: 10px;
+}
+.main .top .same .styTwo label{
+    font-size: 22px;
+}
+.main .top .same .styThree{
+    display: inline-block;
+    width: 2px;
+    height: 50px;
+    background: #dce4e9;
+    position: absolute;
+    right: 0;
+    top: 24px;
+}
+.main .center{
+    margin-left: -7px;
+    margin-right: -7px;
+    margin-top: 13px;
+}
+.main .center .item{
+    float: left;
+    height: 307px;
+}
+.main .center .itemOne{
+    width: 25%;
+}
+.main .center .itemBg,
+.main .bot .item .itemBg{
+    margin-left: 7px;
+    margin-right: 7px;
+    height: 100%;
+    border: 1px solid #dee9f0;
+    border-radius: 2px;
+    background: white;
+}
+.main .center .item .itemBg .title,
+.main .bot .item .itemBg .title{
+    margin-top: 13px;
+    margin-left: 9px;
+}
+.main .center .item .itemBg .title i,
+.main .bot .item .itemBg .title i{
+    display: inline-block;
+    width: 4px;
+    height: 13px;
+    background: #2757d6;
+    vertical-align: -1px;
+    margin-right: 3px;
+}
+.main .center .item .itemBg .echartBox .chart01,
+.main .center .item .itemBg .echartBox .chart02,
+.main .center .item .itemBg .echartBox .chart03{
+    width: 100%;
+    height: 260px;
+}
+.main .center .itemTwo{
+    width: 50%;
+}
+.main .center .itemThree{
+    width: 25%;
+}
+.main .bot {
+    margin-left: -7px;
+    margin-right: -7px;
+    margin-top: 13px;
+}
+.main .bot .item{
+    float: left;
+    width: 50%;
+    height: 339px;
+}
+.main .bot .item .itemBg .echartBox .rank{
+    float: left;
+}
+.main .bot .item .itemBg .echartBox .rank ul{
+    margin-top: 17px;
+    margin-left: 16px;
+}
+.main .bot .item .itemBg .echartBox .rank ul li{
+    width: 22px;
+    height: 15px;
+    line-height: 15px;
+    background: #ebebeb;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 7px;
+    margin-bottom: 13px;
+}
+.main .bot .item .itemBg .echartBox .rank ul .number1{
+    background: #fcb04b;
+    color: white;
+}
+.main .bot .item .itemBg .echartBox .rank ul .number2{
+    background: #38c2d2;
+    color: white;
+}
+.main .bot .item .itemBg .echartBox .rank ul .number3{
+    background: #54b4f4;
+    color: white;
+}
+.main .bot .item .itemBg .echartBox .chart04,
+.main .bot .item .itemBg .echartBox .chart05{
+    width: 100%;
+    height: 300px;
+    margin-left: 40px;
+}

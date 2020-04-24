@@ -1,0 +1,6 @@
+[
+{"displayOrder":1,"modelColName":"xgbz","modelColDisplayName":"修改标志","modelColType":1,"modelColLenth":1},
+{"displayOrder":2,"modelColName":"Id","modelColDisplayName":"模型中本记录主键","modelColType":0,"modelColLenth":64},
+{"displayOrder":3,"modelColName":"originId","modelColDisplayName":"记录关联人(或物)的主键","modelColType":0,"modelColLenth":64},
+{"displayOrder":4,"modelColName":"updateTime","modelColDisplayName":"记录生成日期","modelColType":3,"modelColLenth":-1}
+]

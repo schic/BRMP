@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+	<groupId>com.wondersgroup.brmp</groupId>
+	<artifactId>brmp</artifactId>
+	<version>1.01</version>
+	<relativePath>../pom.xml</relativePath>
+  </parent>
+	
+  <artifactId>brmp-common</artifactId>
+  <packaging>jar</packaging>
+
+  <name>brmp-common</name>
+  <url>http://maven.apache.org</url>
+  
+  <description>常用工程，包含常用工具方法，常用类。需要引入DAO工程。</description>
+  
+  <dependencies>
+	<dependency>
+		<groupId>com.wondersgroup.brmp</groupId>
+		<artifactId>brmp-common-dao</artifactId>
+		<version>${brmp.version}</version>
+	</dependency>
+  </dependencies>
+  
+  
+</project>

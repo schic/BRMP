@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="shortcut icon" href="***.ico" type="image/x-icon"> <!-- 页面title角标  -->
 <%
 request.getSession().setAttribute("ssoUser", null);
-String url = "http://".concat(com.wondersgroup.empi.ssofilter.SsoFilter.getSsoUrl()).concat("/sso_login/login/logout?nextURL=").concat(com.wondersgroup.empi.ssofilter.SsoFilter.getLocalUrl());
+String url = "http://".concat(com.wondersgroup.brmp.ssofilter.SsoFilter.getSsoUrl()).concat("/sso_login/login/logout?nextURL=").concat(com.wondersgroup.brmp.ssofilter.SsoFilter.getLocalUrl());
 response.sendRedirect(url);//将注销传给单点登录完成单点登录全部注销
 %>
 </head>

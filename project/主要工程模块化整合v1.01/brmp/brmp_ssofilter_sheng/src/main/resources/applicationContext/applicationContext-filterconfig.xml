@@ -65,7 +65,7 @@
 				/**/*.jpg=noneFilter
 				/**/*.css=noneFilter
 				/**/*.js=noneFilter
-				/**/*.html=noneFilter 
+				/**/*.html=noneFilter
 				
 				<!--单点登录 -->
 				/**/*.jsp*=filterChainProxy,wondersLoginFilter

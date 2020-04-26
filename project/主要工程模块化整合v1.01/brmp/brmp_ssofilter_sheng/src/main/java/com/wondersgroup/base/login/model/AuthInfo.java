@@ -1,5 +1,9 @@
 package com.wondersgroup.base.login.model;
 
+/**
+ * 单点登录用户信息
+ *
+ */
 @SuppressWarnings("serial")
 public class AuthInfo implements java.io.Serializable {
 
@@ -82,6 +86,12 @@ public class AuthInfo implements java.io.Serializable {
 	 * 有权管理区域名称（行政区域名称或机构名称）
 	 */
 	private String manageAreaShortName;
+	
+	/**
+	 * "<资源管理及服务系统>"自添加
+	 * 用户类型
+	 */
+	private String userType;//资源管理及服务系统添加  用户类型   admin '管理员'  system '数据接入者'  user '一般需求数据用户'
 
 	public String getOrganId() {
 		return organId;
@@ -211,5 +221,15 @@ public class AuthInfo implements java.io.Serializable {
 	public void setPersonName(String personName) {
 		this.personName = personName;
 	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	
+	
 
 }

@@ -92,5 +92,12 @@ public interface AuthService {
 	public List<AuthResource> queryApp(HttpServletRequest request, String userId, String organId);
 	
 	public Map<String, Object> queryPersonDetail(String empId);
+	
+	/**
+	 * 资源管理系统添加，根据userId获取 用户类型
+	 * @param userId
+	 * @return
+	 */
+	public String getUserType(String userId);
 
 }

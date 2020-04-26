@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.wondersgroup.base.login.model.AuthInfo;
+import com.wondersgroup.base.login.service.AuthService;
+import com.wondersgroup.base.login.util.SessionUtil;
 import com.wondersgroup.brmp.po.empipo.ApplyAttribute;
 import com.wondersgroup.brmp.po.empipo.ApplyManagement;
 import com.wondersgroup.brmp.po.empipo.DataType;
@@ -26,7 +29,6 @@ import com.wondersgroup.brmp.po.empipo.OriginSystemInfo;
 import com.wondersgroup.brmp.service.intf.ApplyIntf;
 import com.wondersgroup.brmp.service.intf.ModelDataIntf;
 import com.wondersgroup.brmp.util.cipher.IDUtil;
-import com.wondersgroup.brmp.util.ssoutil.SsoUtil;
 
 @Controller
 @RequestMapping("/resource_catalog")
@@ -36,11 +38,26 @@ public class resourceCatalogController {
 	
 	@Autowired ApplyIntf applyIntf;
 	
+	@Autowired AuthService authService;
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/catalog")
 	public String catalog(HttpServletRequest request){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if ("system".equals(ssoUser.get("userType"))) {
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+//		if ("system".equals(ssoUser.get("userType"))) {
+//			request.setAttribute("errorMessage", "系统接入不需要访问资源目录");//返给页面错误信息
+//			return "index1";
+//		}
+		if ("system".equals(authInfo.getUserType())) {
 			request.setAttribute("errorMessage", "系统接入不需要访问资源目录");//返给页面错误信息
 			return "index1";
 		}
@@ -260,8 +277,13 @@ public class resourceCatalogController {
 	@ResponseBody
 	public String catalogAjaxCommitApplyData(String modelId,String applyName,String applyOrgName,String applyUser,String applyDirection, String json, HttpServletRequest request){
 		
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"user".equals(ssoUser.get("userType"))) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+//		if (!"user".equals(ssoUser.get("userType"))) {
+//			request.setAttribute("errorMessage", "系统接入不需要访问资源目录");//返给页面错误信息
+//			return "用户类型不是一般需求资源用户不需要申请资源";
+//		}
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (!"user".equals(authInfo.getUserType())) {
 			request.setAttribute("errorMessage", "系统接入不需要访问资源目录");//返给页面错误信息
 			return "用户类型不是一般需求资源用户不需要申请资源";
 		}
@@ -283,7 +305,9 @@ public class resourceCatalogController {
 		ApplyManagement applyManagement = new ApplyManagement();
 		applyManagement.setApplyId(applyId);
 		applyManagement.setModelId(modelId);
-		applyManagement.setUserName(String.valueOf(ssoUser.get("uname")));
+//		applyManagement.setUserName(String.valueOf(ssoUser.get("uname")));
+		applyManagement.setUserId(authInfo.getUserId());
+		applyManagement.setUserName(authInfo.getLoginName());
 		applyManagement.setApplyName(applyName);
 		applyManagement.setApplyOrgName(applyOrgName);
 		applyManagement.setApplyUser(applyUser);

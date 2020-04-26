@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+注意：当配置文件logback-test.xml和logback.xml都不存在时logback默认将调用BasicConfigurator创建一个最小化配置。最小化配置有一个关联到根logger的ConsoleAppender组成。
+输出模式为%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n的PatternLayoutEncoder进行格式化。root logger默认级别是DEBUG。
+scan：是否自动重新加载修改后的配置文件
+scanPeriod：属性值单位可以是milliseconds, seconds, minutes or hours 
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+	<substitutionProperty name="porject.name" value="brmp-web" />
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符-->
+			<pattern>%date [${porject.name}] %-5level %c:%line - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="businessLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/${porject.name}.log</file>
+		<!-- 按天滚动文件, 滚动文件将会压缩成zip格式 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/zip/${porject.name}-%d{yyyy-MM-dd}.zip</fileNamePattern>
+			<!-- 最大保存时间为60天，超过60天将被清理掉 -->  
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+		<!-- 独立的pattern -->
+		<encoder>
+			<pattern>%date [%thread] %-5level %c:%line - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- project default level -->
+	<logger name="com.wondersgroup" level="ERROR" />
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+
+	<!-- root -->
+	<!-- level：TRACE、DEBUG、INFO、WARN、ERROR、ALL和 OFF -->
+	<root level="WARN">
+		<appender-ref ref="console" />
+		<appender-ref ref="businessLogFile" />
+	</root>
+</configuration>

@@ -14,6 +14,8 @@ public class ApplyManagement {
 	
 	private String applyId;//申请ID
 	private String modelId;//源系统建立的模型编号(申请主资源编号 一个主要资源)
+	
+	private String userId;//用户Id
 	private String userName;//申请用户用户名
 	
 	private String applyName;//申请资源目录名称（申请名称）
@@ -35,6 +37,12 @@ public class ApplyManagement {
 	}
 	public void setModelId(String modelId) {
 		this.modelId = modelId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getUserName() {
 		return userName;

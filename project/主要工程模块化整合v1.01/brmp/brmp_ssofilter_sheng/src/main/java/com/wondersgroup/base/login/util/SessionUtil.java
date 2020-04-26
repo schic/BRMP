@@ -37,6 +37,7 @@ public class SessionUtil {
 	 * void
 	 * 如果该函数引用或修改了某些全局变量或对象，也应在函数级注释中说明
 	 * ---------------------------------------
+	 *
 	 */
 	public static void setCurrAuthInfo(HttpServletRequest request, AuthInfo authInfo) throws Exception {
 		Assert.notNull(request);
@@ -58,7 +59,7 @@ public class SessionUtil {
 	 * @修改时间：2014-10-23下午4:29:34
 	 * @修改备注：
 	 * @version 1.0
-	 *
+	 * 
 	 */
 	public static AuthInfo getCurrAuthInfo(HttpServletRequest request) {
 		Assert.notNull(request);

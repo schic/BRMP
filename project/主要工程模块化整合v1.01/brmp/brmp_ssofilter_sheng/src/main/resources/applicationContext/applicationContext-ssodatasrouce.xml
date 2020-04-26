@@ -82,12 +82,42 @@
 				<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
 				<prop key="net.sf.ehcache.configurationResourceName">${net.sf.ehcache.configurationResourceName}</prop>
 				<prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
-				<prop key="current_session_context_class">thread</prop>
+				<!-- 配置current session的上下文环境，方便我们调用sessionFactory获取当前线程统一个session对象 -->
+                <prop key="current_session_context_class">thread</prop>
+				<!-- 使用事物控制 -->
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
 			</props>
 		</property>
 		<property value="com.wondersgroup.**.entity" name="packagesToScan" />
 	</bean>
+	
+	
     
+    <!-- 事务管理 
+     -->
+    <bean id="transactionManager_auth" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	    <property name="sessionFactory">		
+			<ref bean="sessionFactory_auth" />
+		</property>
+	</bean>
+	
+	<!-- 配置事务的传播特性  
+	--> 
+	<tx:advice id="txAdvice_auth" transaction-manager="transactionManager_auth">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" read-only="true" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 那些类的哪些方法参与事务 
+	-->
+	<aop:config>
+		<aop:pointcut id="allManagerMethod_auth"
+			expression="execution(* com.wondersgroup.base.login.dao.impl.*.*(..))" />
+		<aop:advisor pointcut-ref="allManagerMethod_auth" advice-ref="txAdvice_auth" />
+	</aop:config>
+	
+	
 
 		
 	

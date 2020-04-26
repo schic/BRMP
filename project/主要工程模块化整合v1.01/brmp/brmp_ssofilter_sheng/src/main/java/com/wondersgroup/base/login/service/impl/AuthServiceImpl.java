@@ -443,4 +443,9 @@ public class AuthServiceImpl implements AuthService {
 			return "4";
 		}
 	}
+
+	@Override
+	public String getUserType(String userId) {
+		return authDao.getUserType(userId);
+	}
 }

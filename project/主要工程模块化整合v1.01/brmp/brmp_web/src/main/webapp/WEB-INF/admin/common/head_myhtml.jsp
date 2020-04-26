@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="com.wondersgroup.base.login.model.AuthInfo"%>  
+<%
+AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgroup.base.login.model.AuthConstants.SESSION_USER_CURRENT_INFO);
+%>  
 <div class="headBox">
     <img class="headBoxBg" src="static/common/img/myhtml_imgs/indexTopBg.png" alt="">
     <div class="headTop clearfix">
@@ -11,7 +15,7 @@
             <div class="login">
                 <img src="static/common/img/myhtml_imgs/indexHeadImg7.png" alt="">
                 <span>
-                	<a onclick="longinUser('${sessionScope.ssoUser.uname}')" class="page-scroll">登录 ${sessionScope.ssoUser.uname}</a>
+                	<a onclick="longinUser('<%=authInfo.getLoginName()%>')" class="page-scroll">欢迎登录 <%=authInfo.getPersonName()%></a>
                 </span>
             </div>
             <div class="det">

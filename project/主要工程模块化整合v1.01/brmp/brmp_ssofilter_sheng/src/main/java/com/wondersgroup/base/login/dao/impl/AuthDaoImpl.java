@@ -19,11 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wondersgroup.base.login.dao.AuthDao;
 import com.wondersgroup.base.login.model.AuthInfo;
 import com.wondersgroup.base.login.model.TbAuthResource;
 import com.wondersgroup.base.login.model.TbAuthUser;
+import com.wondersgroup.base.login.util.SsoFilterConfResource;
 import com.wondersgroup.base.login.model.AuthResource;
 
 
@@ -40,6 +42,8 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 	public void setSuperSessionFactory(@Qualifier("sessionFactory_auth")SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+	
+	@Autowired SsoFilterConfResource ssoFilterConfResource;
 
 	/**
 	 * 
@@ -54,7 +58,6 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 				+ " admi_division_name \"manageAreaShortName\" "
 				+ " from cen_auth.v_tb_auth_user t where t.loginname=:loginName and t.orgId=:organId  ";
 		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
-//		Query query = this.getSessionFactory().openSession().createSQLQuery(sql);
 		query.setString("loginName", loginName);
 		query.setString("organId", organId);
 		query.setResultTransformer(Transformers.aliasToBean(AuthInfo.class));
@@ -436,6 +439,30 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		Query query1 = this.getSessionFactory().getCurrentSession().createSQLQuery(sql2);
 		query.executeUpdate();
 		query1.executeUpdate();
+	}
+
+	@Override
+	public String getUserType(String userId) {
+		String sql = "select roleid from cen_auth.tb_auth_user_role where userid = :userId ";
+		@SuppressWarnings("deprecation")
+		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
+		query.setString("userId", userId);
+		@SuppressWarnings("unchecked")
+		List<String> roleIds = query.list();
+		String userType = "user";
+		for (int i=0;i<roleIds.size();i++){
+			if (roleIds.get(i).equals(ssoFilterConfResource.getBrmpSystem()) ){
+				userType = "system";
+				break;
+			}
+		}
+		for (int i=0;i<roleIds.size();i++){
+			if (roleIds.get(i).equals(ssoFilterConfResource.getBrmpAdmin()) ){
+				userType = "admin";
+				break;
+			}
+		}
+		return userType;
 	}
 
 }

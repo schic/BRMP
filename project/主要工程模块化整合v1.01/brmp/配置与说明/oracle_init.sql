@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS brmp_apply_base;
 CREATE TABLE brmp_apply_base  (
   apply_id varchar2(32),
   model_id varchar2(32),
+  user_id varchar2(255),
   user_name varchar2(255),
   apply_name varchar2(255),
   apply_org_name varchar2(255),
@@ -31,7 +32,8 @@ CREATE TABLE brmp_apply_base  (
 COMMENT ON TABLE brmp_apply_base IS '卫生资源整合申请基本表';
 COMMENT ON COLUMN brmp_apply_base.apply_id is '申请id';
 COMMENT ON COLUMN brmp_apply_base.model_id is '源系统建立的模型编号(申请主资源编号 一个主要资源)';
-COMMENT ON COLUMN brmp_apply_base.user_name is '申请用户登录用户名(或其他登录用唯一号)';
+COMMENT ON COLUMN brmp_apply_base.user_id is '申请用户登录用户ID(或其他登录用唯一号)';
+COMMENT ON COLUMN brmp_apply_base.user_name is '申请用户登录用户名';
 COMMENT ON COLUMN brmp_apply_base.apply_name is '申请资源目录名称（申请名称）';
 COMMENT ON COLUMN brmp_apply_base.apply_org_name is '申请机构名称';
 COMMENT ON COLUMN brmp_apply_base.apply_user is '申请人姓名';

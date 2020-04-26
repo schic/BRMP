@@ -61,5 +61,12 @@ public interface AuthDao {
 	public void saveFile(List<String> list);
 	
 	public void updatePerson(String id,Map<String, String> person);
+	
+	/**
+	 * 资源管理系统添加，根据userId获取 用户类型
+	 * @param userId
+	 * @return
+	 */
+	public String getUserType(String userId);
 
 }

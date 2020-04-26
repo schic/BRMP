@@ -36,11 +36,11 @@ function longinUser(userName){
 	if (userName) {
 		$.messager.confirm('注销','是否要注销该用户?',function(r){
 			if(r){
-				window.location.href = 'http://192.168.1.111:8980/brmp/ssoLogout';
+				window.location.href = 'http://192.168.1.111:8980/brmp-web/ssoLogout';
 			}	
 		});
 	} else {
-		window.location.href = 'http://192.168.1.111:8980/brmp/index';
+		window.location.href = 'http://192.168.1.111:8980/brmp-web/index';
 	}
 	
 	

@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="com.wondersgroup.base.login.model.AuthInfo"%>    
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+
+AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgroup.base.login.model.AuthConstants.SESSION_USER_CURRENT_INFO);
 %> 
 <!DOCTYPE html>   
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
@@ -31,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="login">
                 <img src="static/common/img/myhtml_imgs/indexHeadImg7.png" alt="">
                 <span>
-                	<a onclick="longinUser('${sessionScope.ssoUser.uname}')" class="page-scroll">登录 ${sessionScope.ssoUser.uname}</a>
+                	<a onclick="longinUser('<%=authInfo.getLoginName()%>')" class="page-scroll">欢迎登录 <%=authInfo.getPersonName()%></a>
                 </span>
             </div>
             <div class="det">

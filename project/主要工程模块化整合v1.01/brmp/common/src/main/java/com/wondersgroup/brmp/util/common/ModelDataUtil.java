@@ -59,7 +59,7 @@ public class ModelDataUtil {
 		sBuffer.append(tableName);
 		sBuffer.append(" ( ");
 		
-		if (tableName.contains("_temp")){//temp表增加zybz字段用于计算作业插入到正式库的
+		if (tableName.contains("_temp") || tableName.contains("_change")){//temp表 和两网同步交换表增加zybz字段用于计算作业插入到正式库的
 			sBuffer.append("ZYBZ ");//作业标志
 			sBuffer.append(dataTypeMap.get(1));//int型
 			sBuffer.append("(1) DEFAULT '0'  ");

@@ -78,6 +78,7 @@ public class ModelDataDaoImpl implements ModelDataDaoIntf {
 			paramMap.put("modelColLenth", modelDataAttributes.get(i).getModelColLenth());
 			paramMap.put("modelColDecimalLenth", modelDataAttributes.get(i).getModelColDecimalLenth());
 			paramMap.put("displayOrder", i+1);
+			paramMap.put("pk", modelDataAttributes.get(i).getPk());
 			jdbcTemplate.update(insertModelDataAttributeSql, paramMap);
 		}
 		

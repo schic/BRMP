@@ -66,6 +66,8 @@ public class ModelAdminController {
 				
 			}
 		}
+//		OriginSystemInfo originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemId(authInfo.getUserId());
+//		request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 		return "model_admin/datatype";
 	}
 	
@@ -239,6 +241,10 @@ public class ModelAdminController {
 		String msg = modelDataIntf.createOfficialTable(modelId);//审核通过在数据库建立正式表
 		if (!"建立模型完成".equals(msg)) {
 			return "审核时建立模型失败,请检查系统";
+		}
+		msg = modelDataIntf.createExTable(modelId);
+		if (!"建立模型完成".equals(msg)) {
+			return "审核时建立扩展表失败,请检查系统";
 		}
 		return modelDataIntf.setAudit(modelId,9);
 	}

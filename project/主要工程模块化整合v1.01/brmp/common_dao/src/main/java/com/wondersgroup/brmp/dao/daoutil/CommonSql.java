@@ -25,6 +25,12 @@ public class CommonSql {
 	public static <T> String insertSql(Class<T> clazz, String tableName){
 		StringBuffer sBuffer = new StringBuffer();
 		List<String> objFieldList = getConvertColNames(clazz,"insert");
+		List<String> objFieldListO = new ArrayList<String>();
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+			field.setAccessible(true);
+			objFieldListO.add(new String(field.getName()));
+		}
 		
 		sBuffer.append("insert into ");
 		sBuffer.append(tableName);
@@ -38,9 +44,9 @@ public class CommonSql {
 			}
 		}
 		sBuffer.append(") values (:");
-		for(int i =0;i<objFieldList.size();i++){
-			sBuffer.append(objFieldList.get(i));
-			if (i != objFieldList.size()-1){
+		for(int i =0;i<objFieldListO.size();i++){
+			sBuffer.append(objFieldListO.get(i));
+			if (i != objFieldListO.size()-1){
 				sBuffer.append(",:");
 			}
 		}

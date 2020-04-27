@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                   <div class="fontBg3">
                         <img src="static/common/img/myhtml_imgs/dataImg4.png" alt="">
-                        <span>数据模型与OpenEMPI的关联</span>
+                        <span>值域字典管理</span>
                   </div>
               </div>
           </div>
@@ -150,9 +150,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
         </div>
         
+        
         <div class="mainThree mainSame">
+        	<!-- 
          	<div style="width:202px;height:86px;background:url('static/common/img/my_img/openempi-orig.jpg');"></div>
          	<iframe style="width:100%;height:400px;" src="static/common/img/my_img/test_openempi_html/OpenEMPI Manager.html"></iframe>
+        	 -->
         </div>
         
     </div>

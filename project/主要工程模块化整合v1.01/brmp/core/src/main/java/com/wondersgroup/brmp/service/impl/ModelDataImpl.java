@@ -324,7 +324,7 @@ public class ModelDataImpl implements ModelDataIntf {
 		if (0==modelData.getAuditStatus()){
 			modelData.setAuditStatus(1);//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 			modelData.setModelUpdeteTime(new Date());
-			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", modelId);
+			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", "modelId");
 			//modelDataDaoIntf.updateModelData(modelData);
 		}
 		return "提交审核完成";
@@ -396,7 +396,7 @@ public class ModelDataImpl implements ModelDataIntf {
 		} else if (1 == modelData.getAuditStatus()) {
 			modelData.setAuditStatus(i);//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 			modelData.setModelUpdeteTime(new Date());
-			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", modelId);
+			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", "modelId");
 		}
 		return "审核完成";
 		
@@ -432,6 +432,48 @@ public class ModelDataImpl implements ModelDataIntf {
 		String createTableMsg = commonDaoIntf.createTable(createSql);
 		if ("建立模型失败".equals(createTableMsg)) {
 			return "模型在后台创建失败,请联系管理员";
+		}
+		
+		return createTableMsg;
+	}
+
+	@Override
+	public String createExTable(String modelId) {
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("modelId", modelId);
+		ModelData oldModelData = (ModelData) commonDaoIntf.selectObjByParam(ModelData.class, paramMap);
+		if (null == oldModelData) {
+			return "模型不存在";
+		} else if (oldModelData.getAuditStatus()!=1 ){//0:未设计 1:待审核 2:审核拒绝 9:审核通过
+			return "模型不是待审核状态";
+		}
+		
+		paramMap.clear();
+		paramMap.put("modelId", oldModelData.getModelId());
+		List<ModelDataAttribute> modelDataAttributes = commonDaoIntf.selectObjListByParam(ModelDataAttribute.class, paramMap);
+		List<DataType> dataTypes = commonDaoIntf.selectObj(DataType.class);
+		Map<Integer, String> dataTypeMap = ModelDataUtil.dataTypeList2Map(dataTypes);
+		
+		String tableName = oldModelData.getModelTabName().concat("_change");
+		if (commonDaoIntf.isTable(tableName) ){//表存在
+			commonDaoIntf.delDropTable(tableName);
+		}
+		String createSql = ModelDataUtil.createModelDataSql(tableName, modelDataAttributes, dataTypeMap, daoConfResource.getJdbcDriverClassName());
+		//创建表
+		String createTableMsg = commonDaoIntf.createTable(createSql);
+		if ("建立change表失败".equals(createTableMsg)) {
+			return "change表在后台创建失败,请联系管理员";
+		}
+		
+		tableName = oldModelData.getModelTabName().concat("_ex");//根据表名创建扩展表
+		if (commonDaoIntf.isTable(tableName) ){//表存在
+			commonDaoIntf.delDropTable(tableName);
+		}
+		createSql = ModelDataUtil.createExTabelSql(tableName, modelDataAttributes, dataTypeMap, daoConfResource.getJdbcDriverClassName());
+		//创建表
+		createTableMsg = commonDaoIntf.createTable(createSql);
+		if ("建立扩展表失败".equals(createTableMsg)) {
+			return "扩展表在后台创建失败,请联系管理员";
 		}
 		
 		return createTableMsg;

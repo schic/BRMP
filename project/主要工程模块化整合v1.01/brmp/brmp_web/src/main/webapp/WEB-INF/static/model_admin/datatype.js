@@ -98,8 +98,8 @@ var initOriginSystemId = '';
 function setInit(sendUserType,sendOriginSystemId){
 	this.userType = sendUserType;
 	this.initOriginSystemId = sendOriginSystemId;
-//	console.log('sendUserType'+sendUserType);
-//	console.log('sendOriginSystemId'+sendOriginSystemId);
+//	console.log('sendUserType:'+sendUserType);
+//	console.log('sendOriginSystemId:'+sendOriginSystemId);
 }
 
 /************************************************
@@ -173,10 +173,10 @@ function updateModel(){
 
 //新建立模型
 function newModel (){
-	if (userType=='admin') {
-		$.messager.alert('提示', 'admin用户不需要新建模型，请使用系统接入用户建立模型接入数据');
-		return; 
-	}
+//	if (userType=='admin') {
+//		$.messager.alert('提示', 'admin用户不需要新建模型，请使用系统接入用户建立模型接入数据');
+//		return; 
+//	}
 	
 	$('#model').datagrid('clearSelections');//取消选择
 	

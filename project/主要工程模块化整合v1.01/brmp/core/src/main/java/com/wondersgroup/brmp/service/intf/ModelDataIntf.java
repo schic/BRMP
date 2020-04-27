@@ -41,7 +41,12 @@ public interface ModelDataIntf {
 	String createOfficialTable(String modelId);
 	
 	/**
-	  * 创建中间temp表,测试接入系统数据传入
+	 * 创建正式表后,创建扩展表
+	 */
+	String createExTable(String modelId);
+	
+	/**
+	 * 创建中间temp表,测试接入系统数据传入
 	 * @param modelId
 	 * @return
 	 */

@@ -82,7 +82,7 @@ public interface CommonDaoIntf {
 	 * 更新对象在数据库中用某一字段取值为筛选条件
 	 * @param object 需要更新的对象
 	 * @param tableName 数据库表名
-	 * @param fieldNameById 筛选条件的属性名
+	 * @param fieldNameById 筛选条件的属性名 !!!!千万注意是属性名!!!!!
 	 * @return
 	 */
 	String updateObj(Object object, String tableName, String fieldNameById);

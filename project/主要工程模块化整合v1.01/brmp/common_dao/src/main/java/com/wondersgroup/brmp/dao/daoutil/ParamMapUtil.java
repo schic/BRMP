@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 
 import com.wondersgroup.brmp.util.anotation.Column;
-import com.wondersgroup.brmp.util.anotation.Table;
 
 public class ParamMapUtil {
 	
@@ -25,19 +24,19 @@ public class ParamMapUtil {
 	 */
 	public static Map<String, Object> getParamMap(Object obj) throws IllegalArgumentException, IllegalAccessException, ParseException{
 		//setNull(obj);
-		Table table = obj.getClass().getAnnotation(Table.class);
+//		Table table = obj.getClass().getAnnotation(Table.class);
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		Field[] fields = obj.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			String colNameCamel;
-			if (table != null && !table.camel()){
-				colNameCamel = field.getName().toLowerCase();
-			} else {
-				colNameCamel = DaoUtil.camelToUnderline(field.getName());
-			}
-			String colName = colNameCamel;
+//			String colNameCamel;
+//			if (table != null && !table.camel()){
+//				colNameCamel = field.getName().toLowerCase();
+//			} else {
+//				colNameCamel = DaoUtil.camelToUnderline(field.getName());
+//			}
+			String colName = field.getName();
 			Column column = field.getAnnotation(Column.class);
 			if (null != column){
 				if ("".equals(column.name())){//若字段名为""，则在数据库中不使用该字段

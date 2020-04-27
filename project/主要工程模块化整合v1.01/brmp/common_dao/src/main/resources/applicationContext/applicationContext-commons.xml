@@ -94,7 +94,7 @@
 	<!-- 那些类的哪些方法参与事务 -->
 	<aop:config>
 		<aop:pointcut id="allManagerMethod"
-			expression="execution(* com.wondersgroup.empi.dao.impl.*.*(..))" />
+			expression="execution(* com.wondersgroup.brmp.dao.impl.*.*(..))" />
 		<aop:advisor pointcut-ref="allManagerMethod" advice-ref="txAdvice" />
 	</aop:config>
     

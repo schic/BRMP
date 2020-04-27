@@ -24,11 +24,13 @@
 		<version>${brmp.version}</version>
 	</dependency>
 	
+	<!-- 
 	<dependency>
 		<groupId>com.wondersgroup.brmp</groupId>
 		<artifactId>brmp-ssofilter</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	 -->
 	
 	<dependency>
 		<groupId>com.wondersgroup.brmp</groupId>

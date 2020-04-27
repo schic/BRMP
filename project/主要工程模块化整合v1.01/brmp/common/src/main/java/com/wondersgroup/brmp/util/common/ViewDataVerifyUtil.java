@@ -18,13 +18,18 @@ public class ViewDataVerifyUtil {
 	 * 验证页面的建立的模型字段数据
 	 */
 	public static String verifyModelDataAttributes(List<ModelDataAttribute> modelDataAttributes){
-		//TODO 准备添加主索引字段 选择，判断是否是索引模型
+		//TODO 准备添加(人员或物)主索引字段 选择，判断是否是索引模型
 		//TODO 准备添加值域字段，判断是否是需要值域转码的模型
 		
 		List<String> modelColNames = new ArrayList<String>(); 
 		ModelDataAttribute modelDataAttribute;
+		boolean hasPk = false;
 		for(int i=0;i<modelDataAttributes.size();i++){
 			modelDataAttribute = modelDataAttributes.get(i);
+			if (modelDataAttribute.getPk()==1) {
+				hasPk = true;//最后确认是否有主键字段定义
+			}
+			
 			String modelColName = modelDataAttribute.getModelColName();
 			if(!modelColName.equals(modelColName.trim())) {
 				return "字段不能包含空格:".concat(modelColName);
@@ -50,7 +55,7 @@ public class ViewDataVerifyUtil {
 				
 				modelDataAttribute.setModelColDecimalLenth(-1);//不使用小数
 				if (modelDataAttribute.getModelColLenth() < 1 || modelDataAttribute.getModelColLenth() > 4000) {
-					return "字段长度不在范围(".concat(modelColName).concat("):应该在 1~3999之间");
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 1~4000之间");
 				} 
 			} else if (modelDataAttribute.getModelColType()==1) {//int类型字段长度 1~8 之间
 				
@@ -62,8 +67,8 @@ public class ViewDataVerifyUtil {
 				}
 			} else if (modelDataAttribute.getModelColType()==2) {//float
 				
-				if (modelDataAttribute.getModelColLenth() < 2 || modelDataAttribute.getModelColLenth() > 6) {
-					return "字段长度不在范围(".concat(modelColName).concat("):应该在 2~6之间,长度超过7请使用double");
+				if (modelDataAttribute.getModelColLenth() < 2 || modelDataAttribute.getModelColLenth() > 7) {
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 2~7之间,长度超过7请使用double");
 				}
 				if (modelDataAttribute.getModelColDecimalLenth() < 1 ||  modelDataAttribute.getModelColDecimalLenth() >= modelDataAttribute.getModelColLenth() ){
 					return "字段长度不在范围(".concat(modelColName).concat("):小数位数不在合适的范围");
@@ -89,7 +94,9 @@ public class ViewDataVerifyUtil {
 			
 			modelDataAttributes.get(i).setDisplayOrder(i+1);//展示顺序排列好
 		}
-		
+		if(!hasPk){
+			return "没有定义主键字段";
+		}
 		
 		
 		return "pass";

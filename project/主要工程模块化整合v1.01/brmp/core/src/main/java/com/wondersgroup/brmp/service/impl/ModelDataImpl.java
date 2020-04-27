@@ -11,6 +11,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wondersgroup.brmp.dao.daoutil.DaoConfResource;
 import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
 import com.wondersgroup.brmp.dao.intf.ModelDataDaoIntf;
 import com.wondersgroup.brmp.po.empipo.DataType;
@@ -29,6 +30,8 @@ public class ModelDataImpl implements ModelDataIntf {
 	@Autowired ModelDataDaoIntf modelDataDaoIntf;
 	
 	@Autowired CommonDaoIntf commonDaoIntf;
+	
+	@Autowired DaoConfResource daoConfResource;
 	
 	@Override
 	public List<ModelData> queryModelData() {
@@ -168,7 +171,7 @@ public class ModelDataImpl implements ModelDataIntf {
 			commonDaoIntf.delDropTable(tableName);
 		}
 		
-		String createSql = ModelDataUtil.createModelDataSql(tableName, modelDataAttributes, dataTypeMap);
+		String createSql = ModelDataUtil.createModelDataSql(tableName, modelDataAttributes, dataTypeMap, daoConfResource.getJdbcDriverClassName());
 				
 		//创建表
 		String createTableMsg = commonDaoIntf.createTable(createSql);
@@ -336,6 +339,14 @@ public class ModelDataImpl implements ModelDataIntf {
 		List<OriginSystemInfo> originSystemInfos = commonDaoIntf.selectObjByParamlist(OriginSystemInfo.class, paramMap);
 		return originSystemInfos;
 	}
+	
+	@Override
+	public OriginSystemInfo queryOriginSystemByOriginSystemId(String originSystemId) {
+		Map<String, Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("originSystemId", originSystemId);
+		OriginSystemInfo originSystemInfo =  (OriginSystemInfo) commonDaoIntf.selectObjByParam(OriginSystemInfo.class, paramMap);
+		return originSystemInfo;
+	}
 
 
 	@Override
@@ -415,7 +426,7 @@ public class ModelDataImpl implements ModelDataIntf {
 			commonDaoIntf.delDropTable(tableName);
 		}
 		
-		String createSql = ModelDataUtil.createModelDataSql(tableName, modelDataAttributes, dataTypeMap);
+		String createSql = ModelDataUtil.createModelDataSql(tableName, modelDataAttributes, dataTypeMap, daoConfResource.getJdbcDriverClassName());
 				
 		//创建表
 		String createTableMsg = commonDaoIntf.createTable(createSql);
@@ -425,6 +436,8 @@ public class ModelDataImpl implements ModelDataIntf {
 		
 		return createTableMsg;
 	}
+
+	
 
 	
 

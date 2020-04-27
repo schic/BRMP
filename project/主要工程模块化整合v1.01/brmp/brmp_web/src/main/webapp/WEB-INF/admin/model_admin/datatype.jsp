@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="static/common/css/myhtml_css/resources.css" />
 
 </head>
-<body onload="setInit('${sessionScope.ssoUser.userType}','${sessionScope.originSystemInfo.originSystemId}')">
+<body onload="setInit('${sessionScope["wondersgroup.qyws.curuser"].userType}','${sessionScope.originSystemInfo.originSystemId}')">
 
 <section>
 	<!-- 页面通用头部引用 -->

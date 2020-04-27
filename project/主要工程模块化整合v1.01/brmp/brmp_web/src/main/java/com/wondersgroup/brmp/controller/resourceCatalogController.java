@@ -305,8 +305,8 @@ public class resourceCatalogController {
 		ApplyManagement applyManagement = new ApplyManagement();
 		applyManagement.setApplyId(applyId);
 		applyManagement.setModelId(modelId);
-//		applyManagement.setUserName(String.valueOf(ssoUser.get("uname")));
 		applyManagement.setUserId(authInfo.getUserId());
+//		applyManagement.setUserName(String.valueOf(ssoUser.get("uname")));
 		applyManagement.setUserName(authInfo.getLoginName());
 		applyManagement.setApplyName(applyName);
 		applyManagement.setApplyOrgName(applyOrgName);

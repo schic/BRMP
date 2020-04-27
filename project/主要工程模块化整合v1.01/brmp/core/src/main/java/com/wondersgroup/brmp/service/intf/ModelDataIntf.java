@@ -96,6 +96,13 @@ public interface ModelDataIntf {
 	List<OriginSystemInfo> queryOriginSystemByOriginSystemIds(List<String> originSystemIds);
 
 	/**
+	 * 通过接入系统id获取系统信息
+	 * @param String 接入系统id
+	 * @return
+	 */
+	OriginSystemInfo queryOriginSystemByOriginSystemId(String originSystemId);
+	
+	/**
 	  * 通过接入系统名称获取系统信息
 	 * @param String 接入系统名称
 	 * @return

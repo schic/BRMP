@@ -1,5 +1,6 @@
 package com.wondersgroup.brmp.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wondersgroup.base.login.model.AuthInfo;
+import com.wondersgroup.base.login.service.AuthService;
+import com.wondersgroup.base.login.util.SessionUtil;
 import com.wondersgroup.brmp.po.empipo.ApplyManagement;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
@@ -20,8 +24,6 @@ import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
 import com.wondersgroup.brmp.po.empipo.OriginSystemInfo;
 import com.wondersgroup.brmp.service.intf.ApplyIntf;
 import com.wondersgroup.brmp.service.intf.ModelDataIntf;
-import com.wondersgroup.brmp.util.cipher.IDUtil;
-import com.wondersgroup.brmp.util.ssoutil.SsoUtil;
 
 
 @Controller
@@ -30,22 +32,33 @@ public class applyAdminController {
 	
 	@Autowired ModelDataIntf modelDataIntf;
 	
+	@Autowired AuthService authService;
+	
 	@Autowired ApplyIntf applyIntf;
 	
 	@RequestMapping("/apply")
 	public String apply(HttpServletRequest request,HttpServletResponse response) {
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		HttpSession httpSession = request.getSession();
-		if ("system".equals(ssoUser.get("userType"))){
+		if ("system".equals(authInfo.getUserType())){
 			return "redirect:/apply_management/apply4system";
-		} else if ("user".equals(ssoUser.get("userType"))) {
+		} else if ("user".equals(authInfo.getUserType())) {
 			List<ModelData> modelDatas = null;
 			if (null == httpSession.getAttribute("modelDatas")) {
 				modelDatas = modelDataIntf.queryModelData("1", "", "", "1", "9");
 				httpSession.setAttribute("modelDatas", modelDatas);
 			}
 			return "apply_management/apply4user";
-		} else if ("admin".equals(ssoUser.get("userType"))) {
+		} else if ("admin".equals(authInfo.getUserType())) {
 			List<ModelData> modelDatas = null;
 			if (null == httpSession.getAttribute("modelDatas")) {
 				modelDatas = modelDataIntf.queryModelData("1", "", "", "1", "9");
@@ -102,8 +115,17 @@ public class applyAdminController {
 	@RequestMapping("/apply/ajax/querySelect")
 	@ResponseBody
 	public List<ApplyManagement> applyAjaxQuerySelect(String beginDate,String endDate,String auditStatus,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"admin".equals(ssoUser.get("uname")) ) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"admin".equals(authInfo.getUserType()) ) {
 			request.setAttribute("errorMessage", "用户不是管理员不能使用申请管理");
 			return null;
 		}
@@ -139,8 +161,17 @@ public class applyAdminController {
 	@RequestMapping("/apply/ajax/auditPass")
 	@ResponseBody
 	public String applyAjaxAuditPass(String applyId,HttpServletRequest request){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"admin".equals(ssoUser.get("userType"))) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"admin".equals(authInfo.getUserType())) {
 			return "不是系统管理员不能审核";
 		}
 		return applyIntf.setAudit(applyId,9);
@@ -149,8 +180,17 @@ public class applyAdminController {
 	@RequestMapping("/apply/ajax/auditReject")
 	@ResponseBody
 	public String applyAjaxAuditReject(String applyId,HttpServletRequest request){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"admin".equals(ssoUser.get("userType"))) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"admin".equals(authInfo.getUserType())) {
 			return "不是系统管理员不能审核";
 		}
 		return applyIntf.setAudit(applyId,2);
@@ -174,13 +214,22 @@ public class applyAdminController {
 	@RequestMapping("/apply/ajax/querySelectUser")
 	@ResponseBody
 	public List<ApplyManagement> applyAjaxQuerySelectUser(String beginDate,String endDate,String auditStatus,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"user".equals(ssoUser.get("userType")) ) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"user".equals(authInfo.getUserType()) ) {
 			request.setAttribute("errorMessage", "用户不是一般用户不用查看申请管理");
 			return null;
 		}
 		
-		String uname = (String) ssoUser.get("uname");
+		String uname = authInfo.getLoginName();
 		List<ApplyManagement> applyManagements = applyIntf.selectApplyUser(beginDate, endDate, auditStatus, uname);
 		
 		return applyManagements;
@@ -189,12 +238,21 @@ public class applyAdminController {
 	@RequestMapping("/apply/ajax/getTestParams")
 	@ResponseBody
 	public String applyAjaxGetTestParams(HttpServletRequest request){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"user".equals(ssoUser.get("userType")) ) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"user".equals(authInfo.getUserType()) ) {
 			request.setAttribute("errorMessage", "用户不是一般用户不用查看申请管理");
 			return null;
 		}
-		String uname = (String) ssoUser.get("uname");
+		String uname = authInfo.getLoginName();
 		
 		StringBuffer sBuffer = new StringBuffer();
 		sBuffer.append("批量获取数据传参样例，\n");
@@ -225,13 +283,22 @@ public class applyAdminController {
 	 */
 	@RequestMapping("/apply4system")
 	public String apply4system(HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if  (!"system".equals(ssoUser.get("userType"))){
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if  (!"system".equals(authInfo.getUserType())){
 			request.setAttribute("errorMessage", "用户类型不能访问");
 			return "index1";
 		}
 		if (null == request.getSession().getAttribute("originSystemInfo") ) {
-			OriginSystemInfo originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemName(ssoUser.get("uname").toString());
+			OriginSystemInfo originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemId(authInfo.getUserId());
 			request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 		}
 		return "apply_management/apply4system";
@@ -239,7 +306,16 @@ public class applyAdminController {
 	
 	@RequestMapping("/apply4system_form")
 	public String apply4systemForm(String sysName,String sysPassword,String systemUrl,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		if ("null".equals(sysName)) {
 			request.setAttribute("errorMessage", "系统中文名出错");
 		} else if ("null".equals(sysPassword)) {
@@ -247,13 +323,14 @@ public class applyAdminController {
 		} else {
 			OriginSystemInfo originSystemInfo;
 			if (null == request.getSession().getAttribute("originSystemInfo") ) {
-				originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemName(ssoUser.get("uname").toString());
+				//通过单点登录名获取系统
+				originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemId(authInfo.getUserId());
 				if (null == originSystemInfo) {
 					originSystemInfo = new OriginSystemInfo();
-					originSystemInfo.setOriginSystemId(IDUtil.getUUID());
-					originSystemInfo.setOriginSystemName(ssoUser.get("uname").toString());
+					originSystemInfo.setOriginSystemId(authInfo.getUserId());
+					originSystemInfo.setOriginSystemName(authInfo.getLoginName());
 					originSystemInfo.setOriginSystemCname(sysName);
-					originSystemInfo.setUsername(ssoUser.get("uname").toString());
+					originSystemInfo.setUsername(authInfo.getLoginName());
 					originSystemInfo.setPassword(sysPassword);
 					originSystemInfo.setOriginSystemUrl(systemUrl);
 				}
@@ -265,7 +342,7 @@ public class applyAdminController {
 				originSystemInfo.setOriginSystemUrl(systemUrl);
 			}
 			modelDataIntf.saveOriginSystem(originSystemInfo);
-			request.setAttribute("infoMessage", "系统接入用户信息更新完成");
+			request.setAttribute("infoMessage", "系统接入用户信息更新完成".concat(new Date().toString()));
 		}
 		return "apply_management/apply4system";
 	}

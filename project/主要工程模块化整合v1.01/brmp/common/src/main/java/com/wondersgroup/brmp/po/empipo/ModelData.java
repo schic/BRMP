@@ -22,6 +22,8 @@ public class ModelData {
 	private int status;//状态  0:停用 1:启用
 	private int auditStatus;//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 	
+	private long dataNum;//当前数据记录数
+	
 	public String getOriginSystemId() {
 		return originSystemId;
 	}
@@ -75,6 +77,12 @@ public class ModelData {
 	}
 	public void setAuditStatus(int auditStatus) {
 		this.auditStatus = auditStatus;
+	}
+	public long getDataNum() {
+		return dataNum;
+	}
+	public void setDataNum(long dataNum) {
+		this.dataNum = dataNum;
 	}
 	
 	

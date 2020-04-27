@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="com.wondersgroup.base.login.model.AuthInfo"%>  
-<%
-AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgroup.base.login.model.AuthConstants.SESSION_USER_CURRENT_INFO);
-%>  
 <div class="headBox">
     <img class="headBoxBg" src="static/common/img/myhtml_imgs/indexTopBg.png" alt="">
     <div class="headTop clearfix">
         <div class="topLeft">
             <img src="static/common/img/myhtml_imgs/indexHeadImg1.png" alt="">
-            <label for="">四川省基础资源管理及服务平台<span id="errorMessage" style="font-size:25px"><p><font color="red">${ requestScope.errorMessage}</font></p></span></label>
+            <label for="">卫生资源管理及服务平台<span id="errorMessage" style="font-size:25px"><p><font color="red">${ requestScope.errorMessage}</font></p></span></label>
         </div>
         <div class="topRight clearfix">
             <div class="login">
                 <img src="static/common/img/myhtml_imgs/indexHeadImg7.png" alt="">
                 <span>
-                	<a onclick="longinUser('<%=authInfo.getLoginName()%>')" class="page-scroll">欢迎登录 <%=authInfo.getPersonName()%></a>
+                	<a onclick="longinUser('${sessionScope["wondersgroup.qyws.curuser"].loginName}')" class="page-scroll">欢迎登录 ${sessionScope["wondersgroup.qyws.curuser"].personName}</a>
                 </span>
             </div>
             <div class="det">

@@ -79,9 +79,10 @@ CREATE TABLE brmp_conf_origin_system_model (
   MODEL_COL_TYPE number(3),
   MODEL_COL_LENTH number(11),
   MODEL_COL_DECIMAL_LENTH number(11),
-  DISPLAY_ORDER number(3)
+  DISPLAY_ORDER number(3),
+  PK number(1)
 );
-COMMENT ON TABLE brmp_conf_origin_system_model IS '卫生资源整合接入系统建立模型的配置表';
+COMMENT ON TABLE brmp_conf_origin_system_model IS '卫生资源整合接入系统建立模型的配置明细表';
 COMMENT ON COLUMN brmp_conf_origin_system_model.ORIGIN_SYSTEM_ID is '源系统名称编号';
 COMMENT ON COLUMN brmp_conf_origin_system_model.MODEL_ID is '源系统建立的模型编号';
 COMMENT ON COLUMN brmp_conf_origin_system_model.MODEl_COL_NAME is '模型提供的字段';
@@ -90,6 +91,7 @@ COMMENT ON COLUMN brmp_conf_origin_system_model.MODEL_COL_TYPE is '字段类型 
 COMMENT ON COLUMN brmp_conf_origin_system_model.MODEL_COL_LENTH is '字段长度';
 COMMENT ON COLUMN brmp_conf_origin_system_model.MODEL_COL_DECIMAL_LENTH is '小数长度';
 COMMENT ON COLUMN brmp_conf_origin_system_model.DISPLAY_ORDER is '展示顺序';
+COMMENT ON COLUMN brmp_conf_origin_system_model.PK is '是否主键 0否  1是';
 
 
 -- ----------------------------
@@ -105,7 +107,8 @@ CREATE TABLE brmp_conf_origin_system_modelbase (
   MODEL_UPDETE_TIME date,
   MODEL_DESCRIPTION varchar2(4000),
   STATUS number(1),
-  AUDIT_STATUS number(1)
+  AUDIT_STATUS number(1),
+  DATA_NUM number(12)
 );
 COMMENT ON TABLE brmp_conf_origin_system_modelbase IS '卫生资源整合接入系统建立模型的配置表';
 COMMENT ON COLUMN brmp_conf_origin_system_modelbase.ORIGIN_SYSTEM_ID is '源系统名称编号';
@@ -117,6 +120,7 @@ COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_UPDETE_TIME is '模型
 COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_DESCRIPTION is '模型描述';
 COMMENT ON COLUMN brmp_conf_origin_system_modelbase.STATUS is '状态  0:停用 1:启用';
 COMMENT ON COLUMN brmp_conf_origin_system_modelbase.AUDIT_STATUS is '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过';
+COMMENT ON COLUMN brmp_conf_origin_system_modelbase.DATA_NUM is '当前数据记录数';
 
 -- ----------------------------
 -- Table structure for brmp_dic_datatype

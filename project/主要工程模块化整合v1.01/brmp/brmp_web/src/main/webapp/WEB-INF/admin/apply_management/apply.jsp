@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="com.wondersgroup.base.login.model.AuthInfo"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
-AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgroup.base.login.model.AuthConstants.SESSION_USER_CURRENT_INFO);
 %> 
 <!DOCTYPE html>   
 <!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
@@ -20,7 +18,7 @@ AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgrou
 
 
 </head>
-<body onload="setInit('<%=authInfo.getUserType()%>')">
+<body onload="setInit('${sessionScope["wondersgroup.qyws.curuser"].userType}')">
 
 	<!-- 页面通用头部引用 -->
 	<%@ include file="../common/head_myhtml.jsp" %>

@@ -29,7 +29,7 @@ AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgrou
     <div class="headTop clearfix">
         <div class="topLeft">
             <img src="static/common/img/myhtml_imgs/indexHeadImg1.png" alt="">
-            <label for="">四川省基础资源管理及服务平台<span id="errorMessage" style="font-size:25px"><p><font color="red">${ requestScope.errorMessage}</font></p></span></label>
+            <label for="">卫生资源管理及服务平台<span id="errorMessage" style="font-size:25px"><p><font color="red">${ requestScope.errorMessage}</font></p></span></label>
         </div>
         <div class="topRight clearfix">
             <div class="login">

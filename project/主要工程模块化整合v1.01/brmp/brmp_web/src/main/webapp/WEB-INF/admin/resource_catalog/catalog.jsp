@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="static/common/css/myhtml_css/input.css" />
 
 </head>
-<body onload="init('${sessionScope.ssoUser.userType}')">
+<body onload="init('${sessionScope["wondersgroup.qyws.curuser"].userType}')">
 <section>
 	<!-- 页面通用头部引用 -->
 	<%@ include file="../common/head_myhtml.jsp" %>

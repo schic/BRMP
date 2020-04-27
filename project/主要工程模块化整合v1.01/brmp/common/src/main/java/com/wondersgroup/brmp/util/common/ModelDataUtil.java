@@ -52,8 +52,8 @@ public class ModelDataUtil {
 	 * @param dataTypes
 	 * @return
 	 */
-	public static String createModelDataSql(String tableName,List<ModelDataAttribute> modelDataAttributes,Map<Integer, String> dataTypeMap){
-		
+	public static String createModelDataSql(String tableName,List<ModelDataAttribute> modelDataAttributes,Map<Integer, String> dataTypeMap, String databaseClass){
+
 		StringBuffer sBuffer = new StringBuffer();
 		sBuffer.append("CREATE TABLE ");
 		sBuffer.append(tableName);
@@ -62,7 +62,11 @@ public class ModelDataUtil {
 		if (tableName.contains("_temp")){//temp表增加zybz字段用于计算作业插入到正式库的
 			sBuffer.append("ZYBZ ");//作业标志
 			sBuffer.append(dataTypeMap.get(1));//int型
-			sBuffer.append("(1) DEFAULT '0'  COMMENT '作业标志,用于temp表', ");
+			sBuffer.append("(1) DEFAULT '0'  ");
+			if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+				sBuffer.append(" COMMENT '作业标志,用于temp表' ");
+			}
+			sBuffer.append(",");
 		}
 		
 		
@@ -79,9 +83,12 @@ public class ModelDataUtil {
 				}
 				sBuffer.append(") ");
 			}
-			sBuffer.append(" COMMENT '");
-			sBuffer.append(modelDataAttributes.get(i).getModelColDisplayName());
-			sBuffer.append("'");
+			
+			if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+				sBuffer.append(" COMMENT '");
+				sBuffer.append(modelDataAttributes.get(i).getModelColDisplayName());
+				sBuffer.append("'");
+			}
 			if(i != modelDataAttributes.size()-1 ){
 				sBuffer.append(",");
 			}
@@ -92,6 +99,74 @@ public class ModelDataUtil {
 		String sql = sBuffer.toString();
 		System.out.println(sql);
 		return sql;
+	}
+	
+	/**
+	 * 根据建立的模型生成扩展表建表语句
+	 * @param tableName
+	 * @param modelDataAttributes
+	 * @param dataTypeMap
+	 * @param jdbcDriverClassName
+	 * @return
+	 */
+	public static String createExTabelSql(String tableName, List<ModelDataAttribute> modelDataAttributes,
+			Map<Integer, String> dataTypeMap, String databaseClass) {
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append("CREATE TABLE ");
+		sBuffer.append(tableName);
+		sBuffer.append(" ( ");
+		
+		for(int i=0;i<modelDataAttributes.size();i++){
+			if (modelDataAttributes.get(i).getPk()==1) {//扩展表只建立主键字段确定唯一
+				sBuffer.append(modelDataAttributes.get(i).getModelColName());
+				sBuffer.append(" ");
+				sBuffer.append(dataTypeMap.get(modelDataAttributes.get(i).getModelColType()));
+				if(modelDataAttributes.get(i).getModelColLenth()!=-1 ){
+					sBuffer.append("(");
+					sBuffer.append(modelDataAttributes.get(i).getModelColLenth());
+					if (modelDataAttributes.get(i).getModelColDecimalLenth()!=-1) {
+						sBuffer.append(",");
+						sBuffer.append(modelDataAttributes.get(i).getModelColDecimalLenth());
+					}
+					sBuffer.append(") ");
+				}
+				
+				if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+					sBuffer.append(" COMMENT '");
+					sBuffer.append(modelDataAttributes.get(i).getModelColDisplayName());
+					sBuffer.append("'");
+				}
+				sBuffer.append(",");
+				
+			}
+			
+			
+		}
+		
+		/*
+		sBuffer.append("GIRID ");//证照id
+		sBuffer.append(dataTypeMap.get(0));//String型
+		sBuffer.append("(256) DEFAULT '0'  ");
+		if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+			sBuffer.append(" COMMENT '证照id,保存大数据中心反给平台数据的唯一id' ");
+		}
+		sBuffer.append(",");
+		*/
+		
+		sBuffer.append("CGBZ_1 ");//成功标志,两网(互联网区和政务网区)数据交换的成功标志
+		sBuffer.append(dataTypeMap.get(1));//int型
+		sBuffer.append("(1) DEFAULT '0'  ");
+		if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+			sBuffer.append(" COMMENT '判断数据是否上传完成,0未上传,1上传完成' ");
+		}
+		//sBuffer.append(",");//最后一个字段不加","
+		
+		sBuffer.append(" ) ");
+		
+		String sql = sBuffer.toString();
+		System.out.println(sql);
+		return sql;
+		
 	}
 	
 	/**

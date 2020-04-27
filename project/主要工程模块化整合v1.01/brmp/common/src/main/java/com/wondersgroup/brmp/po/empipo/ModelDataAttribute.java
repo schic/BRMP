@@ -1,6 +1,5 @@
 package com.wondersgroup.brmp.po.empipo;
 
-import com.wondersgroup.brmp.util.anotation.Column;
 import com.wondersgroup.brmp.util.anotation.Table;
 
 /**
@@ -19,7 +18,6 @@ public class ModelDataAttribute {
 	private int modelColDecimalLenth;//小数长度(用于有小数的字段)
 	private int displayOrder;//页面展示顺序
 	
-	@Column(name="")
 	private int pk;//是否源系统主键 (0否 1是)
 	
 	public String getOriginSystemId() {

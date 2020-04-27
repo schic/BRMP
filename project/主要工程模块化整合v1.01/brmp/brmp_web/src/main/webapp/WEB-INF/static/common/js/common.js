@@ -33,6 +33,7 @@ function trim(str){
  * 通用页面的js
  **************************************************************/
 function longinUser(userName){
+	//alert(userName);
 	if (userName) {
 		$.messager.confirm('注销','是否要注销该用户?',function(r){
 			if(r){

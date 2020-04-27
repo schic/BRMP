@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.wondersgroup.base.login.model.AuthInfo;
+import com.wondersgroup.base.login.service.AuthService;
+import com.wondersgroup.base.login.util.SessionUtil;
 import com.wondersgroup.brmp.dao.daoutil.DaoConfResource;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
@@ -22,7 +25,6 @@ import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
 import com.wondersgroup.brmp.po.empipo.OriginSystemInfo;
 import com.wondersgroup.brmp.service.intf.ModelDataIntf;
 import com.wondersgroup.brmp.util.cipher.IDUtil;
-import com.wondersgroup.brmp.util.ssoutil.SsoUtil;
 
 @Controller
 @RequestMapping("/model_admin")
@@ -30,19 +32,30 @@ public class ModelAdminController {
 	
 	@Autowired ModelDataIntf modelDataIntf;
 	
+	@Autowired AuthService authService;
+	
 	@Autowired DaoConfResource daoConfResource;
 	
 	@RequestMapping("/datatype")
 	public String dataType(HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		//Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
-		if ("user".equals(ssoUser.get("userType"))) {
+		if ("user".equals(authInfo.getUserType())) {
 			request.setAttribute("errorMessage", "一般用户不能访问数据模型管理");//返给页面错误信息
 			return "index1";
-		} else if ("system".equals(ssoUser.get("userType"))) {
+		} else if ("system".equals(authInfo.getUserType())) {
 			OriginSystemInfo originSystemInfo = null;
 			if (null == request.getSession().getAttribute("originSystemInfo") ) {
-				originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemName(ssoUser.get("uname").toString());
+				originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemId(authInfo.getUserId());
 				request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 			} else {
 				originSystemInfo = (OriginSystemInfo) request.getSession().getAttribute("originSystemInfo");
@@ -59,9 +72,22 @@ public class ModelAdminController {
 	@RequestMapping("/datatype/ajax/querySelect")
 	@ResponseBody
 	public List<ModelData> dataTypeAjaxQuerySelect(String beginDate,String endDate,String status,String auditStatus,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		//Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		if (null == request.getSession().getAttribute("originSystemInfo") ) {
-			OriginSystemInfo originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemName(ssoUser.get("uname").toString());
+			String originSystemId = authInfo.getUserId();
+			if ("admin".equals(authInfo.getUserType())){
+				originSystemId = "1";//管理员admin默认为"1"
+			}
+			OriginSystemInfo originSystemInfo = modelDataIntf.queryOriginSystemByOriginSystemId(originSystemId);
 			request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 		}
 		OriginSystemInfo originSystemInfo = (OriginSystemInfo) request.getSession().getAttribute("originSystemInfo");
@@ -178,8 +204,17 @@ public class ModelAdminController {
 	@RequestMapping("/datatype/ajax/auditReject")
 	@ResponseBody
 	public String dataTypeAjaxAuditReject(String modelId,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"admin".equals(ssoUser.get("userType"))) {
+		//Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"admin".equals(authInfo.getUserType())) {
 			return "不是系统管理员不能审核";
 		}
 		return modelDataIntf.setAudit(modelId,2);
@@ -188,8 +223,17 @@ public class ModelAdminController {
 	@RequestMapping("/datatype/ajax/auditPass")
 	@ResponseBody
 	public String dataTypeAjaxAuditPass(String modelId,HttpServletRequest request,HttpServletResponse response){
-		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
-		if (!"admin".equals(ssoUser.get("userType"))) {
+//		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
+		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
+		if (null == authInfo.getUserType()){
+			authInfo.setUserType(authService.getUserType(authInfo.getUserId()));
+			try {
+				SessionUtil.setCurrAuthInfo(request, authInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (!"admin".equals(authInfo.getUserType())) {
 			return "不是系统管理员不能审核";
 		}
 		String msg = modelDataIntf.createOfficialTable(modelId);//审核通过在数据库建立正式表

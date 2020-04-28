@@ -21,10 +21,12 @@ import com.wondersgroup.brmp.util.webserviceutil.ResponsePoMsg;
 /**
  * 接收建立好的对应模型的数据
  */
-@Service("model")//名称为接口方法名称，不能随便修改;
-public class BrmpCenterSaveModel implements BrmpCenterService4ws {
+@Service("SynchronousData")//名称为接口方法名称，不能随便修改;
+public class BrmpSynchronousData implements BrmpCenterService4ws {
 
 	@Autowired CommonDaoIntf commonDaoIntf;
+	
+	//@Autowired ModelDataDaoIntf modelDataDaoIntf;
 	
 	@Override
 	public ResponsePo parseWs(String params, String systemId, String modelName) {
@@ -34,7 +36,7 @@ public class BrmpCenterSaveModel implements BrmpCenterService4ws {
 		if (null == modelData){
 			return ResponsePoMsg.response2Obj(ResponseHead.Error, "ModelType: 未找到对应的模型");
 		}
-		if (!systemId.equals(modelData.getOriginSystemId())){
+		if (!systemId.equals("1")){//不是管理员系统接口不能调用本接口
 			return ResponsePoMsg.response2Obj(ResponseHead.Error, "在当前系统,未找到对应的模型");
 		}
 		if (modelData.getAuditStatus() != 9 && modelData.getAuditStatus() != 0 ){//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
@@ -64,7 +66,7 @@ public class BrmpCenterSaveModel implements BrmpCenterService4ws {
 			return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的json格式出错——".concat(e.getMessage()));
 		}
 		
-		String tableName = modelData.getModelTabName().concat("_temp");
+		String tableName = modelData.getModelTabName().concat("_change");//将河对面网络传输过来的同步数据保存到本地数据库对应模型以 _change结尾的表，剩下的步骤交给计算存储过程。
 		String msg = commonDaoIntf.saveObj(dataList4save, tableName);
 		
 		return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);

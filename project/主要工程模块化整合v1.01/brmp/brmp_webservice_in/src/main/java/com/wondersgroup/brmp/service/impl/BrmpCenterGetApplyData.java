@@ -23,7 +23,9 @@ import com.wondersgroup.brmp.util.common.CommonUtil;
 import com.wondersgroup.brmp.util.webserviceutil.ResponseHead;
 import com.wondersgroup.brmp.util.webserviceutil.ResponsePoMsg;
 
-
+/**
+ * 通过请求申请，返回给请求者需要数据。
+ */
 @Service("apply")
 public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 

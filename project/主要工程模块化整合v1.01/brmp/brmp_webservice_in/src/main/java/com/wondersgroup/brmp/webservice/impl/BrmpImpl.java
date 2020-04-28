@@ -45,7 +45,6 @@ public class BrmpImpl implements BrmpIntf {
 		try {
 			brmpCenterService4ws = applicationContext.getBean(action, BrmpCenterService4ws.class);
 		} catch (Exception e) {
-			//throw new IllegalArgumentException("不支持的服务类型：" + action);
 			return ResponsePoMsg.response2Json(ResponseHead.NoSupport, "ParamType错误erorr".concat(action));
 		}
 		ResponsePo resPo = brmpCenterService4ws.parseWs(reqPo.getParams(),verifiedPo.getOriginSystemId(),reqPo.getModelType());

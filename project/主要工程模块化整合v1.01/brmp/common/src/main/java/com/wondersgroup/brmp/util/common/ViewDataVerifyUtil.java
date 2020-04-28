@@ -9,7 +9,7 @@ import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
 
 
 /**
- * 用于验证页面数据的有效性
+ * 用于验证页面申请配置的数据的有效性
  *
  */
 public class ViewDataVerifyUtil {

@@ -17,9 +17,10 @@
   	<module>common_dao</module>
   	<module>core</module>
   	<module>brmp_web</module>
-  	
+
   	<module>common_webservice</module>
   	<module>brmp_webservice_in</module>
+  	<module>brmp_webservice_out</module>
   	
   </modules>
   

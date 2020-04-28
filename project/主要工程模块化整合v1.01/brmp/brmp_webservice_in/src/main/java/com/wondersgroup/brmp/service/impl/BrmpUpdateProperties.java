@@ -45,7 +45,8 @@ public class BrmpUpdateProperties implements BrmpCenterService4ws{
 		Class<?> clazz;
 		try {
 			//					   com.wondersgroup.brmp.po.empipo.ModelData
-			clazz = Class.forName("com.wondersgroup.brmp.po.empipo.".concat(modelName));
+//			clazz = Class.forName("com.wondersgroup.brmp.po.empipo.".concat(modelName));
+			clazz = Class.forName(modelName);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return ResponsePoMsg.response2Obj(ResponseHead.Error, "ModelType: 未找到对应的配置表类");

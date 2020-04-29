@@ -138,6 +138,13 @@ public class CommonDaoImpl implements CommonDaoIntf {
 	}
 	
 	@Override
+	public List<Map<String, Object>> selectObj(String sql) {
+		System.out.println(sql);
+		List<Map<String, Object>> objList = jdbcTemplate.queryForList(sql, new HashMap<String,Object>());
+		return objList;
+	}
+	
+	@Override
 	public <T> List<T> selectObj(Class<T> clazz, int pageNo, int pageSize) {
 		String sql = CommonSql.selectSql4Obj(clazz,pageNo,pageSize,daoConfResource.getJdbcDriverClassName());
 		System.out.println(sql);
@@ -257,6 +264,8 @@ public class CommonDaoImpl implements CommonDaoIntf {
 		}
 		return url;
 	}
+
+	
 
 	
 

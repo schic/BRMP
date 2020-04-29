@@ -47,12 +47,12 @@ COMMENT ON COLUMN brmp_apply_base.audit_status is '审核状态  1:待审核 2:�
 -- ----------------------------
 DROP TABLE IF EXISTS brmp_conf_origin_system_info;
 CREATE TABLE brmp_conf_origin_system_info (
-  ORIGIN_SYSTEM_ID varchar2(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '源系统名称编号',
-  ORIGIN_SYSTEM_NAME varchar2(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '源系统名称',
-  ORIGIN_SYSTEM_CNAME varchar2(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '源系统名称中文或别名',
-  ORIGIN_SYSTEM_URL varchar2(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入系统接口的URL',
-  USERNAME varchar2(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入系统用户名',
-  PASSWORD varchar2(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接入系统验证'
+  ORIGIN_SYSTEM_ID varchar2(32),
+  ORIGIN_SYSTEM_NAME varchar2(255),
+  ORIGIN_SYSTEM_CNAME varchar2(255),
+  ORIGIN_SYSTEM_URL varchar2(1024),
+  USERNAME varchar2(255),
+  PASSWORD varchar2(255)
 );
 COMMENT ON TABLE brmp_conf_origin_system_info IS '卫生资源整合接入系统基本信息表';
 COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_ID is '源系统名称编号';

@@ -69,7 +69,7 @@ public class Sql4WebserviceOut {
 	*/
 	public static <T> String getWaitInsert2Data(List<ModelDataAttribute> modelDataAttributes,String tableName){
 		StringBuffer sBuffer = new StringBuffer();
-		
+		//TODO 查询语句待优化
 		sBuffer.append("select ");
 		for (int i=0;i<modelDataAttributes.size();i++) {
 			ModelDataAttribute modelDataAttribute = modelDataAttributes.get(i);

@@ -78,7 +78,7 @@ CREATE TABLE `brmp_conf_origin_system_modelbase`  (
   `MODEL_UPDETE_TIME` datetime(0) NULL DEFAULT NULL COMMENT '模型更新时间',
   `MODEL_DESCRIPTION` varchar(4000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模型描述',
   `STATUS` int(1) NULL DEFAULT NULL COMMENT '状态  0:停用 1:启用',
-  `AUDIT_STATUS` int(1) NULL DEFAULT NULL COMMENT '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过'
+  `AUDIT_STATUS` int(1) NULL DEFAULT NULL COMMENT '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过',
   `DATA_NUM` int(12) NULL DEFAULT 0 COMMENT '当前数据记录数'
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '接入系统建立模型的配置表' ROW_FORMAT = Dynamic;
 

@@ -1,14 +1,18 @@
-package com.wondersgroup.brmp.quartz;
-
-import java.util.Date;
+package com.wondersgroup.brmp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wondersgroup.brmp.dao.daoutil.BrmpConfResource;
+import com.wondersgroup.brmp.quartz.QuartzReqCenter;
 import com.wondersgroup.brmp.service.intf.BrmpChangeServiceIntf;
 import com.wondersgroup.brmp.service.intf.BrmpSendPropertiesIntf;
 
-public class QuartzReqCenter {
+
+@Controller
+@RequestMapping("/")
+public class testController {
 	
 	@Autowired BrmpChangeServiceIntf brmpChangeServiceIntf;
 	
@@ -16,36 +20,35 @@ public class QuartzReqCenter {
 	
 	@Autowired BrmpConfResource brmpConfResource;
 	
-	public static boolean insertJob = false;//插入作业是否正在执行标志
-	public static byte[] lockInsertJob = new byte[0];
-	
-	void executeReqCenter(){
-		System.out.println("QuartzBigining定时任务开始");
-		System.out.println(new Date());
-		synchronized (lockInsertJob) {
-			if (insertJob){
+	@RequestMapping("/")
+	public String index(){
+		System.out.println("BRMPtestWebservice");
+		synchronized (QuartzReqCenter.lockInsertJob) {
+			if (QuartzReqCenter.insertJob){
 				System.out.println("insertJob方法正在执行，退出本次执行，is running，exit");
-				return;
+				return "index";
 			}
-			insertJob=true;
+			QuartzReqCenter.insertJob=true;
 		}
 		try {
-			
-			
+		
 			if("true".equals(brmpConfResource.getMainWebService())){
 				brmpSendPropertiesIntf.sendProperties();
 			}
 			
 			brmpChangeServiceIntf.sendModelData();
 			
+			return "index";
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "index";
 		} finally {
-			synchronized (lockInsertJob) {
-				insertJob=false;
+			synchronized (QuartzReqCenter.lockInsertJob) {
+				QuartzReqCenter.insertJob=false;
 			}
 		}
 	}
+	
 
 }

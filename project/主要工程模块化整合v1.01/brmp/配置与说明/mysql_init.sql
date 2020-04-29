@@ -45,7 +45,7 @@ CREATE TABLE `brmp_conf_origin_system_info`  (
 -- ----------------------------
 -- Records of brmp_conf_origin_system_info
 -- ----------------------------
-INSERT INTO `brmp_conf_origin_system_info` VALUES ('1', 'admin', 'BRMP中心系统', 'http://172.16.9.33:8980/brmp_ws_in/webservice/BrmpObj/reqBrmp', 'admin', 'admin');
+INSERT INTO `brmp_conf_origin_system_info` VALUES ('1', 'admin', 'BRMP中心系统', 'http://172.16.9.33:8980/brmp-webservice-in/webservice/BrmpObj/reqBrmp', 'admin', 'admin');
 
 -- ----------------------------
 -- Table structure for brmp_conf_origin_system_model

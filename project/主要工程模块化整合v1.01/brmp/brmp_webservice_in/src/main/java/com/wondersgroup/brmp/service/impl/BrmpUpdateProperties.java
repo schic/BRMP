@@ -19,7 +19,6 @@ import com.wondersgroup.brmp.util.webserviceutil.ResponsePoMsg;
 /**
  * 接收 跨网主系统的 服务请求，更新从网 数据库模型等配置表。
  * 主网系统不需要此配置
- * @param <T>
  */
 @Service("updateProperties")//名称为接口方法名称，不能随便修改;
 public class BrmpUpdateProperties implements BrmpCenterService4ws{
@@ -29,6 +28,9 @@ public class BrmpUpdateProperties implements BrmpCenterService4ws{
 	@Autowired CommonDaoIntf commonDaoIntf;
 	
 	@Autowired CreateTableBaseOnConf4Webservice createTableBaseOnConf4Webservice;
+	
+	private static boolean modelDataComplate = false;
+	private static boolean modelDataAttributeComplate = false;
 
 	@Override
 	public ResponsePo parseWs(String params, String systemId, String modelName) {
@@ -61,7 +63,16 @@ public class BrmpUpdateProperties implements BrmpCenterService4ws{
 		String msg = commonDaoIntf.saveObj(objects, table.name());
 		
 		if("数据保存完成save_complates".equals(msg)){//配置更新完成后，判断是否需要新建表，并完成建表。
-			createTableBaseOnConf4Webservice.createTable();
+			if ("com.wondersgroup.brmp.po.empipo.ModelData".equals(modelName) ) {
+				modelDataComplate = true;
+			} else if ("com.wondersgroup.brmp.po.empipo.ModelDataAttribute".equals(modelName) ) {
+				modelDataAttributeComplate = true;
+			}
+			if(modelDataComplate && modelDataAttributeComplate){
+				createTableBaseOnConf4Webservice.createTable();
+				modelDataComplate = false;
+				modelDataAttributeComplate = false;
+			}	
 		}
 		return ResponsePoMsg.response2Obj(ResponseHead.Completenss, "更新完成");
 	}

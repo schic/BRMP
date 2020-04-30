@@ -548,7 +548,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
         PROCEDURE P_CEN_BRMP_AFTER is
          col_sql      Varchar2(4000) := ''; --动态sql保存
          --script       Clob;
-         --pkno         int := 0; --pk字段循环数
+         --data_num         number := 0; --数据量
          begin
            
          For table_list In ( select m.model_name as table_cname,
@@ -562,9 +562,8 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
            
               /*
                * 整理正式表重建表索引
-               *
-               * if to_char(sysdate,'dd') = 15 then
                */
+             if to_char(sysdate,'dd') = 15 then  
              col_sql := 'analyze table cen_brmp.' || table_list.TABLE_NAME || ' compute statistics' ;
              execute immediate col_sql;
              col_sql := 'analyze table cen_brmp.' || table_list.TABLE_NAME || '_ex compute statistics' ;
@@ -579,8 +578,17 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
               col_sql := 'ALTER INDEX ' || STR3.OWNER || '.' || STR3.INDEX_NAME || ' REBUILD' ;
               execute immediate col_sql;
               END LOOP;
-                 
-         
+              END IF;   
+              
+              /**
+              * 更新正式表数据量字段，统计数据量
+              */
+              
+              col_sql :='update cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MDBASE t set t.DATA_NUM=(select count(1) from '||table_list.table_name||') where t.model_tab_name = '''||table_list.table_name||'''';
+              -- dbms_output.put_line(col_sql);
+              execute immediate col_sql;
+              commit;
+              
            
          Exception
                  When Others Then
@@ -612,10 +620,8 @@ begin
 
        CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_TEMP;
 
-
-       if to_char(sysdate,'dd') = 15 then
-          CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_AFTER;
-       end if;
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_AFTER;
+       
 
 Exception
   When Others Then

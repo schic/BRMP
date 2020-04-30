@@ -65,7 +65,7 @@ public class BrmpUpdateProperties implements BrmpCenterService4ws{
 		if("数据保存完成save_complates".equals(msg)){//配置更新完成后，判断是否需要新建表，并完成建表。
 			if ("com.wondersgroup.brmp.po.empipo.ModelData".equals(modelName) ) {
 				modelDataComplate = true;
-			} else if ("com.wondersgroup.brmp.po.empipo.ModelDataAttribute".equals(modelName) ) {
+			} else if (modelDataComplate && "com.wondersgroup.brmp.po.empipo.ModelDataAttribute".equals(modelName) ) {
 				modelDataAttributeComplate = true;
 			}
 			if(modelDataComplate && modelDataAttributeComplate){

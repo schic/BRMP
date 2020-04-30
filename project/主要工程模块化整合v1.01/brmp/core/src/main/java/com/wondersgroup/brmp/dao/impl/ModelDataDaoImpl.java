@@ -92,7 +92,7 @@ public class ModelDataDaoImpl implements ModelDataDaoIntf {
 	
 	@Override
 	public String insertModelData(List<ModelDataAttribute> modelDataAttributes, ModelData modelData) throws Exception {
-		String insertModelDataSql = CommonSql.insertSql(ModelData.class, "brmp_conf_origin_system_modelbase");
+		String insertModelDataSql = CommonSql.insertSql(ModelData.class, "brmp_conf_origin_system_mdbase");
 		System.out.println(insertModelDataSql);
 		ParamMapUtil.setNull(modelData);
 		jdbcTemplate.update(insertModelDataSql, ParamMapUtil.getParamMap(modelData));

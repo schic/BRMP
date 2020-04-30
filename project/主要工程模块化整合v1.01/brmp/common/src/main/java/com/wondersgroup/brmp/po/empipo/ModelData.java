@@ -7,9 +7,9 @@ import com.wondersgroup.brmp.util.anotation.Table;
 /**
  * 模型基本
  * 
- * 表名：brmp_conf_origin_system_modelbase
+ * 表名：brmp_conf_origin_system_mdbase
  */
-@Table(name="brmp_conf_origin_system_modelbase")
+@Table(name="brmp_conf_origin_system_mdbase")
 public class ModelData {
 	
 	private String originSystemId;//源系统名称编号

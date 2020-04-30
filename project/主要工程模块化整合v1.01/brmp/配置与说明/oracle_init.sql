@@ -95,10 +95,10 @@ COMMENT ON COLUMN brmp_conf_origin_system_model.PK is '是否主键 0否  1是';
 
 
 -- ----------------------------
--- Table structure for brmp_conf_origin_system_modelbase
+-- Table structure for brmp_conf_origin_system_mdbase
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_conf_origin_system_modelbase;
-CREATE TABLE brmp_conf_origin_system_modelbase (
+DROP TABLE IF EXISTS brmp_conf_origin_system_mdbase;
+CREATE TABLE brmp_conf_origin_system_mdbase (
   ORIGIN_SYSTEM_ID varchar2(32),
   MODEL_ID varchar2(32),
   MODEL_NAME varchar2(255),
@@ -110,17 +110,17 @@ CREATE TABLE brmp_conf_origin_system_modelbase (
   AUDIT_STATUS number(1),
   DATA_NUM number(12)
 );
-COMMENT ON TABLE brmp_conf_origin_system_modelbase IS '卫生资源整合接入系统建立模型的配置表';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.ORIGIN_SYSTEM_ID is '源系统名称编号';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_ID is '源系统建立的模型编号';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_NAME is '源系统名称编号';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_TAB_NAME is '源系统建立的模型表名';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_CREATE_TIME is '模型创建时间';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_UPDETE_TIME is '模型更新时间';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.MODEL_DESCRIPTION is '模型描述';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.STATUS is '状态  0:停用 1:启用';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.AUDIT_STATUS is '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过';
-COMMENT ON COLUMN brmp_conf_origin_system_modelbase.DATA_NUM is '当前数据记录数';
+COMMENT ON TABLE brmp_conf_origin_system_mdbase IS '卫生资源整合接入系统建立模型的配置表';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.ORIGIN_SYSTEM_ID is '源系统名称编号';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_ID is '源系统建立的模型编号';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_NAME is '源系统名称编号';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_TAB_NAME is '源系统建立的模型表名';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_CREATE_TIME is '模型创建时间';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_UPDETE_TIME is '模型更新时间';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.MODEL_DESCRIPTION is '模型描述';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.STATUS is '状态  0:停用 1:启用';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.AUDIT_STATUS is '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过';
+COMMENT ON COLUMN brmp_conf_origin_system_mdbase.DATA_NUM is '当前数据记录数';
 
 -- ----------------------------
 -- Table structure for brmp_dic_datatype
@@ -145,3 +145,6 @@ INSERT INTO brmp_dic_datatype VALUES (2, 'number', 'float');
 INSERT INTO brmp_dic_datatype VALUES (3, 'date', 'Date');
 INSERT INTO brmp_dic_datatype VALUES (4, 'number', 'long');
 INSERT INTO brmp_dic_datatype VALUES (5, 'number', 'double');
+
+
+commit;

@@ -66,10 +66,10 @@ CREATE TABLE `brmp_conf_origin_system_model`  (
 
 
 -- ----------------------------
--- Table structure for brmp_conf_origin_system_modelbase
+-- Table structure for brmp_conf_origin_system_mdbase
 -- ----------------------------
-DROP TABLE IF EXISTS `brmp_conf_origin_system_modelbase`;
-CREATE TABLE `brmp_conf_origin_system_modelbase`  (
+DROP TABLE IF EXISTS `brmp_conf_origin_system_mdbase`;
+CREATE TABLE `brmp_conf_origin_system_mdbase`  (
   `ORIGIN_SYSTEM_ID` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '源系统名称编号',
   `MODEL_ID` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '源系统建立的模型编号',
   `MODEL_NAME` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '源系统建立的模型名称',

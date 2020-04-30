@@ -324,7 +324,7 @@ public class ModelDataImpl implements ModelDataIntf {
 		if (0==modelData.getAuditStatus()){
 			modelData.setAuditStatus(1);//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 			modelData.setModelUpdeteTime(new Date());
-			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", "modelId");
+			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_mdbase", "modelId");
 			//modelDataDaoIntf.updateModelData(modelData);
 		}
 		return "提交审核完成";
@@ -396,7 +396,7 @@ public class ModelDataImpl implements ModelDataIntf {
 		} else if (1 == modelData.getAuditStatus()) {
 			modelData.setAuditStatus(i);//审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过
 			modelData.setModelUpdeteTime(new Date());
-			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_modelbase", "modelId");
+			commonDaoIntf.updateObj(modelData, "brmp_conf_origin_system_mdbase", "modelId");
 		}
 		return "审核完成";
 		

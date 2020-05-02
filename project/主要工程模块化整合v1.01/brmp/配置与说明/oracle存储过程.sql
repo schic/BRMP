@@ -31,11 +31,11 @@ CREATE OR REPLACE PACKAGE S_PKG_EXEBRMPJOB as
        /*资源管理作业前置工作*/
        PROCEDURE P_CEN_BRMP_BEGIN;
        /*资源管理更新对面网络传入来的数据去重进入主题库*/
-       PROCEDURE P_CEN_BRMP_CHANGE;
+       PROCEDURE P_CEN_BRMP_CHANGE(DATANUM_TYPE IN varchar2);
        /*资源管理将临时表的数据去重传入主题库*/
-       PROCEDURE P_CEN_BRMP_TEMP;
+       PROCEDURE P_CEN_BRMP_TEMP(DATANUM_TYPE IN varchar2);
        /*资源管理作业后置工作*/
-       PROCEDURE P_CEN_BRMP_AFTER;
+       PROCEDURE P_CEN_BRMP_AFTER(DATANUM_TYPE IN varchar2);
        
        
 END S_PKG_EXEBRMPJOB;
@@ -169,7 +169,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
            
        END P_CEN_BRMP_BEGIN;
 
-       PROCEDURE P_CEN_BRMP_CHANGE is
+       PROCEDURE P_CEN_BRMP_CHANGE(DATANUM_TYPE IN varchar2) is
           col_sql      Varchar2(4000) := ''; --动态sql保存
           --cols_str     Varchar2(4000) := ''; --字段名称拼装
           --i_total      Number := 0; --插入成功后影响的数据条数
@@ -188,7 +188,10 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
                                 (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id) as col,
                                 (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id and md.pk=1 ) as pk
                          from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MDBASE m
-                         where m.status = 1 and m.audit_status = 9 )
+                         where m.status = 1 and m.audit_status = 9 
+                         and ( 'S'=DATANUM_TYPE and m.data_num<5000000 ) /*  S = 小于5百万数据量小表*/
+                         or ('M'=DATANUM_TYPE and m.data_num>5000000) /*  M = 大于5百万数据量表*/
+                         )
           Loop
           begin
 
@@ -330,11 +333,12 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
             --dbms_output.put_line(script);
             execute immediate script;
 
-
+            
            --将插入成功的作业标志修改为 2
            col_sql := 'update cen_brmp.'|| table_list.table_name || '_CHANGE set ZYBZ= 2 where ZYBZ=1';
           -- dbms_output.put_line(col_sql);
            execute immediate col_sql;
+           /*长事务最后提交*/
            commit;
 
 
@@ -360,7 +364,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
        
        
 
-       PROCEDURE P_CEN_BRMP_TEMP is
+       PROCEDURE P_CEN_BRMP_TEMP(DATANUM_TYPE IN varchar2) is
          col_sql      Varchar2(4000) := ''; --动态sql保存
          --cols_str     Varchar2(4000) := ''; --字段名称拼装
          --i_total      Number := 0; --插入成功后影响的数据条数
@@ -379,7 +383,10 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
                                       (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id) as col,
                                       (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id and md.pk=1 ) as pk
                                from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MDBASE m
-                               where m.status = 1 and m.audit_status = 9 )
+                               where m.status = 1 and m.audit_status = 9 
+                               and ( 'S'=DATANUM_TYPE and m.data_num<5000000 ) /*  S = 小于5百万数据量小表*/
+                               or ('M'=DATANUM_TYPE and m.data_num>5000000) /*  M = 大于5百万数据量表*/
+                              )
            Loop
                begin
 
@@ -522,6 +529,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
                  col_sql := 'update cen_brmp.'|| table_list.table_name || '_TEMP set ZYBZ= 2 where ZYBZ=1';
                 -- dbms_output.put_line(col_sql);
                  execute immediate col_sql;
+                 /*长事物最后提交*/
                  commit;
 
 
@@ -545,7 +553,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
 
         end P_CEN_BRMP_TEMP;
         
-        PROCEDURE P_CEN_BRMP_AFTER is
+        PROCEDURE P_CEN_BRMP_AFTER(DATANUM_TYPE IN varchar2) is
          col_sql      Varchar2(4000) := ''; --动态sql保存
          --script       Clob;
          --data_num         number := 0; --数据量
@@ -556,7 +564,10 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
                                       (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id) as col,
                                       (select wm_concat(md.model_col_name) from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MODEL md where md.model_id = m.model_id and md.pk=1 ) as pk
                                from cen_brmp.BRMP_CONF_ORIGIN_SYSTEM_MDBASE m
-                               where m.status = 1 and m.audit_status = 9 )
+                               where m.status = 1 and m.audit_status = 9 
+                               and ( 'S'=DATANUM_TYPE and m.data_num<5000000 ) /*  S = 小于5百万数据量小表*/
+                               or ('M'=DATANUM_TYPE and m.data_num>5000000) /*  M = 大于5百万数据量表*/
+                               )
          Loop
          BEGIN
            
@@ -604,6 +615,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
 
 end S_PKG_EXEBRMPJOB;
 
+
 /************************************************
 *
 *  创建 执行存储过程
@@ -614,13 +626,24 @@ CREATE OR REPLACE PROCEDURE PRO_BRMP_SCHEDUL AUTHID CURRENT_USER is
 
 begin
 
+       /*前置任务执行，并更新作业标志*/
        CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_BEGIN;
 
-       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_CHANGE;
+       /*执行5百万数据量以下的小表从change表插入正式表*/
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_CHANGE('S');
 
-       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_TEMP;
+       /*执行5百万数据量以下的小表从temp表插入正式表*/
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_TEMP('S');
+       
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_AFTER('S');
+       
+       /*执行5百万数据量以上的表从change表插入正式表*/
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_CHANGE('M');
+       
+       /*执行5百万数据量以上的表从temp表插入正式表*/
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_TEMP('M');
 
-       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_AFTER;
+       CEN_BRMP.S_PKG_EXEBRMPJOB.P_CEN_BRMP_AFTER('M');
        
 
 Exception

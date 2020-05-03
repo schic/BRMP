@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
@@ -22,6 +21,7 @@ import com.wondersgroup.base.login.dao.MenuDao;
 import com.wondersgroup.core.hibernate.PageRequest;
 
 
+@SuppressWarnings("deprecation")
 @Component
 public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 
@@ -85,6 +85,7 @@ public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 		query.setParameter("resid", resid);
 		query.setMaxResults(1);
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		List<Map> list = query.list();
 		if(list != null && list.size()>0){
 			version = list.get(0).get("VERSION").toString();
@@ -96,6 +97,7 @@ public class MenuDaoImpl extends HibernateDaoSupport implements MenuDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String,Object> queryLogList(String resid,PageRequest pageRequest){
+		@SuppressWarnings("unused")
 		List<Object> listArr=new ArrayList<Object>();
 		
 		String countSql = "select count(1) count from TB_AUTH_RESOURCE_RELEASE_LOG t where "

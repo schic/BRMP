@@ -16,6 +16,7 @@ import java.util.List;
  * @author "王胤洪"
  * 
  */
+@SuppressWarnings("serial")
 public class AuthResource implements Serializable {
   /**
    * MENU表示菜单资源

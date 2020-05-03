@@ -121,6 +121,7 @@ public class AuthenticationFilter extends AbstractCasFilter {
 
     	
     	String requestUri = httpRequest.getRequestURI();
+		@SuppressWarnings("unused")
 		String rootPath = httpRequest.getContextPath();
 
 		boolean match = false;

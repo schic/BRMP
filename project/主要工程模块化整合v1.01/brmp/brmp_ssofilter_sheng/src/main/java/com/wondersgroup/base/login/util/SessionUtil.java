@@ -39,6 +39,7 @@ public class SessionUtil {
 	 * ---------------------------------------
 	 *
 	 */
+	@SuppressWarnings("deprecation")
 	public static void setCurrAuthInfo(HttpServletRequest request, AuthInfo authInfo) throws Exception {
 		Assert.notNull(request);
 		request.getSession(true).setAttribute(AuthConstants.SESSION_USER_CURRENT_INFO, authInfo);
@@ -61,6 +62,7 @@ public class SessionUtil {
 	 * @version 1.0
 	 * 
 	 */
+	@SuppressWarnings("deprecation")
 	public static AuthInfo getCurrAuthInfo(HttpServletRequest request) {
 		Assert.notNull(request);
 		return (AuthInfo) request.getSession(true).getAttribute(AuthConstants.SESSION_USER_CURRENT_INFO);
@@ -82,6 +84,7 @@ public class SessionUtil {
 	 * @version 1.0
 	 *
 	 */
+	@SuppressWarnings("deprecation")
 	public static void setLoginUsers(HttpServletRequest request, List<AuthInfo> authInfoList) {
 		Assert.notNull(request);
 		request.getSession(true).setAttribute(AuthConstants.SESSION_USER_INFO, authInfoList);
@@ -103,7 +106,7 @@ public class SessionUtil {
 	 * @version 1.0
 	 *
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	public static List<AuthInfo> getLoginUsers(HttpServletRequest request) {
 		Assert.notNull(request);
 		return (List<AuthInfo>) request.getSession(true).getAttribute(AuthConstants.SESSION_USER_INFO);
@@ -121,11 +124,13 @@ public class SessionUtil {
 	 * @version 1.0
 	 *
 	 */
+	@SuppressWarnings("deprecation")
 	public static void setProjectNameOrID(HttpServletRequest request, String nameOrID) {
 		Assert.notNull(request);
 		request.getSession(true).setAttribute(AuthConstants.PROJECT_NAME, nameOrID);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static String getProjectNameOrID(HttpServletRequest request) {
 		Assert.notNull(request);
 		return (String) request.getSession(true).getAttribute(AuthConstants.PROJECT_NAME);
@@ -140,6 +145,7 @@ public class SessionUtil {
 	 * @return
 	 */
 
+	@SuppressWarnings("deprecation")
 	public static void put(HttpServletRequest request, String key, Object obj) {
 		Assert.notNull(request);
 		request.getSession(true).setAttribute(key, obj);

@@ -133,6 +133,7 @@ public class CASFilter extends AbstractConfigurationFilter {
 
 
 		String requestUri = httpRequest.getRequestURI();
+		@SuppressWarnings("unused")
 		String rootPath = httpRequest.getContextPath();
 
 		this.serverName = httpRequest.getRequestURL().toString().replace(requestUri, "");

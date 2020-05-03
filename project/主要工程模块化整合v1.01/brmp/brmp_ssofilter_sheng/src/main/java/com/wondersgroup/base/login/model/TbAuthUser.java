@@ -32,21 +32,24 @@ public class TbAuthUser implements java.io.Serializable {
 	
 	
 	//用户所授予的权限
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthResources = new HashSet(0);
 	
 	//多对多，一个用户可以对应多个角色，一个角色也可以对应多个用户
 	private Set<TbAuthRole> tbAuthRoles;
 	
 	//用户创建的角色
+	@SuppressWarnings("rawtypes")
 	private Set userCreateRoles;
 	
 	public TbAuthUser() {
 		super();
 	}
 
+	@SuppressWarnings("unchecked")
 	public TbAuthUser(String userid, String username, String loginname,
 			String psw, String comments, String gender, String mobilephone,
-			String telephone, String email, Set tbAuthRoles,
+			String telephone, String email, @SuppressWarnings("rawtypes") Set tbAuthRoles,
 			TbAuthUnit tbAuthUnit, TbAuthDepartment tbAuthDepartment) {
 		super();
 		this.userid = userid;
@@ -151,11 +154,12 @@ public class TbAuthUser implements java.io.Serializable {
 		this.tbAuthDepartment = tbAuthDepartment;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthResources() {
 		return tbAuthResources;
 	}
 
-	public void setTbAuthResources(Set tbAuthResources) {
+	public void setTbAuthResources(@SuppressWarnings("rawtypes") Set tbAuthResources) {
 		this.tbAuthResources = tbAuthResources;
 	}
 
@@ -167,11 +171,12 @@ public class TbAuthUser implements java.io.Serializable {
 		this.tbAuthUnitRoot = tbAuthUnitRoot;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getUserCreateRoles() {
 		return userCreateRoles;
 	}
 
-	public void setUserCreateRoles(Set userCreateRoles) {
+	public void setUserCreateRoles(@SuppressWarnings("rawtypes") Set userCreateRoles) {
 		this.userCreateRoles = userCreateRoles;
 	}
 

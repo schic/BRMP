@@ -13,13 +13,14 @@ public class TbAuthUnitgrade implements java.io.Serializable {
 	private String gradename;
 	
 	// 一对多，一个单位等级对应多个单位信息
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthUnits = new HashSet(0);
 	
 	public TbAuthUnitgrade() {
 		super();
 	}
 
-	public TbAuthUnitgrade(String gradekey, String gradename, Set tbAuthUnits) {
+	public TbAuthUnitgrade(String gradekey, String gradename, @SuppressWarnings("rawtypes") Set tbAuthUnits) {
 		super();
 		this.gradekey = gradekey;
 		this.gradename = gradename;
@@ -42,11 +43,12 @@ public class TbAuthUnitgrade implements java.io.Serializable {
 		this.gradename = gradename;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthUnits() {
 		return tbAuthUnits;
 	}
 
-	public void setTbAuthUnits(Set tbAuthUnits) {
+	public void setTbAuthUnits(@SuppressWarnings("rawtypes") Set tbAuthUnits) {
 		this.tbAuthUnits = tbAuthUnits;
 	}
 }

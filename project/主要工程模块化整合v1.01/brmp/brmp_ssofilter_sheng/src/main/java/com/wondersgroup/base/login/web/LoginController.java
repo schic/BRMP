@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.druid.stat.TableStat.Name;
 import com.wondersgroup.base.login.filter.FilterChainProxy;
 import com.wondersgroup.base.login.model.AuthConstants;
 import com.wondersgroup.base.login.model.AuthInfo;
@@ -468,7 +467,6 @@ public class LoginController {
 		return map;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/queryLogList")
 	@ResponseBody
 	public Map<String, Object> queryLogList(HttpServletRequest request,PageRequest pageRequest,

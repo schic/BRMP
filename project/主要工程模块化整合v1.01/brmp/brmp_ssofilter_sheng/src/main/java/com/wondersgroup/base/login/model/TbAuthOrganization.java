@@ -27,6 +27,7 @@ public class TbAuthOrganization implements java.io.Serializable {
 	//节点管理员
 	private Set<TbAuthUser> tbAuthUsers = new HashSet<TbAuthUser>(0);
 	
+	@SuppressWarnings("unused")
 	private TbAuthUser tbAuthUser;//暂时只为一个节点管理员
     
 	public String getOrgid() {

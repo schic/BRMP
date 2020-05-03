@@ -111,6 +111,7 @@ public class ValidationFilter extends AbstractConfigurationFilter {
 	 */
 	private ProxyGrantingTicketStorage proxyGrantingTicketStorage = new ProxyGrantingTicketStorageImpl();
 
+	@SuppressWarnings("static-access")
 	public final void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
 		if (!isIgnoreInitConfiguration()) {
@@ -184,6 +185,7 @@ public class ValidationFilter extends AbstractConfigurationFilter {
 
 		if (proxyGrantingTicketStorageClass != null) {
 			try {
+				@SuppressWarnings("rawtypes")
 				final Class storageClass = Class.forName(proxyGrantingTicketStorageClass);
 				this.proxyGrantingTicketStorage = (ProxyGrantingTicketStorage) storageClass.newInstance();
 			} catch (final Exception e) {
@@ -299,6 +301,7 @@ public class ValidationFilter extends AbstractConfigurationFilter {
 	 * @param filterConfig the Filter Configuration object.
 	 * @return a fully constructed TicketValidator.
 	 */
+	@SuppressWarnings("unchecked")
 	protected final TicketValidator getTicketValidator(final FilterConfig filterConfig) {
 		final String allowAnyProxy = getPropertyFromInitParams(filterConfig, "acceptAnyProxy", null);
 		final String allowedProxyChains = getPropertyFromInitParams(filterConfig, "allowedProxyChains", null);
@@ -318,10 +321,13 @@ public class ValidationFilter extends AbstractConfigurationFilter {
 		validator.setProxyRetriever(new Cas20ProxyRetriever(casServerUrlPrefix, "UTF-8"));
 		validator.setRenew(parseBoolean(getPropertyFromInitParams(filterConfig, "renew", "false")));
 
+		@SuppressWarnings("rawtypes")
 		final Map additionalParameters = new HashMap();
+		@SuppressWarnings("rawtypes")
 		final List params = Arrays.asList(RESERVED_INIT_PARAMS);
 
-		for (final Enumeration e = filterConfig.getInitParameterNames(); e.hasMoreElements();) {
+		for (@SuppressWarnings("rawtypes")
+		final Enumeration e = filterConfig.getInitParameterNames(); e.hasMoreElements();) {
 			final String s = (String) e.nextElement();
 
 			if (!params.contains(s)) {

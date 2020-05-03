@@ -1,23 +1,12 @@
 package com.wondersgroup.base.login.service.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wondersgroup.base.login.dao.AuthDao;
 import com.wondersgroup.base.login.dao.VisitLogsDao;
-import com.wondersgroup.base.login.model.AuthInfo;
-import com.wondersgroup.base.login.model.AuthResource;
-import com.wondersgroup.base.login.model.ResultConstant;
-import com.wondersgroup.base.login.model.ResultVO;
 import com.wondersgroup.base.login.model.VisitLogs;
-import com.wondersgroup.base.login.service.AuthService;
 import com.wondersgroup.base.login.service.VisitLogsService;
-import com.wondersgroup.base.login.util.BaseCache;
-import com.wondersgroup.base.login.util.MD5Utils;
 
 /**
  * 

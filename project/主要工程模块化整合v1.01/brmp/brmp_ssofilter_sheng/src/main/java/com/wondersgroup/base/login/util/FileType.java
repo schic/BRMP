@@ -8,6 +8,7 @@ public class FileType {
 	public static final String PNG = "PNG";
 	public static final String GIF = "GIF";
 
+	@SuppressWarnings("serial")
 	private static final Map<String, String> types = new HashMap<String, String>() {
 		{
 			put(FileType.JPG, ".jpg");

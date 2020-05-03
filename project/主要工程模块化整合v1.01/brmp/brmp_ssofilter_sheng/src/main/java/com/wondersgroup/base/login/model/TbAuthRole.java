@@ -14,8 +14,10 @@ public class TbAuthRole implements java.io.Serializable {
 	private String isChecked;//判断角色是否已经被授权
 	
 	//多对多，一个角色对应多个菜单资源 (TB_AUTH_ROLE_RESOURCE中间表)
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthResources = new HashSet(0);
 	//多对多，一个角色对应多个用户
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthUsers = new HashSet(0);
 	
 	private TbAuthUser tbAuthUser;//创建角色用户
@@ -24,8 +26,8 @@ public class TbAuthRole implements java.io.Serializable {
 		super();
 	}
 
-	public TbAuthRole(String roleid, String rolename, Set tbAuthResources,
-			Set tbAuthUsers) {
+	public TbAuthRole(String roleid, String rolename, @SuppressWarnings("rawtypes") Set tbAuthResources,
+			@SuppressWarnings("rawtypes") Set tbAuthUsers) {
 		super();
 		this.roleid = roleid;
 		this.rolename = rolename;
@@ -49,19 +51,21 @@ public class TbAuthRole implements java.io.Serializable {
 		this.rolename = rolename;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthResources() {
 		return tbAuthResources;
 	}
 
-	public void setTbAuthResources(Set tbAuthResources) {
+	public void setTbAuthResources(@SuppressWarnings("rawtypes") Set tbAuthResources) {
 		this.tbAuthResources = tbAuthResources;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthUsers() {
 		return tbAuthUsers;
 	}
 
-	public void setTbAuthUsers(Set tbAuthUsers) {
+	public void setTbAuthUsers(@SuppressWarnings("rawtypes") Set tbAuthUsers) {
 		this.tbAuthUsers = tbAuthUsers;
 	}
 

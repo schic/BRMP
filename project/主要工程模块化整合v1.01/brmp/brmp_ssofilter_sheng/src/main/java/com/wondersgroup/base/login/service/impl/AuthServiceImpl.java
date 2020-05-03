@@ -3,7 +3,6 @@ package com.wondersgroup.base.login.service.impl;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,6 @@ import com.wondersgroup.base.login.util.BaseCache;
 import com.wondersgroup.base.login.util.ConfigManager;
 import com.wondersgroup.base.login.util.FileType;
 import com.wondersgroup.base.login.util.MD5util;
-import com.wondersgroup.base.login.util.MD5Utils;
 import com.wondersgroup.base.login.util.PathFormat;
 import com.wondersgroup.base.login.util.SessionUtil;
 import com.wondersgroup.core.ftp.service.FtpService;
@@ -62,6 +60,7 @@ public class AuthServiceImpl implements AuthService {
 	/**
 	 * 缓存工具类
 	 */
+	@SuppressWarnings("unused")
 	private BaseCache cache = new BaseCache(AuthResource.class, 120);
 
 	@Autowired
@@ -179,6 +178,7 @@ public class AuthServiceImpl implements AuthService {
 		/**
 		 * 判断访问地址是内网还是外网
 		 */
+		@SuppressWarnings("static-access")
 		boolean isInnerUrl = loginFilter.getRealCasPath(request);
 		log.info("serverName:" + request.getHeader("host") + ",int?:" + isInnerUrl);
 		String serverName = request.getHeader("host");
@@ -238,7 +238,6 @@ public class AuthServiceImpl implements AuthService {
 	 * @version 1.0
 	 *
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void setSystemize(HttpServletRequest request, AuthInfo currentAuthInfo, List<AuthResource> resourceList) {
 		SessionUtil.put(request, "user", setUser(currentAuthInfo));
@@ -284,6 +283,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public List<AuthResource> queryApp(HttpServletRequest request, String userId, String organId) {
+		@SuppressWarnings("static-access")
 		boolean isInnerUrl = loginFilter.getRealCasPath(request);
 		String serverName = request.getHeader("host");
 		if (serverName.indexOf(":") > -1) {
@@ -318,6 +318,7 @@ public class AuthServiceImpl implements AuthService {
 				fileid = this.saveBase64("PERSONPHOTO", file_name, image_data);
 			}
 			
+			@SuppressWarnings("rawtypes")
 			Iterator it = info.keySet().iterator();  
 			while(it.hasNext()) {  
 				String key = (String) it.next(); 

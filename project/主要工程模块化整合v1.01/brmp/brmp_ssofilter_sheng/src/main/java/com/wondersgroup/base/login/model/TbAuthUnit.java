@@ -40,6 +40,7 @@ public class TbAuthUnit implements java.io.Serializable {
 	//提供资源
 	private Set<TbAuthResource> tbAuthResources = new HashSet<TbAuthResource>(0);
 	
+	@SuppressWarnings("unused")
 	private String unitidString;
 
 	

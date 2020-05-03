@@ -18,6 +18,7 @@ import com.wondersgroup.base.login.model.VisitLogs;
 
 
 
+@SuppressWarnings("deprecation")
 @Component
 public class VisitLogsDaoImpl extends HibernateDaoSupport  implements VisitLogsDao {
 
@@ -33,7 +34,6 @@ public class VisitLogsDaoImpl extends HibernateDaoSupport  implements VisitLogsD
 	 * @描述：通过登录名、机构ID获取登录人信息
 	 * @see com.wondersgroup.rhip.login.dao.AuthDao#getAuthUserInfo(java.lang.String, java.lang.String)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void save(VisitLogs visitLogs) {
 		StringBuilder sql=new StringBuilder();

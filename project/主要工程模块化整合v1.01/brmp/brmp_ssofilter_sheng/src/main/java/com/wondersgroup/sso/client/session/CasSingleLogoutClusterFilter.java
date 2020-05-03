@@ -244,6 +244,7 @@ public class CasSingleLogoutClusterFilter implements Filter {
 			try {
 				CasSingleLogoutClusterFilter.LOG.debug("Attempting to send logout request {}", infoMsg);
 
+				@SuppressWarnings("unused")
 				final URL tempUrl = new URL(peerProtocol, peerHostname, peerPort, url);
 				final StringBuilder urlWithInfoSb = new StringBuilder(url.length() + 128);
 				urlWithInfoSb.append(url);

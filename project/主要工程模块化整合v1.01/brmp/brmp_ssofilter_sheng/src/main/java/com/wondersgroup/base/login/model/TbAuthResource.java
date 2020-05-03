@@ -20,8 +20,10 @@ public class TbAuthResource implements java.io.Serializable {
 	//多对一 ,多个菜单资源对应一个菜单资源
 	private TbAuthResource tbAuthResource;
 	//一对多  一个菜单资源对多个角色(TB_AUTH_ROLE_RESOURCE中间表)
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthRoles = new HashSet(0);
 	//菜单组成，父级菜单 一对多关系，一个菜单资源对应多个菜单资源
+	@SuppressWarnings("rawtypes")
 	private Set tbAuthResources = new HashSet(0);
 	
 	public TbAuthResource() {
@@ -30,8 +32,8 @@ public class TbAuthResource implements java.io.Serializable {
 
 	public TbAuthResource(String resid, TbAuthResource tbAuthResource,
 			String resname, String keyword, String url, String comments,
-			Long resLevel, String treelayer, Set tbAuthRoles,
-			Set tbAuthResources) {
+			Long resLevel, String treelayer, @SuppressWarnings("rawtypes") Set tbAuthRoles,
+			@SuppressWarnings("rawtypes") Set tbAuthResources) {
 		super();
 		this.resid = resid;
 		this.tbAuthResource = tbAuthResource;
@@ -109,19 +111,21 @@ public class TbAuthResource implements java.io.Serializable {
 		this.treelayer = treelayer;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthRoles() {
 		return tbAuthRoles;
 	}
 
-	public void setTbAuthRoles(Set tbAuthRoles) {
+	public void setTbAuthRoles(@SuppressWarnings("rawtypes") Set tbAuthRoles) {
 		this.tbAuthRoles = tbAuthRoles;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Set getTbAuthResources() {
 		return tbAuthResources;
 	}
 
-	public void setTbAuthResources(Set tbAuthResources) {
+	public void setTbAuthResources(@SuppressWarnings("rawtypes") Set tbAuthResources) {
 		this.tbAuthResources = tbAuthResources;
 	}
 }

@@ -1,26 +1,23 @@
 package org.jasig.cas.client.session;
 
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
-import java.util.Set;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jasig.cas.client.util.CommonUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.session.ExpiringSession;
 import org.springframework.session.SessionRepository;
 
+@SuppressWarnings("deprecation")
 public final class RedisBackedSessionMappingStorage implements SessionMappingStorage {
 	
 	private final Log log = LogFactory.getLog(getClass());
 	
+	@SuppressWarnings("unused")
 	private ServletContext servletContext;
 	
 	private RedisTemplate<String, String> ID_TO_SESSION_KEY_MAPPING;
@@ -84,7 +81,7 @@ public final class RedisBackedSessionMappingStorage implements SessionMappingSto
 	}
 	
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("unused")
 	private static final HttpSessionContext NOOP_SESSION_CONTEXT = new HttpSessionContext() {
 		public HttpSession getSession(String sessionId) {
 			return null;

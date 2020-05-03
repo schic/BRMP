@@ -2,11 +2,9 @@ package com.wondersgroup.base.login.dao.impl;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.wondersgroup.base.login.dao.AuthDao;
 import com.wondersgroup.base.login.model.AuthInfo;
@@ -30,6 +27,7 @@ import com.wondersgroup.base.login.model.AuthResource;
 
 
 
+@SuppressWarnings({ "deprecation"})
 @Component
 public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 
@@ -117,7 +115,6 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		//return this.find(hql);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public boolean changePassword(final String loginName, final String passWord) {
 		String hql = "update TbAuthUser us set us.psw=? where us.loginname=?";
 		int count = this.getHibernateTemplate().bulkUpdate(hql, new Object[]{passWord,loginName});
@@ -177,6 +174,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AuthInfo> getUserByLoginNameByOrgid(String loginName, String orgid) {
 		String sql = "select userId \"userId\",loginName \"loginName\",psw \"pwd\",orgId \"organId\",org_Code \"organCode\",org_Abbreviation \"organName\","
@@ -200,6 +198,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		query.setString("organId", orgId);
 		query.setString("psw", passWord);
 		query.setResultTransformer(Transformers.aliasToBean(AuthInfo.class));
+		@SuppressWarnings("rawtypes")
 		List list = query.list();
 
 		return (AuthInfo) ((list != null && list.size() > 0) ? list.get(0) : null);
@@ -233,6 +232,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		query.setString("loginname", loginName);
 		query.setString("orgid", orgId);
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings("unchecked")
 		List<Map<String, String>> list = query.list();
 
 		/****************************对菜单进行组装********************************/
@@ -324,6 +324,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		query.setString("userid", userId);
 		query.setString("orgid", organId);
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings("unchecked")
 		List<Map<String, String>> list = query.list();
 		/****************************对菜单进行组装********************************/
 		List<AuthResource> resultList = new ArrayList<AuthResource>(0);
@@ -394,6 +395,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
 		query.setString("personId", personId);
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> list = query.list();
 		if(list.size()>0){
 			return list.get(0);
@@ -407,6 +409,7 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
 		query.setString("fileid", fileid);
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> list = query.list();
 		if(list.size()>0){
 			return list.get(0);
@@ -444,7 +447,6 @@ public class AuthDaoImpl extends HibernateDaoSupport  implements AuthDao {
 	@Override
 	public String getUserType(String userId) {
 		String sql = "select roleid from cen_auth.tb_auth_user_role where userid = :userId ";
-		@SuppressWarnings("deprecation")
 		Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(sql);
 		query.setString("userId", userId);
 		@SuppressWarnings("unchecked")

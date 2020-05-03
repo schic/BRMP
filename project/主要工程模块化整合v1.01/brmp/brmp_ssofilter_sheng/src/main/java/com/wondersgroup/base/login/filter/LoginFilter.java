@@ -160,6 +160,7 @@ public class LoginFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String requestUri = httpRequest.getRequestURI().toUpperCase();
+		@SuppressWarnings("unused")
 		String rootPath = httpRequest.getContextPath();
 
 		boolean match = false;
@@ -280,11 +281,13 @@ public class LoginFilter implements Filter {
 	 *
 	 */
 	public static boolean getRealCasPath(HttpServletRequest request) {
+		@SuppressWarnings("unused")
 		String scheme = request.getScheme();
 		String serverName = request.getHeader("host");
 		if (serverName.indexOf(":") > -1) {
 			serverName = serverName.split(":")[0];
 		}
+		@SuppressWarnings("unused")
 		int serverPort = request.getServerPort();
 		// 如果配置的是用相对地址（relativeAddress="true"）对请求的地址不最任何改变，反之要读取redirectAddressMap里面想要的映射关系
 		if (innerUrl != null && innerUrl.size() > 0) {

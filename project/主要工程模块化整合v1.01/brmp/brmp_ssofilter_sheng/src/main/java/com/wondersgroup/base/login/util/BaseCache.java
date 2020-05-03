@@ -27,7 +27,7 @@ public class BaseCache {
 		this.refreshPeriod = refreshPeriod;
 	}
 
-	public BaseCache(Class clazz, int refreshPeriod) {
+	public BaseCache(@SuppressWarnings("rawtypes") Class clazz, int refreshPeriod) {
 		super();
 		this.refreshPeriod = refreshPeriod;
 		this.keyPrefix = clazz.getName();
@@ -38,7 +38,7 @@ public class BaseCache {
 		this.keyPrefix = keyPrefix;
 	}
 
-	public BaseCache(Class clazz) {
+	public BaseCache(@SuppressWarnings("rawtypes") Class clazz) {
 		super();
 		this.keyPrefix = clazz.getName();
 	}

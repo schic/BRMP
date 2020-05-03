@@ -11,6 +11,7 @@ public class Sql4WebserviceOut {
 	 * 将扩展表的待传出的前5000条数据修改为即将作业
 	 * CGBZ_1 0待传出 1成功 2失败 9作业中
 	 * UPDATE md_db0359d112df4385a6f1_ex a set CGBZ_1=9 where CGBZ_1=0 LIMIT 5000
+	 * update md_db0359d112df4385a6f1_ex set CGBZ_1=9 where CGBZ_1=0  and rownum<=5000
 	 * @param tableName
 	 * @param dataBaseName
 	 * @return
@@ -73,7 +74,7 @@ public class Sql4WebserviceOut {
 		sBuffer.append("select ");
 		for (int i=0;i<modelDataAttributes.size();i++) {
 			ModelDataAttribute modelDataAttribute = modelDataAttributes.get(i);
-			sBuffer.append(" a.").append(modelDataAttribute.getModelColName());
+			sBuffer.append(" a.").append(modelDataAttribute.getModelColName()).append(" as \"").append(modelDataAttribute.getModelColName()).append("\" ");
 			if (i+1 != modelDataAttributes.size() ) {
 				sBuffer.append(", ");
 			}

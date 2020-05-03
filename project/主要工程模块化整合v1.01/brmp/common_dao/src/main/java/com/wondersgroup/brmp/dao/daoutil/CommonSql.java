@@ -238,7 +238,7 @@ public class CommonSql {
 		} else if ("oracle.jdbc.driver.OracleDriver".equals(dataBaseName)) {
 			sBuffer.append("select ");
 			for(int i=0;i<attributeNames.size();i++){
-				sBuffer.append(attributeNames.get(i));
+				sBuffer.append(attributeNames.get(i)).append(" as \"").append(attributeNames.get(i)).append("\" ");//注意oacle此处as保证attributeName的在map里面的key的大小写准确
 				if (i!=attributeNames.size()-1){
 					sBuffer.append(",");
 				}
@@ -320,7 +320,7 @@ public class CommonSql {
 		StringBuffer sBuffer = new StringBuffer();
 		sBuffer.append("select ");
 		for(int i=0;i<attributeNames.size();i++){
-			sBuffer.append(attributeNames.get(i));
+			sBuffer.append(attributeNames.get(i)).append(" as \"").append(attributeNames.get(i)).append("\" ");//注意oacle此处as保证attributeName的在map里面的key的大小写准确;
 			if (i!=attributeNames.size()-1){
 				sBuffer.append(",");
 			}

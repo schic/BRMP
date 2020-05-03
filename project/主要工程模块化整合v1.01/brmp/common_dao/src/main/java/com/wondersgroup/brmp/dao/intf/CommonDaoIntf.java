@@ -65,6 +65,7 @@ public interface CommonDaoIntf {
 	/**
 	 * 自定义写sql
 	 * 查询获取实体模型数据，实体模型用HashMap封装
+	 * @param sql 当连接的是oracle数据库时sql中select的字段一定要使用<  as "大小写属性名" > 才能获取大小写正确的key
 	 * @return
 	 */
 	List<Map<String, Object>> selectObj(String sql);

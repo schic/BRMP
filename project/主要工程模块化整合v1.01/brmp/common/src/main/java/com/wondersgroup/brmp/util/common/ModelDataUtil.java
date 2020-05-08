@@ -67,8 +67,21 @@ public class ModelDataUtil {
 				sBuffer.append(" COMMENT '作业标志,用于temp表' ");
 			}
 			sBuffer.append(",");
-		}
+		} else {
+			//建立正式表的时候，添加一个JLGXSJ字段
+			sBuffer.append("JLGXSJ ");
+			sBuffer.append(dataTypeMap.get(3));//date型
+			sBuffer.append(" DEFAULT ");
+			if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
+				sBuffer.append(" SYSDATE() COMMENT '记录更新时间，数据写入正式表的日期时间' ");
+			} else if ("oracle.jdbc.driver.OracleDriver".equals(databaseClass)) {
+				sBuffer.append(" sysdate ");
+			} else {
+				sBuffer.append(" null ");
+			}
+			sBuffer.append(",");
 		
+		}
 		
 		for(int i=0;i<modelDataAttributes.size();i++){
 			sBuffer.append(modelDataAttributes.get(i).getModelColName());
@@ -142,16 +155,6 @@ public class ModelDataUtil {
 			
 			
 		}
-		
-		/*
-		sBuffer.append("GIRID ");//证照id
-		sBuffer.append(dataTypeMap.get(0));//String型
-		sBuffer.append("(256) DEFAULT '0'  ");
-		if ("com.mysql.jdbc.Driver".equals(databaseClass)) {
-			sBuffer.append(" COMMENT '证照id,保存大数据中心反给平台数据的唯一id' ");
-		}
-		sBuffer.append(",");
-		*/
 		
 		sBuffer.append("CGBZ_1 ");//成功标志,两网(互联网区和政务网区)数据交换的成功标志
 		sBuffer.append(dataTypeMap.get(1));//int型

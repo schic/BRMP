@@ -16,7 +16,7 @@ public class MyUUID {
   }
 
 }
-
+/
 
 /************************************************
 *
@@ -39,7 +39,7 @@ CREATE OR REPLACE PACKAGE S_PKG_EXEBRMPJOB as
        
        
 END S_PKG_EXEBRMPJOB;
-
+/
 /************************************************
 *
 *  创建packge body
@@ -614,7 +614,7 @@ CREATE OR REPLACE PACKAGE BODY S_PKG_EXEBRMPJOB as
         
 
 end S_PKG_EXEBRMPJOB;
-
+/
 
 /************************************************
 *
@@ -654,4 +654,25 @@ Exception
 
 
 end PRO_BRMP_SCHEDUL;
+/
+
+/************************************************
+*
+*  创建job
+*
+*********************************************/
+begin
+  dbms_scheduler.create_job(job_name            => 'CEN_BRMP.临时和交换表去重进正式表作业',
+                                job_type            => 'STORED_PROCEDURE',
+                                job_action          => 'PRO_BRMP_SCHEDUL',
+                                start_date          => to_date('06-05-2020 00:00:00', 'dd-mm-yyyy hh24:mi:ss'),
+                                repeat_interval     => 'Freq=Daily;ByHour=02',
+                                end_date            => to_date(null),
+                                job_class           => 'DEFAULT_JOB_CLASS',
+                                enabled             => true,
+                                auto_drop           => false,
+                                comments            => '');
+end;
+/
+
 

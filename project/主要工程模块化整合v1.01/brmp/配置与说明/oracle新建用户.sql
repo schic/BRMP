@@ -1,11 +1,13 @@
 /*创建表空间 */
-create tablespace TBS_cen_brmp    logging datafile 'D:\app\oracle\oradata\PDBCENTER\tbs_cen_brmp_01.dbf' size 10M AUTOEXTEND ON NEXT 1G;
+create tablespace TBS_cen_brmp    logging datafile '/storage/app/oracle/oradata/sjzk/tbs_cen_brmp_01.dbf' size 100M AUTOEXTEND ON NEXT 100M;
+ALTER TABLESPACE TBS_cen_brmp ADD DATAFILE '/storage/app/oracle/oradata/sjzk/tbs_cen_brmp_02.dbf' SIZE 100M AUTOEXTEND ON NEXT 100M;
+ALTER TABLESPACE TBS_cen_brmp ADD DATAFILE '/storage/app/oracle/oradata/sjzk/tbs_cen_brmp_03.dbf' SIZE 100M AUTOEXTEND ON NEXT 100M;
 
 /*创建临时表空间*/
-create temporary tablespace TBS_TEMP_cen_brmp tempfile 'D:\app\oracle\oradata\PDBCENTER\tbs_tmp_cen_brmp_01.dbf'       size 10M AUTOEXTEND ON NEXT 1G;  
+create temporary tablespace TBS_TEMP_cen_brmp tempfile '/storage/app/oracle/oradata/sjzk/tbs_tmp_cen_brmp_01.dbf'       size 10M AUTOEXTEND ON NEXT 1G;  
 
 /*创建索引表空间 */
-create tablespace TBS_IX_cen_brmp logging datafile 'D:\app\oracle\oradata\PDBCENTER\tbs_ix_cen_brmp_01.dbf'       size 10M AUTOEXTEND ON NEXT 1G; 
+create tablespace TBS_IX_cen_brmp logging datafile '/storage/app/oracle/oradata/sjzk/tbs_ix_cen_brmp_01.dbf'       size 10M AUTOEXTEND ON NEXT 1G; 
 
 /*创建用户*/
 CREATE USER cen_brmp  PROFILE "DEFAULT"     IDENTIFIED BY "cen_brmp" DEFAULT TABLESPACE TBS_cen_brmp     TEMPORARY TABLESPACE TBS_TEMP_cen_brmp;

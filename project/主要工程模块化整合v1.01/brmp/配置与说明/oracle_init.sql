@@ -1,7 +1,6 @@
 -- ----------------------------
 -- Table structure for brmp_apply_attribute
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_apply_attribute;
 CREATE TABLE brmp_apply_attribute  (
   apply_id varchar2(32),
   model_id varchar2(32),
@@ -16,7 +15,6 @@ COMMENT ON COLUMN brmp_apply_attribute.model_col_name is '模型字段名';
 -- ----------------------------
 -- Table structure for brmp_apply_base
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_apply_base;
 CREATE TABLE brmp_apply_base  (
   apply_id varchar2(32),
   model_id varchar2(32),
@@ -45,7 +43,6 @@ COMMENT ON COLUMN brmp_apply_base.audit_status is '审核状态  1:待审核 2:�
 -- ----------------------------
 -- Table structure for brmp_conf_origin_system_info
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_conf_origin_system_info;
 CREATE TABLE brmp_conf_origin_system_info (
   ORIGIN_SYSTEM_ID varchar2(32),
   ORIGIN_SYSTEM_NAME varchar2(255),
@@ -70,7 +67,6 @@ INSERT INTO brmp_conf_origin_system_info VALUES ('1', 'admin', 'BRMP中心系统
 -- ----------------------------
 -- Table structure for brmp_conf_origin_system_model
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_conf_origin_system_model;
 CREATE TABLE brmp_conf_origin_system_model (
   ORIGIN_SYSTEM_ID varchar2(32),
   MODEL_ID varchar2(32),
@@ -97,7 +93,6 @@ COMMENT ON COLUMN brmp_conf_origin_system_model.PK is '是否主键 0否  1是';
 -- ----------------------------
 -- Table structure for brmp_conf_origin_system_mdbase
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_conf_origin_system_mdbase;
 CREATE TABLE brmp_conf_origin_system_mdbase (
   ORIGIN_SYSTEM_ID varchar2(32),
   MODEL_ID varchar2(32),
@@ -125,7 +120,6 @@ COMMENT ON COLUMN brmp_conf_origin_system_mdbase.DATA_NUM is '当前数据记录
 -- ----------------------------
 -- Table structure for brmp_dic_datatype
 -- ----------------------------
-DROP TABLE IF EXISTS brmp_dic_datatype;
 CREATE TABLE brmp_dic_datatype (
   MODEL_COL_TYPE number(11),
   DATATYPE varchar2(255),

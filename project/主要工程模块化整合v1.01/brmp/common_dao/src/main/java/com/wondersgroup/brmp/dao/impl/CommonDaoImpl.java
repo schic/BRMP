@@ -258,7 +258,7 @@ public class CommonDaoImpl implements CommonDaoIntf {
 	public String getCenterUrl() {
 		String url = "";
 		try {
-			url = jdbcTemplate.queryForObject("select ORIGIN_SYSTEM_URL from brmp_conf_origin_system_info where ORIGIN_SYSTEM_ID=1", new HashMap<String,Object>(), String.class);
+			url = jdbcTemplate.queryForObject("select ORIGIN_SYSTEM_URL from brmp_conf_origin_system_info where ORIGIN_SYSTEM_ID='1'", new HashMap<String,Object>(), String.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -44,11 +44,11 @@
 				<entry key="192.168.2.107:8080" value="192.168.2.107:8080" />
 				<entry key="127.0.0.1:8980" value="59.225.200.64:8080" />
 				<entry key="localhost:8980" value="59.225.200.64:8080"/>
-				<entry key="192.168.1.111:8980" value="59.225.200.64:8080"/>
+				<entry key="192.168.1.114:8980" value="59.225.200.64:8080"/>
 			</map>
 		</property>
 
-		<property name="serverName" value="http://192.168.1.111:8980" />
+		<property name="serverName" value="http://192.168.1.114:8980" />
 		<property name="casServerLoginUrl" value="/sso/login" />
 		<property name="casServerLogoutUrl" value="/sso/logout"/>
 		<property name="casServerUrlPrefix" value="http://59.225.200.64:8080/sso"/>

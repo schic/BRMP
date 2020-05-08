@@ -47,7 +47,7 @@
     </init-param>
     <init-param>
       <param-name>localUrl</param-name>
-      <param-value>http://192.168.1.111:8980/brmp</param-value> 
+      <param-value>http://192.168.1.114:8980/brmp</param-value> 
     </init-param>
     <init-param>   
 		<param-name>excludedPages</param-name>    

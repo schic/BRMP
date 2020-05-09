@@ -195,7 +195,7 @@ public class ModelDataUtil {
 				String attributeType = dataTypeMap.get(modelDataAttribute.getModelColType());
 				//System.out.println(" 属性名"+ attributeName + " 属性类型" + attributeType);
 				Object value = dataMap.get(attributeName);
-				if ("String".equals(attributeType) ) {
+				if (attributeType.contains("String")) {
 					if (value == null) {
 						value = "-";
 					} else {

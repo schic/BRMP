@@ -196,7 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						}">主键</th>
 		            <th data-options="field:'modelColName',width:100,align:'center',editor:'text'">表字段名称</th>
 		            <th data-options="field:'modelColDisplayName',width:180,align:'center',editor:'text'">字段通用名称</th>
-		            <th data-options="field:'modelColType',width:50,align:'center',formatter:getModelColType,editor:{
+		            <th data-options="field:'modelColType',width:70,align:'center',formatter:getModelColType,editor:{
 							type:'combobox',
 							options:{
 								url:'model_admin/datatype/ajax/2',

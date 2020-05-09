@@ -139,6 +139,45 @@ INSERT INTO brmp_dic_datatype VALUES (2, 'number', 'float');
 INSERT INTO brmp_dic_datatype VALUES (3, 'date', 'Date');
 INSERT INTO brmp_dic_datatype VALUES (4, 'number', 'long');
 INSERT INTO brmp_dic_datatype VALUES (5, 'number', 'double');
-
+INSERT INTO brmp_dic_datatype VALUES (6, 'nvarchar2', 'String(n)');
 
 commit;
+
+-- ----------------------------
+-- 创建值域字典表
+-- ----------------------------
+create table BRMP_DICTIONARY (
+DIC_ID varchar2(64),
+ORIGIN_SYSTEM_ID varchar2(32),
+DIC_CODE varchar2(64),
+DIC_NAME varchar2(256),
+STATUS number(1),
+AUDIT_STATUS number(1)
+);
+COMMENT ON TABLE BRMP_DICTIONARY IS '卫生资源整合值域字典表';
+COMMENT ON COLUMN BRMP_DICTIONARY.DIC_ID is '字典ID';
+COMMENT ON COLUMN BRMP_DICTIONARY.ORIGIN_SYSTEM_ID is '源系统名称编号';
+COMMENT ON COLUMN BRMP_DICTIONARY.DIC_CODE is '字典编码名称';
+COMMENT ON COLUMN BRMP_DICTIONARY.DIC_NAME is '字典中文名称';
+COMMENT ON COLUMN BRMP_DICTIONARY.STATUS is '状态  0:停用 1:启用';
+COMMENT ON COLUMN BRMP_DICTIONARY.AUDIT_STATUS is '审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过';
+
+-- ----------------------------
+-- 创建值域字典数据项表
+-- ----------------------------
+create table BRMP_DICTIONARY_ITEM (
+DIC_ID varchar2(64),
+ORIGIN_SYSTEM_ID varchar2(32),
+DIC_CODE varchar2(64),
+CODE varchar2(64),
+NAME varchar2(512),
+DISPLAY_ORDER number(3)
+);
+COMMENT ON TABLE BRMP_DICTIONARY_ITEM IS '卫生资源整合值域字典数据项表';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.DIC_ID is '字典ID';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.ORIGIN_SYSTEM_ID is '源系统名称编号';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.DIC_CODE is '字典编码名称';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.CODE is '值域代码';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.NAME is '值域名称';
+COMMENT ON COLUMN BRMP_DICTIONARY_ITEM.DISPLAY_ORDER is '展示顺序';
+

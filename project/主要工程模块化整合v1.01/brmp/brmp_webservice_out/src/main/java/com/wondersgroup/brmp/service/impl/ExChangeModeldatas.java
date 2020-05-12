@@ -73,6 +73,7 @@ public class ExChangeModeldatas implements BrmpChangeServiceIntf {
 				//System.out.println(json);
 				try {
 					String responsePoMsg = RestCXFClient.reqRestService(brmpConfResource.getBrmpChangeAdress(), json);
+					System.out.println(responsePoMsg);
 					ResponsePo responsePo = JSON.parseObject(responsePoMsg, ResponsePo.class);
 					if(responsePo.getCode()==ResponseHead.Completenss.getIndex() || responsePo.getCode()==ResponseHead.Success.getIndex() ){
 						commonDaoIntf.createTable(Sql4WebserviceOut.updateEx1(modelData.getModelTabName()));

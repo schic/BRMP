@@ -15,7 +15,7 @@ AuthInfo authInfo = (AuthInfo) request.getSession().getAttribute(com.wondersgrou
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <base href="<%=basePath%>">
-<title>基础资源管理平台</title>
+<title>卫生资源管理及服务平台</title>
 <%@ include  file="./common/project_myhtml.jsp" %><!-- 页面的通用静态文件引用 -->
 <link rel="stylesheet" href="static/common/css/myhtml_css/index.css" />
 

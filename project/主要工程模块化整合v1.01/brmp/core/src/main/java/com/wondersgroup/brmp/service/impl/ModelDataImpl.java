@@ -89,7 +89,15 @@ public class ModelDataImpl implements ModelDataIntf {
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		paramMap.put("modelId", modelId);
 		List<ModelDataAttribute> modelDataAttributes = commonDaoIntf.selectObjListByParam(ModelDataAttribute.class, paramMap);
-		return modelDataAttributes;
+		List<ModelDataAttribute> modelDataAttributesSort = new ArrayList<ModelDataAttribute>(modelDataAttributes.size());
+		for(int i=0;i<modelDataAttributes.size();i++){
+			for(int j=0;j<modelDataAttributes.size();j++){
+				if(modelDataAttributes.get(j).getDisplayOrder()==(i+1)){
+					modelDataAttributesSort.add(modelDataAttributes.get(j));
+				}
+			}
+		}
+		return modelDataAttributesSort;
 	}
 
 	@Override

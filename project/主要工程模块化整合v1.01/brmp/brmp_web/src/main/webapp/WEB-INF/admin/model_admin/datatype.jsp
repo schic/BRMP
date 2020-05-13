@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <div class="two">
                               <p>
                                   <label for="">1.</label>
-                                  为了确保数据的公平性和正确性，数据提供单位，先需要向四川省卫生信息中心提供申请，建立卫生基础资源目录。
+                                  为了确保数据的公平性和正确性，数据提供单位，先需要向四川省卫生信息中心提供申请，建立卫生资源目录。
                               </p>
                               <p>
                                   <label for="">2.</label>
@@ -91,7 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                               </p>
                               <p>
                                   <label for="">3.</label>
-                                  为了确保数据的公平性和正确性，数据提供单位，先需要向四川省卫生信息中心提供申请，建立卫生基础资源目录。
+                                  为了确保数据的公平性和正确性，数据提供单位，先需要向四川省卫生信息中心提供申请，建立卫生资源目录。
                               </p>
                               <p>
                                   <label for="">4.</label>

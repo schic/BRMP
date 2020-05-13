@@ -90,6 +90,11 @@ public class ViewDataVerifyUtil {
 				if (modelDataAttribute.getModelColDecimalLenth() < 1 ||  modelDataAttribute.getModelColDecimalLenth() >= modelDataAttribute.getModelColLenth() ){
 					return "字段长度不在范围(".concat(modelColName).concat("):小数位数不在合适的范围");
 				}
+			} else if (modelDataAttribute.getModelColType()==6) {//String(n) nvarchar2 字符串类型字段长度应该在 1~2000之间
+				modelDataAttribute.setModelColDecimalLenth(-1);//不使用小数
+				if (modelDataAttribute.getModelColLenth() < 1 || modelDataAttribute.getModelColLenth() > 2000) {
+					return "字段长度不在范围(".concat(modelColName).concat("):应该在 1~2000之间");
+				} 
 			}
 			
 			modelDataAttributes.get(i).setDisplayOrder(i+1);//展示顺序排列好

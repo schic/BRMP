@@ -60,6 +60,10 @@ var userType = '';
  */
 function init(sendUserType){
 	this.userType = sendUserType;
+	if (this.userType=='admin') {
+		//管理员不需要的操作   不需要数据申请
+		$('a#apply4getData').remove();
+	}
 }
 
 
@@ -81,6 +85,7 @@ $.extend($.fn.datagrid.methods, {
             	$('p#pDescription').html('<font color="#0000E3">'+selectModel.modelDescription+'</font>');
             	$('p#pModelName').html('<font color="#005AB5">'+selectModel.modelName+'</font>');
             	$('p#pSystemName').html('<font color="#005AB5">'+row.group+'</font>');
+            	$('p#pSum').html('<font color="#005AB5">'+selectModel.dataNum+'</font>');
             	$('p#pModelCreateTime').html('<font color="#005AB5">'+selectModel.modelCreateTime+'</font>');
             	
             }

@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		            <td width="120px" height="30px"><p>资源名称：</p></td>
 		            <td width="240px"><p id='pModelName'></p></td>
 		            <td width="120px"><p>更新周期：</p></td>
-		            <td width="240px"><p id='pCycle'>每天</p></td>
+		            <td width="240px"><p id='pCycle'></p></td>
 		        </tr>
 		        <tr align="center">
 		            <td height="30px"><p>数据来源：</p></td>
@@ -143,7 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="contain">
 				<div class="top">
 					<div class="font" style="">
-						<h2>基础资源申请</h2>
+						<h2>卫生资源申请</h2>
 					</div>
 				
 					<div class="topCon">

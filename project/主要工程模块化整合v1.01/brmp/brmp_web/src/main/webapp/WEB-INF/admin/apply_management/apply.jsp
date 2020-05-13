@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 		 
 	<div id="2west" style="width:50%;height:100%;background-color:#D2E9FF;float:left;">
-		<h2>基础资源申请</h2>
+		<h2>卫生资源申请</h2>
 		
 		<div class="col-md-8 col-md-offset-2">
 		  <form name="sentMessage" id="Form" action="apply_management/apply4system_form" method="post" enctype="application/x-www-form-urlencoded" novalidate>

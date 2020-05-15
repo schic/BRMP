@@ -66,8 +66,11 @@ public class BrmpCenterSaveModel implements BrmpCenterService4ws {
 		
 		String tableName = modelData.getModelTabName().concat("_temp");
 		String msg = commonDaoIntf.saveObj(dataList4save, tableName);
-		
-		return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);
+		if (msg.contains("数据保存完成save_complates")){
+			return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);
+		} else {
+			return ResponsePoMsg.response2Obj(ResponseHead.Error, msg);
+		}
 	}
 
 }

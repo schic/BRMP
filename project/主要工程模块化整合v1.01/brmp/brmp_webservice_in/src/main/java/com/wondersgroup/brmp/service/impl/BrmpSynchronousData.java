@@ -68,8 +68,11 @@ public class BrmpSynchronousData implements BrmpCenterService4ws {
 		
 		String tableName = modelData.getModelTabName().concat("_change");//将河对面网络传输过来的同步数据保存到本地数据库对应模型以 _change结尾的表，剩下的步骤交给计算存储过程。
 		String msg = commonDaoIntf.saveObj(dataList4save, tableName);
-		
-		return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);
+		if (msg.contains("数据保存完成save_complates")){
+			return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);
+		} else {
+			return ResponsePoMsg.response2Obj(ResponseHead.Error, msg);
+		}
 	}
 
 }

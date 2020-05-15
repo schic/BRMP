@@ -36,7 +36,8 @@ public class BrmpCenterAddEMPI implements BrmpCenterService4ws {
 		}
 		String msg = saveEMPIObjIntf.saveEMPIObj(empiObjs, systemId, EMPIObjSql.saveEMPIObj);
 		
-		RestCXFClient.reqRestService(brmpConfResource.getEMPIClientAdress(), "Client执行索引计算");//请求EMPIClient系统
+		String responsePoMsg = RestCXFClient.reqRestService(brmpConfResource.getEMPIClientAdress(), "Client执行索引计算");//请求EMPIClient系统
+		System.out.println(responsePoMsg);
 		return ResponsePoMsg.response2Obj(ResponseHead.Completenss, msg);
 	}
 

@@ -39,7 +39,18 @@ $(function(){
 	 */
 	
 	
-})
+});
+
+/**
+ * 初始化系统id
+ */
+var encryptionType = '';
+
+function setInit(encryptionType){
+	this.encryptionType = encryptionType;
+	$(" select option[value='"+encryptionType+"']").attr("selected","selected"); 
+	console.log('encryptionType:'+encryptionType);
+}
 
 
 /************************************************

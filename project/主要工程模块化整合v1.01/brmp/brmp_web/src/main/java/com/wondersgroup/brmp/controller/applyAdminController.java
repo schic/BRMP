@@ -305,7 +305,7 @@ public class applyAdminController {
 	}
 	
 	@RequestMapping("/apply4system_form")
-	public String apply4systemForm(String sysName,String sysPassword,String systemUrl,HttpServletRequest request,HttpServletResponse response){
+	public String apply4systemForm(String sysName,String sysPassword,int encryptionType,String systemUrl,HttpServletRequest request,HttpServletResponse response){
 //		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
 		AuthInfo authInfo = SessionUtil.getCurrAuthInfo(request);
 		if (null == authInfo.getUserType()){
@@ -333,6 +333,7 @@ public class applyAdminController {
 					originSystemInfo.setUsername(authInfo.getLoginName());
 					originSystemInfo.setPassword(sysPassword);
 					originSystemInfo.setOriginSystemUrl(systemUrl);
+					originSystemInfo.setEncryptionType(encryptionType);
 				}
 				request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 			} else {
@@ -340,6 +341,8 @@ public class applyAdminController {
 				originSystemInfo.setOriginSystemCname(sysName);
 				originSystemInfo.setPassword(sysPassword);
 				originSystemInfo.setOriginSystemUrl(systemUrl);
+				originSystemInfo.setEncryptionType(encryptionType);
+				request.getSession().setAttribute("originSystemInfo", originSystemInfo);
 			}
 			modelDataIntf.saveOriginSystem(originSystemInfo);
 			request.setAttribute("infoMessage", "系统接入用户信息更新完成".concat(new Date().toString()));

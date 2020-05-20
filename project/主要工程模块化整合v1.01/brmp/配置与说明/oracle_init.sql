@@ -49,7 +49,8 @@ CREATE TABLE brmp_conf_origin_system_info (
   ORIGIN_SYSTEM_CNAME varchar2(255),
   ORIGIN_SYSTEM_URL varchar2(1024),
   USERNAME varchar2(255),
-  PASSWORD varchar2(255)
+  PASSWORD varchar2(255),
+  ENCRYPTION_TYPE number(1)  default 0
 );
 COMMENT ON TABLE brmp_conf_origin_system_info IS '卫生资源整合接入系统基本信息表';
 COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_ID is '源系统名称编号';
@@ -58,6 +59,7 @@ COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_CNAME is '源系统
 COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_URL is '接入系统接口的URL';
 COMMENT ON COLUMN brmp_conf_origin_system_info.USERNAME is '接入系统用户名';
 COMMENT ON COLUMN brmp_conf_origin_system_info.PASSWORD is '接入系统验证';
+COMMENT ON COLUMN brmp_conf_origin_system_info.ENCRYPTION_TYPE is '接入加密方式 0:无 ;1:AES;2:AESVi;3:DES;4:ThreeDES;5:AES变化;6:AESVi变化;7:DES变化';
 
 -- ----------------------------
 -- Records of brmp_conf_origin_system_info

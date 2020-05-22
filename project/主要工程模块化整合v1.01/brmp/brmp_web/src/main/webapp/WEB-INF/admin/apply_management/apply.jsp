@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <base href="<%=basePath%>">
 <title>申请管理</title>
 <%@ include  file="../common/project_myhtml.jsp" %><!-- 页面的通用静态文件引用 -->
-
+<link rel="stylesheet" href="static/common/css/myhtml_css/input.css" />
 
 
 </head>
@@ -70,46 +70,58 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 		 
 	<div id="2west" style="width:50%;height:100%;background-color:#D2E9FF;float:left;">
-		<h2>卫生资源申请</h2>
-		
-		<div class="col-md-8 col-md-offset-2">
-		  <form name="sentMessage" id="Form" action="apply_management/apply4system_form" method="post" enctype="application/x-www-form-urlencoded" novalidate>
-			<div class="row">
-			  <div class="col-md-6">
-				<div class="form-group">
-				  <p>申请资源目录名称<span id="applyNameVerify"></span></p>
-				  <input type="text" id="apply_name" name="applyName" class="form-control" disabled="true">
-				  <p class="help-block text-danger"></p>
+		<div class="contain">
+			<div class="top">
+				<div class="font" style="">
+					<h2>卫生资源申请</h2>
 				</div>
-			  </div>
-			  
-			  <div class="col-md-6">
-				<div class="form-group">
-				  <p>申请单位名称</p>
-				  <input type="text" id="apply_org_name" name="applyOrgName" class="form-control" disabled="true">
-				  <p class="help-block text-danger"></p>
+				<div class="topCon">
+						
+					<div class="topConOne topConSame clearfix">
+			            <div class="leftOne leftSame">
+			            	<label for="">申请资源目录名称</label>	
+			              	<input type="text" id="apply_name" name="applyName" class="form-control" disabled="true">
+						</div>
+						
+						<div class="leftTwo leftSame">
+			            	<label for="">返回数据加密方式</label>	
+			              	<select id="encryption_type" name="encryptionType" class="easyui-combobox" panelHeight="auto" style="width:120px" editable="false" disabled="true" >
+						        <option value="0">无</option>
+						        <option value="1">AES</option>
+						        <option value="2">AESVi</option>
+						        <option value="3">DES</option>
+						        <option value="4">ThreeDES</option>
+						        <option value="5">AES变化</option>
+						        <option value="6">AESVi变化</option>
+						        <option value="7">DES变化</option>
+			              	</select>
+						</div>
+						
+			        </div>
+			        
+					<div class="topConOne topConSame clearfix">
+			            <div class="leftOne leftSame">
+			            	<label for="">申请单位名称</label>	
+			              	<input type="text" id="apply_org_name" name="applyOrgName" class="form-control" disabled="true">
+						</div>
+			        </div>	
+					
+					<div class="topConOne topConSame clearfix">
+			            <div class="leftOne leftSame">
+			            	<label for="">申请人</label>	
+			              	<input type="text" id="apply_user" name="applyUser" class="form-control" disabled="true">
+						</div>
+			        </div>
+					
+					<div class="topConTwo topConSame">
+                    	<label for="">申请资源用途说明</label>
+                    	<textarea name="applyDirection" id="apply_direction" class="form-control" style="width: 100%" rows="6" placeholder=""  disabled="true"></textarea>
+	                </div>
+						
 				</div>
-			  </div>
-			  
-			  <div class="col-md-6">
-				<div class="form-group">
-				  <p>申请人<span id="applyUserVerify"></span></p>
-				  <input type="text" id="apply_user" name="applyUser" class="form-control" disabled="true">
-				  <p class="help-block text-danger"></p>
-				</div>
-			  </div>
-			  
 			</div>
-			
-			<div class="form-group">
-			  <p>申请资源用途说明<span id="applyDirectionVerify"></span></p>	
-			  <textarea name="applyDirection" id="apply_direction" class="form-control" rows="4" disabled="true"></textarea>
-			  <p class="help-block text-danger"></p>
-			</div>
-			
-		  </form>
-		</div>
-		
+	    </div>
+	
 	</div>	
 	
 	<div id="apply_data_east" style="width:50%;height:100%;float:right;">

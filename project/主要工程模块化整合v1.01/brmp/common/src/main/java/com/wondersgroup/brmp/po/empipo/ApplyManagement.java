@@ -26,6 +26,8 @@ public class ApplyManagement {
 	private Date applyTime;//申请时间
 	private int auditStatus;//审核状态  1:待审核 2:审核拒绝 9:审核通过
 	
+	private int encryptionType;//获取数据时的加密方式 0:无 ;1:AES;2:AESVi;3:DES;4:ThreeDES;5:AES变化;6:AESVi变化;7:DES变化 
+	
 	public String getApplyId() {
 		return applyId;
 	}
@@ -85,6 +87,12 @@ public class ApplyManagement {
 	}
 	public void setAuditStatus(int auditStatus) {
 		this.auditStatus = auditStatus;
+	}
+	public int getEncryptionType() {
+		return encryptionType;
+	}
+	public void setEncryptionType(int encryptionType) {
+		this.encryptionType = encryptionType;
 	}
 	
 	

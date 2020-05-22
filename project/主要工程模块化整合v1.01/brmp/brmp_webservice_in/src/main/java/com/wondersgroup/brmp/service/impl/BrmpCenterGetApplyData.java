@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
 import com.wondersgroup.brmp.po.applypo.ReqApplyBatchParams;
-import com.wondersgroup.brmp.po.applypo.ResApplyBatchParams;
+import com.wondersgroup.brmp.po.applypo.ReqApplyParams;
 import com.wondersgroup.brmp.po.applypo.ResApplyParams;
 import com.wondersgroup.brmp.po.empipo.ApplyManagement;
 import com.wondersgroup.brmp.po.empipo.ModelData;
@@ -48,22 +48,35 @@ public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 			return ResponsePoMsg.response2Obj(ResponseHead.Error,"该接口审核未通过审核，或正在审核中");
 		}
 		
-		
-		ResApplyParams resApplyParams = null;
+		ResApplyParams<Map<String, Object>> resApplyParams = new ResApplyParams<Map<String, Object>>();
 		List<Map<String, Object>> applyDates = new ArrayList<>();
 		
 		List<List<ModelDataAttribute>> applyModelDataAttributes = applyService4Webservice.queryApplyById4ApplyDataAttribute(applyId);
-		if ("batch".equals(modelName) ){//批量获取数据
-			if (applyModelDataAttributes.size()==1){//只申请了一种模型字段数据
-				List<ModelDataAttribute> modelDataAttributes = applyModelDataAttributes.get(0);
-				List<String> attributeNames = new ArrayList<String>();
-				for(int i=0;i<modelDataAttributes.size();i++){
-					attributeNames.add(modelDataAttributes.get(i).getModelColName());
-				}
-				paramMap.clear();
-				paramMap.put("modelId", modelDataAttributes.get(0).getModelId());
-				ModelData modelData = (ModelData) commonDaoIntf.selectObjByParam(ModelData.class, paramMap);
-				ReqApplyBatchParams rParams = null;
+		
+		if (applyModelDataAttributes.size()==1){//只申请了一种模型字段数据
+			List<ModelDataAttribute> modelDataAttributes = applyModelDataAttributes.get(0);
+			List<String> attributeNames = new ArrayList<String>();
+			for(int i=0;i<modelDataAttributes.size();i++){
+				attributeNames.add(modelDataAttributes.get(i).getModelColName());
+			}
+			paramMap.clear();
+			paramMap.put("modelId", modelDataAttributes.get(0).getModelId());
+			ModelData modelData = (ModelData) commonDaoIntf.selectObjByParam(ModelData.class, paramMap);
+			
+			/*
+			if ("batch".equals(modelName) ){//0:批量数据申请
+				
+			} else if ("condition".equals(modelName) ){//通过条件获取数据 
+				// TODO Auto-generated method stub
+				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "功能未完成");
+			} else if ("date".equals(modelName) ){//1:带入库日期批量数据申请
+				
+			} else {
+				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "不支持的类型ModelType:".concat(modelName));
+			}
+			*/
+			ReqApplyParams rParams = null; 
+			if ("batch".equals(modelName) ){//0:批量数据申请
 				try {
 					rParams = JSON.parseObject(params, ReqApplyBatchParams.class);	
 				} catch (Exception e) {
@@ -74,26 +87,21 @@ public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 						return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的格式错误");
 					}	
 				}
-				
 				applyDates = commonDaoIntf.selectObj(attributeNames, modelData.getModelTabName(), rParams.getPageNo() , rParams.getPageSize() );
-				ResApplyBatchParams<Map<String, Object>> resApplyBatchParams = new ResApplyBatchParams<Map<String, Object>>();
-				resApplyBatchParams.setData(applyDates);
-				resApplyBatchParams.setPages(rParams.getPageNo());
-				resApplyBatchParams.setPageSize(rParams.getPageSize());
-				resApplyBatchParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName()));
-				resApplyParams = resApplyBatchParams;
-				
-			} else {//申请多个模型的数据
-				// TODO Auto-generated method stub
-				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "功能未完成");
-			}
+			}	
 			
-		} else if ("condition".equals(modelName) ){//通过条件获取数据
+			resApplyParams.setData(applyDates);
+			resApplyParams.setPages(rParams.getPageNo());
+			resApplyParams.setPageSize(rParams.getPageSize());
+			resApplyParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName()));
+			
+		} else {//申请多个模型的数据
 			// TODO Auto-generated method stub
 			return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "功能未完成");
-		} else {
-			return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "不支持的类型ModelType:".concat(modelName));
 		}
+		
+		
+		
 		
 		return ResponsePoMsg.response2Obj(ResponseHead.Success, CommonUtil.toJSONString(resApplyParams));
 	}

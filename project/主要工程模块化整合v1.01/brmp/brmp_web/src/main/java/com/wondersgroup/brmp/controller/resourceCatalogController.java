@@ -275,7 +275,7 @@ public class resourceCatalogController {
 	
 	@RequestMapping("catalog/ajax/commitApplyData")
 	@ResponseBody
-	public String catalogAjaxCommitApplyData(String modelId,String applyName,String applyOrgName,String applyUser,String applyDirection, String json, HttpServletRequest request){
+	public String catalogAjaxCommitApplyData(String modelId,String applyName,String applyOrgName,String applyUser,String applyDirection,int encryptionType, String json, HttpServletRequest request){
 		
 //		Map<String,Object> ssoUser = SsoUtil.getSsoUser(request);
 //		if (!"user".equals(ssoUser.get("userType"))) {
@@ -314,6 +314,7 @@ public class resourceCatalogController {
 		applyManagement.setApplyDirection(applyDirection);
 		applyManagement.setApplyTime(new Date());
 		applyManagement.setAuditStatus(1);//审核状态  1:待审核
+		applyManagement.setEncryptionType(encryptionType);
 		
 		List<ModelDataAttribute> modelDataAttributes = JSONArray.parseArray(json, ModelDataAttribute.class);
 		if (modelDataAttributes.size()==0) {

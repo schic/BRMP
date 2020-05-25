@@ -51,11 +51,12 @@
   	<mvc:default-servlet-handler/>
 
 	<!-- 静态资源的处理  js image等 -->
-	<mvc:resources location="/WEB-INF/static/" mapping="/static/**"></mvc:resources>
+	<!-- <mvc:resources location="/WEB-INF/layui/" mapping="/static/**"></mvc:resources> -->
 
 	<!-- 
 	<mvc:resources location="/pages/" mapping="/pages/**"/>  
     -->
+
 	
 	<!-- 权限的拦截	 
 	<mvc:interceptors>
@@ -68,26 +69,71 @@
 	</mvc:interceptors>
 	-->
 	
+	<!-- 
+		<mvc:interceptors>		
+			<mvc:interceptor>		
+				<mvc:mapping path="/**"/>  
+				<mvc:exclude-mapping path="/style/**"/>
+				<bean class="com.wondersgroup.empi.util.common.LoginInterceptor"/>
+			</mvc:interceptor>				
+		</mvc:interceptors>
 	
-	<!-- 视图处理器   -->
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" id="viewResolver">
-		<property name="viewResolvers">
-			<list>
-				<bean id="htmlViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-					<property name="order" value="1"></property>
-					<property name="prefix" value="/WEB-INF/admin/"></property>
-					<property name="suffix" value=".html"></property>
-					<property name="contentType" value="text/html;charset=UTF-8"></property>
-					<property name="viewNames" value="*.html"></property>
-				</bean>			
-				<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="order" value="0"></property>
-					<property name="prefix" value="/WEB-INF/admin/"></property>
-					<property name="suffix" value=".jsp"></property>
-				</bean>	
-			</list>
-		</property>
-	</bean>
+	 -->
+	
+	
+	<!-- 视图处理器   -->	
+	<!-- 设置freeMarker的配置文件路径 -->
+ 	<bean id="freemarkerConfiguration"
+      class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+    <!--注释掉的下方代码是指引freemarker的基本信息的配置位置，因为我已经将配置信息移到了applicationContext文件下，所以这里就没必要存在了，不注释也不会有问题的 -->
+    <!--<property name="location" value="classpath:/WEB-INF/config/freemarker.properties" />-->
+  </bean>
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <property name="exposeRequestAttributes" value="true" />
+    <property name="exposeSessionAttributes" value="true" />
+    <property name="viewClass">
+      <value>org.springframework.web.servlet.view.freemarker.FreeMarkerView</value>
+    </property>
+    <property name="cache"><value>true</value></property>
+    <!--这里需要注意一下，我注释了下面这样一行代码，这行代码的意思就是指引freemarker需要解析的文件的位置。注释掉原因是因为
+     applicationContext.xml里有这样一行代码：<property name="templateLoaderPath" value="/WEB-INF/views/" /> 已经指定了视图位置。如果我们这里依然保留下方代码，页面回报406的找不到的错误 -->
+    <!--<property name="prefix"><value>/WEB-INF/views/</value></property>-->
+    <property name="suffix"><value>.html</value>
+    </property>
+    <property name="contentType">
+      <value>text/html; charset=UTF-8</value>
+    </property>
+  </bean>
+  
+  <!-- 配置全局属性文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="locations">  
+            <list>  
+                <value>classpath:properties/*.properties</value>   
+            </list>             
+        </property>                             
+    </bean>
+	
+	<!-- 
+		<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" id="viewResolver">
+			<property name="viewResolvers">
+				<list>
+					<bean id="htmlViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+						<property name="order" value="1"></property>
+						<property name="prefix" value="/WEB-INF/admin/"></property>
+						<property name="suffix" value=".html"></property>
+						<property name="contentType" value="text/html;charset=UTF-8"></property>
+						<property name="viewNames" value="*.html"></property>
+					</bean>			
+					<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+						<property name="order" value="0"></property>
+						<property name="prefix" value="/WEB-INF/admin/"></property>
+						<property name="suffix" value=".jsp"></property>
+					</bean>	
+				</list>
+			</property>
+		</bean>
+	 -->
 	
 	
 </beans>

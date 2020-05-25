@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>护士注册</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link type="text/css"  rel="stylesheet" href="style/css/layui.css">
+  <link type="text/css"  rel="stylesheet" href="style/css/login.css">
+  <link type="text/css"  rel="stylesheet" href="style/css/admin.css">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"65161",secure:"65166"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script src="style/layui.js"></script>
+<!-- <script src="style/admin.js"></script>
+<script src="style/view.js"></script> -->
+
+<body data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/BRMP_join/src/main/webapp/WEB-INF/layui/docReg.html">
+<div  class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc1-0" data-genuitec-path="/BRMP_join/src/main/webapp/WEB-INF/layui/docReg.html">
+  <div style="padding-top：15px;margin-top:10px;" class="layadmin-user-login-main">
+    <div class="layadmin-user-login-box layadmin-user-login-header">
+      <h2>护士注册</h2>
+      <p>职业医师注册</p>
+    </div>
+    <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+      <div class="layui-form-item">
+        <input type="text" name="xm" id="xm" lay-verify="required"  placeholder="姓名" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+      	  <label style="" class="layui-form-label">性别</label>
+          <div class="layui-input-block">
+            <input type="radio" name="xb" value="男" title="男" checked="">
+            <input type="radio" name="xb" value="女" title="女">
+         </div>       
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="sfzm" id="sfzm" lay-verify="required"  placeholder="身份证号" class="layui-input">
+      </div>         
+      <div class="layui-form-item">
+        <input type="text" name="csrq" id="csrq"  placeholder="出生日期" lay-verify="date" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="gj" id="gj"  placeholder="国籍" class="layui-input">
+      </div>    
+      <div class="layui-form-item">
+        <input type="text" name="fzjg" id="fzjg"  placeholder="发证机关" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="fzrq" id="fzrq"  placeholder="发证日期" lay-verify="date" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="qfr" id="qfr"  placeholder="签发人" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="zydd" id="zydd"  placeholder="执业地点" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="hszyzsbh" id="hszyzsbh" lay-verify="required"  placeholder="护士执业证书编号" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="hszyzszcrq" id="hszyzszcrq"  placeholder="护士执业证书注册日期" lay-verify="date" autocomplete="off"  class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="hszyzsyxksrq" id="hszyzsyxksrq"  placeholder="护士执业证书有效开始日期" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="text" name="hszyzsyxjsrq" id="hszyzsyxjsrq"  placeholder="护士执业证书有效结束日期" class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议">
+      </div>
+      <div class="layui-form-item">
+        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-reg-submit">注 册</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="layui-trans layui-form-item layadmin-user-login-other">
+  </div>
+  
+  <div class="layui-trans layadmin-user-login-footer">
+    <p >© 2020 <a href="#" target="_blank">四川省卫生健康信息中心中心提供</a></p>
+  </div>
+
+</div>
+
+<script>
+layui.use(['layer','form', 'laydate'], function(){
+  var $ = layui.$
+  ,laydate = layui.laydate
+  ,form = layui.form;
+
+  //form.render();
+  
+  laydate.render({
+    elem: '#csrq'
+  });
+  
+  laydate.render({
+    elem: '#fzrq'
+  });
+  
+  laydate.render({
+    elem: '#hszyzszcrq'
+  });
+  
+  laydate.render({
+    elem: '#hszyzsyxksrq'
+  });
+  
+  laydate.render({
+    elem: '#hszyzsyxjsrq'
+  });
+  
+
+
+  //提交
+  form.on('submit(LAY-user-reg-submit)', function(obj){
+    var field = obj.field;
+   	
+   	/*
+    //请输入正确手机号
+    if( !/^1\d{10}$/.test(field.cellphone)){
+    	
+    	layer.msg("请输入正确的手机号");
+      	return t.focus();
+    }
+    */
+    
+    //是否同意用户协议
+    if(!field.agreement){
+      return layer.msg('你必须同意用户协议才能注册');
+    }
+    
+    //layer.msg(JSON.stringify(field));
+    
+    $.post('saveDoctor', field, function(str){
+    	
+    	
+    
+    	
+	});
+    
+    /*
+    //请求接口
+    admin.req({
+      url: 'saveDoctor' //实际使用请改成服务端真实接口
+      ,data: field
+      ,done: function(res){        
+        layer.msg('注册成功', {
+          offset: '15px'
+          ,icon: 1
+          ,time: 1000
+        }, function(){
+          	//location.hash = '/user/login'; //跳转到登入页
+        });
+      }
+    });
+    */
+    
+    return false;
+  });
+});
+</script>
+
+</body>
+
+</html>

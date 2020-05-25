@@ -12,6 +12,8 @@
     <java.version>1.8</java.version>	
 	<spring.version>4.3.18.RELEASE</spring.version>
 	<cxf.version>3.1.7</cxf.version>
+	<freemarker.version>2.3.22</freemarker.version>
+	<httpclient.version>4.5.12</httpclient.version>
   </properties>
   <dependencies>
     <dependency>
@@ -107,6 +109,13 @@
 	    <version>8.0.17</version>
 	</dependency>
 	
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+	
 	<dependency>
 	    <groupId>org.slf4j</groupId>
 	    <artifactId>slf4j-api</artifactId>
@@ -200,6 +209,25 @@
 	    <version>${spring.version}</version>
 	</dependency>
 	
+	<!-- freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+				
+		<dependency>
+				<groupId>dom4j</groupId>
+				<artifactId>dom4j</artifactId>
+				<version>1.6.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+				</exclusions>
+		</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-core -->
 	<dependency>
 	    <groupId>org.apache.cxf</groupId>
@@ -244,7 +272,6 @@
 		<artifactId>cxf-rt-rs-security-cors</artifactId>
 		<version>${cxf.version}</version>
 	</dependency>
-	<!-- cxf restful client  -->
 	<dependency>
 	    <groupId>org.apache.cxf</groupId>
 	    <artifactId>cxf-rt-rs-client</artifactId>

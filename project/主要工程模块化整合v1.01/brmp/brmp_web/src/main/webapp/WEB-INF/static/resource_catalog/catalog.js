@@ -416,13 +416,16 @@ function commitApplyData(){
 	var applyUser = $('input#apply_user').val();
 	var applyDirection = $('textarea#apply_direction').val();
 	
+	var encryptionType = $('select#encryption_type').val();
+	console.log('encryptionType='+encryptionType);
+	
 	$.ajax({
 		type : "post",
 		url : "resource_catalog/catalog/ajax/commitApplyData",
 		contentType:"application/x-www-form-urlencoded; charset=utf-8",
 		dataType : "json",
 		async : true,
-		data : {modelId:selectModel.modelId,applyName:applyName,applyOrgName:applyOrgName,applyUser:applyUser,applyDirection:applyDirection,json:JSON.stringify(rows)},
+		data : {modelId:selectModel.modelId,applyName:applyName,applyOrgName:applyOrgName,applyUser:applyUser,applyDirection:applyDirection,encryptionType:encryptionType,json:JSON.stringify(rows)},
 		success : function(msg) {
 			$.messager.alert('申请提交完成后请等待平台管理员审核',msg);
 			if (msg == '完成') {

@@ -146,6 +146,7 @@ function setAudit(){
 			},
 		});
 		
+		$("select#encryption_type").combobox('select',selectApply.encryptionType);
 		$('input#apply_name').val(selectApply.applyName);
 		$('input#apply_org_name').val(selectApply.applyOrgName);
 		$('input#apply_user').val(selectApply.applyUser);

@@ -12,8 +12,10 @@ import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
+import com.wondersgroup.brmp.po.empipo.OriginSystemInfo;
 import com.wondersgroup.brmp.po.webservicepo.ResponsePo;
 import com.wondersgroup.brmp.service.intf.BrmpCenterService4ws;
+import com.wondersgroup.brmp.util.cipher.DecryptUtil;
 import com.wondersgroup.brmp.util.common.ModelDataUtil;
 import com.wondersgroup.brmp.util.webserviceutil.ResponseHead;
 import com.wondersgroup.brmp.util.webserviceutil.ResponsePoMsg;
@@ -51,9 +53,17 @@ public class BrmpCenterSaveModel implements BrmpCenterService4ws {
 		List<DataType> dataTypes = commonDaoIntf.selectObj(DataType.class);
 		Map<Integer, String> dataTypeMap = ModelDataUtil.dataTypeListJava2Map(dataTypes);
 		
+		paramMap.clear();
+		paramMap.put("originSystemId", systemId);
+		OriginSystemInfo originSystemInfo = (OriginSystemInfo) commonDaoIntf.selectObjByParam(OriginSystemInfo.class, paramMap);
+		String decryptParams = DecryptUtil.decrypt(params, originSystemInfo);
+		if("".equals(decryptParams)){
+			return ResponsePoMsg.response2Obj(ResponseHead.Error,"params参数不合法");
+		}
+		
 		List<Map<String, Object>> dataList4save = null;
 		try {
-			List<String> dataLists = JSON.parseArray(params, String.class);
+			List<String> dataLists = JSON.parseArray(decryptParams, String.class);
 			if (dataLists.size()>5000){
 				return ResponsePoMsg.response2Obj(ResponseHead.Error, "数据单次传入超过限制，单次传入不超过5000条");
 			}

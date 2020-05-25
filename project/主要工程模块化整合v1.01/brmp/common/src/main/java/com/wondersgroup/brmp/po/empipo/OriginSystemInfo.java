@@ -15,6 +15,7 @@ public class OriginSystemInfo {
 	private String originSystemUrl;//接入系统接口的URL
 	private String username;//接入系统用户名
 	private String password;//接口验证码
+	private int encryptionType;//接入加密方式 0:无 ;1:AES;2:AESVi;3:DES;4:ThreeDES;5:AES变化;6:AESVi变化;7:DES变化
 	
 	public String getOriginSystemId() {
 		return originSystemId;
@@ -51,6 +52,12 @@ public class OriginSystemInfo {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getEncryptionType() {
+		return encryptionType;
+	}
+	public void setEncryptionType(int encryptionType) {
+		this.encryptionType = encryptionType;
 	}
 	
 	

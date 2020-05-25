@@ -25,7 +25,8 @@ CREATE TABLE brmp_apply_base  (
   apply_user varchar2(255),
   apply_direction varchar2(2048),
   apply_time date,
-  audit_status NUMBER(1)
+  audit_status NUMBER(1),
+  ENCRYPTION_TYPE number(1)  default 0
 );
 COMMENT ON TABLE brmp_apply_base IS '卫生资源整合申请基本表';
 COMMENT ON COLUMN brmp_apply_base.apply_id is '申请id';
@@ -38,6 +39,8 @@ COMMENT ON COLUMN brmp_apply_base.apply_user is '申请人姓名';
 COMMENT ON COLUMN brmp_apply_base.apply_direction is '申请用途描述说明';
 COMMENT ON COLUMN brmp_apply_base.apply_time is '申请时间';
 COMMENT ON COLUMN brmp_apply_base.audit_status is '审核状态  1:待审核 2:审核拒绝 9:审核通过';
+COMMENT ON COLUMN brmp_apply_base.ENCRYPTION_TYPE is '接入加密方式 0:无 ;1:AES;2:AESVi;3:DES;4:ThreeDES;5:AES变化;6:AESVi变化;7:DES变化';
+
 
 
 -- ----------------------------
@@ -49,7 +52,8 @@ CREATE TABLE brmp_conf_origin_system_info (
   ORIGIN_SYSTEM_CNAME varchar2(255),
   ORIGIN_SYSTEM_URL varchar2(1024),
   USERNAME varchar2(255),
-  PASSWORD varchar2(255)
+  PASSWORD varchar2(255),
+  ENCRYPTION_TYPE number(1)  default 0
 );
 COMMENT ON TABLE brmp_conf_origin_system_info IS '卫生资源整合接入系统基本信息表';
 COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_ID is '源系统名称编号';
@@ -58,6 +62,7 @@ COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_CNAME is '源系统
 COMMENT ON COLUMN brmp_conf_origin_system_info.ORIGIN_SYSTEM_URL is '接入系统接口的URL';
 COMMENT ON COLUMN brmp_conf_origin_system_info.USERNAME is '接入系统用户名';
 COMMENT ON COLUMN brmp_conf_origin_system_info.PASSWORD is '接入系统验证';
+COMMENT ON COLUMN brmp_conf_origin_system_info.ENCRYPTION_TYPE is '接入加密方式 0:无 ;1:AES;2:AESVi;3:DES;4:ThreeDES;5:AES变化;6:AESVi变化;7:DES变化';
 
 -- ----------------------------
 -- Records of brmp_conf_origin_system_info

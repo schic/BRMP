@@ -154,19 +154,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					            	<label for="">申请资源目录名称<span id="applyNameVerify"></span></label>	
 					              	<input type="text" id="apply_name" name="applyName" class="form-control" placeholder="【请输入名称】" required="required" value="${sessionScope.originSystemInfo.originSystemCname}">
 								</div>
+								
+								<div class="leftTwo leftSame">
+					            	<label for="">返回数据加密方式</label>	
+					              	<select id="encryption_type" name="encryptionType" class="easyui-combobox" panelHeight="auto" style="width:120px" editable="false" >
+								        <option value="0">无</option>
+								        <option value="1">AES</option>
+								        <option value="2">AESVi</option>
+								        <option value="3">DES</option>
+								        <option value="4">ThreeDES</option>
+								        <option value="5">AES变化</option>
+								        <option value="6">AESVi变化</option>
+								        <option value="7">DES变化</option>
+					              	</select>
+								</div>
+								
 					        </div>
-
+					        
 							<div class="topConOne topConSame clearfix">
 					            <div class="leftOne leftSame">
 					            	<label for="">申请单位名称</label>	
-					              	<input type="text" id="apply_org_name" name="applyOrgName" class="form-control" placeholder="【请输入申请单位名称】" required="required" value="${sessionScope.ssoUser.uname}">
+					              	<input type="text" id="apply_org_name" name="applyOrgName" class="form-control" placeholder="【请输入申请单位名称】" required="required" value="${sessionScope["wondersgroup.qyws.curuser"].organName}">
 								</div>
 					        </div>	
 							
 							<div class="topConOne topConSame clearfix">
 					            <div class="leftOne leftSame">
 					            	<label for="">申请人<span id="applyUserVerify"></span></label>	
-					              	<input type="text" id="apply_user" name="applyUser" class="form-control" placeholder="【请输入申请人姓名】" required="required" value="${sessionScope.ssoUser.uname}">
+					              	<input type="text" id="apply_user" name="applyUser" class="form-control" placeholder="【请输入申请人姓名】" required="required" value="${sessionScope["wondersgroup.qyws.curuser"].personName}">
 								</div>
 					        </div>
 							

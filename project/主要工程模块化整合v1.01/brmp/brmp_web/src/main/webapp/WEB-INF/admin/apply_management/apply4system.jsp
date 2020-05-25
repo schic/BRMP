@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 </head>
-<body>
+<body onload="setInit('${sessionScope.originSystemInfo.encryptionType}')">
 <!-- 页面通用头部引用 -->
 <%@ include file="../common/head_myhtml.jsp" %>
 
@@ -44,6 +44,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                        <label for="">设置接口通过码：</label>
               				<input type="text" id="sys_password" name="sysPassword" class="form-control" placeholder="用于模型建立后传入数据的接口验证" required="required" value="${sessionScope.originSystemInfo.password}">
 	                    </div>
+			        </div>
+			        <div class="topConOne topConSame clearfix">
+			            <div class="leftOne leftSame">
+			            	<label for="">设置加密方式：</label>	
+			              	<select id="encryption_type" name="encryptionType" class="easyui-combobox" panelHeight="auto" style="width:120px" editable="false" >
+						        <option value="0">无</option>
+						        <option value="1">AES</option>
+						        <option value="2">AESVi</option>
+						        <option value="3">DES</option>
+						        <option value="4">ThreeDES</option>
+						        <option value="5">AES变化</option>
+						        <option value="6">AESVi变化</option>
+						        <option value="7">DES变化</option>
+			              	</select>
+			              	
+			            </div>
+			            
 			        </div>
 			        <div class="topConTwo topConSame">
 	                    <label for="">接入系统接口的URL地址：</label>

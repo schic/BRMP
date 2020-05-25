@@ -163,7 +163,7 @@ public class CommonDaoImpl implements CommonDaoIntf {
 		String sql = CommonSql.selectSql(clazz, paramMap);
 		List<T> objList = null;
 		try {
-			objList = jdbcTemplate.query(sql, new HashMap<String,Object>(),new BeanPropertyRowMapper<T>(clazz));
+			objList = jdbcTemplate.query(sql, paramMap,new BeanPropertyRowMapper<T>(clazz));
 		} catch (Exception e) {
 			//没有查询返回空null
 		}

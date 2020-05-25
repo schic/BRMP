@@ -181,7 +181,12 @@ public class ModelAdminController {
 	@RequestMapping("/datatype/ajax/entityModelData")
 	@ResponseBody
 	public String dataTypeAjaxEntityModelData(String modelId){
-		String json = modelDataIntf.getEntityModelData(modelId);
+		String json = null;
+		try {
+			json = modelDataIntf.getEntityModelData(modelId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return json;
 	}
 	

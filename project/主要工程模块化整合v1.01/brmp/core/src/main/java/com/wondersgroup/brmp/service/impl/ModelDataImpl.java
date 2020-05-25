@@ -278,7 +278,7 @@ public class ModelDataImpl implements ModelDataIntf {
 	}
 
 	@Override
-	public String getEntityModelData(String modelId) {
+	public String getEntityModelData(String modelId) throws Exception {
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		paramMap.put("modelId", modelId);
 		List<ModelDataAttribute> modelDataAttributes = commonDaoIntf.selectObjListByParam(ModelDataAttribute.class, paramMap);
@@ -292,7 +292,7 @@ public class ModelDataImpl implements ModelDataIntf {
 	}
 	
 	@Override
-	public String getOfficialModelData(String modelId) {
+	public String getOfficialModelData(String modelId) throws Exception {
 		Map<String,Object> paramMap = new HashMap<String,Object>();
 		paramMap.put("modelId", modelId);
 		List<ModelDataAttribute> modelDataAttributes = commonDaoIntf.selectObjListByParam(ModelDataAttribute.class, paramMap);

@@ -47,6 +47,9 @@ public class ResApplyParams<T> {
 	public int getRecords() {
 		return records;
 	}
+	/**
+	 * 当前查询的记录数
+	 */
 	public void setRecords(int records) {
 		this.records = records;
 	}

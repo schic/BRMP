@@ -1,5 +1,6 @@
 package com.wondersgroup.brmp.dao.intf;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,10 +58,36 @@ public interface CommonDaoIntf {
 	 * @param attributeNames 模型属性名的List
 	 * @param tableName 模型表名
 	 * @param pageNo 第几页
-	 * @param count 分页数
+	 * @param pageSize 分页数,页面大小
 	 * @return
 	 */
-	List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName,int pageNo,int count);
+	List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName,int pageNo,int pageSize)  throws Exception;
+	
+	/**
+	 * 查询获取实体模型数据，实体模型用HashMap封装
+	 * @param attributeNames 模型属性名的List
+	 * @param tableName 模型表名
+	 * @param pageNo 第几页
+	 * @param pageSize 分页数，页面大小
+	 * @param bigenDate 开始日期
+	 * @param endDate 结束日期
+	 * @param dateColName 日期字段名
+	 * @return
+	 */
+	List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize, Date bigenDate,
+			Date endDate, String dateColName)  throws Exception ;
+
+	/**
+	 * 查询获取实体模型数据，实体模型用HashMap封装
+	 * @param attributeNames 模型属性名的List
+	 * @param tableName 模型表名
+	 * @param pageNo 第几页
+	 * @param pageSize 第几页
+	 * @param paramMap 条件查询参数
+	 * @return
+	 */
+	List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize,
+			Map<String, Object> paramMap)  throws Exception ;
 
 	/**
 	 * 自定义写sql
@@ -127,6 +154,24 @@ public interface CommonDaoIntf {
 	int getRecords(String tableName);
 	
 	/**
+	 * 获取某一时间范围的表数据量
+	 * @param tableName 模型表名
+	 * @param bigenDate 开始日期
+	 * @param endDate 结束日期
+	 * @param dateColName 日期字段名
+	 * @return
+	 */
+	int getRecords(String tableName, Date bigenDate, Date endDate, String dateColName);
+	
+	/**
+	 * 获取某表带参数条件查询后的 数据量
+	 * @param tableName 模型表名
+	 * @param paramMap 参数条件Map
+	 * @return
+	 */
+	int getRecords(String tableName, Map<String, Object> paramMap);
+	
+	/**
 	 * 清空表 truncate
 	 * @param tableName 模型表名
 	 * @return
@@ -140,6 +185,13 @@ public interface CommonDaoIntf {
 	 */
 	String getCenterUrl();
 
+	
+
+	
+
+	
+
+	
 	
 
 

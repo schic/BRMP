@@ -70,14 +70,14 @@ public interface ModelDataIntf {
 	 * @param modelId
 	 * @return json
 	 */
-	String getEntityModelData(String modelId);
+	String getEntityModelData(String modelId) throws Exception;
 	
 	/**
 	 * 获取实体模型正式表数据(前20条)
 	 * @param modelId
 	 * @return json
 	 */
-	String getOfficialModelData(String modelId);
+	String getOfficialModelData(String modelId) throws Exception;
 
 	/**
 	  * 清除实体模型测试数据

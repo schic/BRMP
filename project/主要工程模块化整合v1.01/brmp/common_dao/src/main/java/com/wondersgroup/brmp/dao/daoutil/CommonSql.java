@@ -260,6 +260,97 @@ public class CommonSql {
 		return sBuffer.toString();
 	}
 	
+	/**
+	 * 查询sql获取实体模型Map封装的List,日期时间范围
+	 * @param attributeNames 属性list
+	 * @param tableName 数据库表名
+	 * @param pageNo 第几页
+	 * @param pageSize 分页数，页面大小
+	 * @param dataBaseName 数据库驱动类型名称
+	 * @param dateColName 日期字段名 需要范围查询的
+	 * @return
+	 */
+	public static String selectSql4Map(List<String> attributeNames, String tableName, int pageNo, int pageSize,
+			String dataBaseName, String dateColName) {
+		StringBuffer sBuffer = new StringBuffer();
+		if ("com.mysql.jdbc.Driver".equals(dataBaseName)){
+			//TODO
+		} else if ("oracle.jdbc.driver.OracleDriver".equals(dataBaseName)) {
+			sBuffer.append("select ");
+			for(int i=0;i<attributeNames.size();i++){
+				sBuffer.append(attributeNames.get(i)).append(" as \"").append(attributeNames.get(i)).append("\" ");//注意oacle此处as保证attributeName的在map里面的key的大小写准确
+				if (i!=attributeNames.size()-1){
+					sBuffer.append(",");
+				}
+			}
+			sBuffer.append( " from (");
+			sBuffer.append("select rownum as rowno, ");
+			for(int i=0;i<attributeNames.size();i++){
+				sBuffer.append(attributeNames.get(i));
+				if (i!=attributeNames.size()-1){
+					sBuffer.append(",");
+				}
+			}
+			sBuffer.append(" from ").append(tableName);
+			sBuffer.append(" where rownum<= ").append(pageNo*pageSize);
+			sBuffer.append(" and ").append(dateColName).append(" between :bigenDate and :endDate");
+			sBuffer.append(")");
+			sBuffer.append(" where rowno >").append((pageNo-1)*pageSize);
+		}
+		return sBuffer.toString();
+	}
+	
+	/**
+	 * 查询sql获取实体模型Map封装的List,带参数条件
+	 * @param attributeNames 属性list
+	 * @param tableName 数据库表名
+	 * @param pageNo 第几页
+	 * @param pageSize 分页数，页面大小
+	 * @param dataBaseName 数据库驱动类型名称
+	 * @param paramMap 条件参数查询
+	 * @return
+	 */
+	public static String selectSql4Map(List<String> attributeNames, String tableName, int pageNo, int pageSize,
+			String dataBaseName, Map<String, Object> paramMap) {
+		StringBuffer sBuffer = new StringBuffer();
+		if ("com.mysql.jdbc.Driver".equals(dataBaseName)){
+			// TODO Auto-generated method stub
+			
+			
+		} else if ("oracle.jdbc.driver.OracleDriver".equals(dataBaseName)) {
+			sBuffer.append("select ");
+			for(int i=0;i<attributeNames.size();i++){
+				sBuffer.append(attributeNames.get(i)).append(" as \"").append(attributeNames.get(i)).append("\" ");//注意oacle此处as保证attributeName的在map里面的key的大小写准确
+				if (i!=attributeNames.size()-1){
+					sBuffer.append(",");
+				}
+			}
+			sBuffer.append( " from (");
+			sBuffer.append("select rownum as rowno, ");
+			for(int i=0;i<attributeNames.size();i++){
+				sBuffer.append(attributeNames.get(i));
+				if (i!=attributeNames.size()-1){
+					sBuffer.append(",");
+				}
+			}
+			sBuffer.append(" from ").append(tableName);
+			sBuffer.append(" where rownum<= ").append(pageNo*pageSize);
+			Iterator<Map.Entry<String, Object>> e = paramMap.entrySet().iterator();
+			while (e.hasNext()) {
+				Map.Entry<String, Object> param = e.next();
+				sBuffer.append(" and ");
+				sBuffer.append(param.getKey());
+				sBuffer.append(" = :");
+				sBuffer.append(param.getKey());
+			}
+			sBuffer.append(")");
+			sBuffer.append(" where rowno >").append((pageNo-1)*pageSize);
+			
+		}
+		
+		return sBuffer.toString();
+	}
+	
 	
 	
 	public static <T> String selectSql4Obj(Class<T> clazz, int pageNo, int pageSize, String dataBaseName) {
@@ -311,7 +402,7 @@ public class CommonSql {
 	}
 	
 	/**
-	 * 查询sql获取实体模型Map 带条件查询
+	 * 查询sql获取实体模型Map 带条件查询(注意驼峰转下划线)
 	 * @param attributeNames 属性list
 	 * @param tableName 数据库表名
 	 * @param paramMap 查询条件参数Map
@@ -427,6 +518,10 @@ public class CommonSql {
 		
 		return objFieldList;
 	}
+
+	
+
+	
 
 	
 

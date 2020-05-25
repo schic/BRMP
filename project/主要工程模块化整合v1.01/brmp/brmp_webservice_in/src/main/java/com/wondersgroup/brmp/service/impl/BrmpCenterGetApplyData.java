@@ -1,16 +1,18 @@
 package com.wondersgroup.brmp.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
-import com.wondersgroup.brmp.po.applypo.ReqApplyBatchParams;
 import com.wondersgroup.brmp.po.applypo.ReqApplyParams;
 import com.wondersgroup.brmp.po.applypo.ResApplyParams;
 import com.wondersgroup.brmp.po.empipo.ApplyManagement;
@@ -19,6 +21,7 @@ import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
 import com.wondersgroup.brmp.po.webservicepo.ResponsePo;
 import com.wondersgroup.brmp.service.intf.BrmpCenterService4ws;
 import com.wondersgroup.brmp.service4webservice.ApplyService4Webservice;
+import com.wondersgroup.brmp.util.cipher.EncryptUtil;
 import com.wondersgroup.brmp.util.common.CommonUtil;
 import com.wondersgroup.brmp.util.webserviceutil.ResponseHead;
 import com.wondersgroup.brmp.util.webserviceutil.ResponsePoMsg;
@@ -63,37 +66,74 @@ public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 			paramMap.put("modelId", modelDataAttributes.get(0).getModelId());
 			ModelData modelData = (ModelData) commonDaoIntf.selectObjByParam(ModelData.class, paramMap);
 			
-			/*
+			ReqApplyParams rParams = null; 
+			try {
+				rParams = JSON.parseObject(params, ReqApplyParams.class);	
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的json格式出错——".concat(e.getMessage()));
+			} finally {
+				if (rParams == null) {
+					return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的格式错误");
+				}	
+			}
+			
 			if ("batch".equals(modelName) ){//0:批量数据申请
+				try {
+					applyDates = commonDaoIntf.selectObj(attributeNames, modelData.getModelTabName(), rParams.getPageNo() , rParams.getPageSize() );
+				} catch (Exception e) {
+					e.printStackTrace();
+					return ResponsePoMsg.response2Obj(ResponseHead.Error, e.getMessage());
+				}
+				resApplyParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName()));
+			} else if ("date".equals(modelName)) {//1:带入库日期批量数据申请
+				if (null == rParams.getBigenDate() || null == rParams.getEndDate()) {
+					return ResponsePoMsg.response2Obj(ResponseHead.Error, "入库日期未正确 bigenDate endDate");
+				}
+				try {
+					applyDates = commonDaoIntf.selectObj(attributeNames, modelData.getModelTabName(), rParams.getPageNo(), rParams.getPageSize(), rParams.getBigenDate(), rParams.getEndDate(), "JLGXSJ");
+				} catch (Exception e) {
+					e.printStackTrace();
+					return ResponsePoMsg.response2Obj(ResponseHead.Error, e.getMessage());
+				}
+				resApplyParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName(), rParams.getBigenDate(), rParams.getEndDate(), "JLGXSJ"));
+			} else if ("condition".equals(modelName)) {//2:带条件查询批量数据申请
 				
-			} else if ("condition".equals(modelName) ){//通过条件获取数据 
-				// TODO Auto-generated method stub
-				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "功能未完成");
-			} else if ("date".equals(modelName) ){//1:带入库日期批量数据申请
+				Iterator<Map.Entry<String, Object>> e = rParams.getParamMap().entrySet().iterator();
+				while (e.hasNext()) {
+					Map.Entry<String, Object> param = e.next();
+					boolean conditionFlag = false;
+					for(int i=0;i<attributeNames.size();i++){
+						if (attributeNames.get(i).equals(param.getKey())){
+							conditionFlag = true;
+						}
+					}
+					if(!conditionFlag){
+						return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "未找到需要查询的条件参数字段名称:".concat(param.getKey()));
+					}
+					try {
+						param.setValue(DateUtils.parseDate(param.getValue().toString(), "yyyy-MM-dd","yyyy-MM-dd HH:mm:ss"));
+					} catch (ParseException e1) {
+						//如果是日期格式的参数，则转为日期保存
+					}
+				}
+				
+				try {
+					applyDates = commonDaoIntf.selectObj(attributeNames, modelData.getModelTabName(), rParams.getPageNo(), rParams.getPageSize(), rParams.getParamMap());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					return ResponsePoMsg.response2Obj(ResponseHead.Error, "获取数据失败,请查看condition条件参数,数据格式是否正确");
+				}
+				resApplyParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName(),rParams.getParamMap()));
 				
 			} else {
 				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "不支持的类型ModelType:".concat(modelName));
 			}
-			*/
-			ReqApplyParams rParams = null; 
-			if ("batch".equals(modelName) ){//0:批量数据申请
-				try {
-					rParams = JSON.parseObject(params, ReqApplyBatchParams.class);	
-				} catch (Exception e) {
-					e.printStackTrace();
-					return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的json格式出错——".concat(e.getMessage()));
-				} finally {
-					if (rParams == null) {
-						return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的格式错误");
-					}	
-				}
-				applyDates = commonDaoIntf.selectObj(attributeNames, modelData.getModelTabName(), rParams.getPageNo() , rParams.getPageSize() );
-			}	
 			
 			resApplyParams.setData(applyDates);
 			resApplyParams.setPages(rParams.getPageNo());
 			resApplyParams.setPageSize(rParams.getPageSize());
-			resApplyParams.setRecords(commonDaoIntf.getRecords(modelData.getModelTabName()));
+			
 			
 		} else {//申请多个模型的数据
 			// TODO Auto-generated method stub
@@ -101,9 +141,7 @@ public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 		}
 		
 		
-		
-		
-		return ResponsePoMsg.response2Obj(ResponseHead.Success, CommonUtil.toJSONString(resApplyParams));
+		return ResponsePoMsg.response2Obj(ResponseHead.Success, EncryptUtil.enctypt(CommonUtil.toJSONString(resApplyParams), applyManagement));
 	}
 
 }

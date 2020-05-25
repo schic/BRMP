@@ -1,7 +1,9 @@
 package com.wondersgroup.brmp.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -130,10 +132,31 @@ public class CommonDaoImpl implements CommonDaoIntf {
 	
 
 	@Override
-	public List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize) {
+	public List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize)  throws Exception {
 		String sql = CommonSql.selectSql4Map(attributeNames,tableName,pageNo,pageSize,daoConfResource.getJdbcDriverClassName());
 		System.out.println(sql);
 		List<Map<String, Object>> objList = jdbcTemplate.queryForList(sql, new HashMap<String,Object>());
+		return objList;
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize,
+			Date bigenDate, Date endDate, String dateColName) throws Exception {
+		String sql = CommonSql.selectSql4Map(attributeNames,tableName,pageNo,pageSize,daoConfResource.getJdbcDriverClassName(), dateColName);
+		System.out.println(sql);
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("bigenDate", bigenDate);
+		paramMap.put("endDate", endDate);
+		List<Map<String, Object>> objList = jdbcTemplate.queryForList(sql, paramMap);
+		return objList;
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectObj(List<String> attributeNames, String tableName, int pageNo, int pageSize,
+			Map<String, Object> paramMap) throws Exception {
+		String sql = CommonSql.selectSql4Map(attributeNames,tableName,pageNo,pageSize,daoConfResource.getJdbcDriverClassName(),paramMap);
+		System.out.println(sql);
+		List<Map<String, Object>> objList = jdbcTemplate.queryForList(sql, paramMap);
 		return objList;
 	}
 	
@@ -253,6 +276,57 @@ public class CommonDaoImpl implements CommonDaoIntf {
 		}
 		return i;
 	}
+	
+	@Override
+	public int getRecords(String tableName, Date bigenDate, Date endDate, String dateColName){
+		Map<String,Object> paramMap = new HashMap<String,Object>();
+		paramMap.put("bigenDate", bigenDate);
+		paramMap.put("endDate", endDate);
+		
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append("select count(1) from ").append(tableName);
+		sBuffer.append(" where ").append(dateColName).append(" between :bigenDate and :endDate ");
+		String sql = sBuffer.toString();
+		System.out.println(sql);
+		int i = -1;
+		try {
+			i = jdbcTemplate.queryForObject(sql , paramMap, Integer.class);
+		} catch (Exception e) {
+			
+		}
+		return i;
+	}
+	
+	@Override
+	public int getRecords(String tableName, Map<String, Object> paramMap) {
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append("select count(1) from ").append(tableName);
+		
+		Iterator<Map.Entry<String, Object>> e = paramMap.entrySet().iterator();
+		if (e.hasNext()) {
+			Map.Entry<String, Object> param = e.next();
+			sBuffer.append(" where ");
+			sBuffer.append(param.getKey());
+			sBuffer.append(" = :");
+			sBuffer.append(param.getKey());
+		}
+		while (e.hasNext()) {
+			Map.Entry<String, Object> param = e.next();
+			sBuffer.append(" and ");
+			sBuffer.append(param.getKey());
+			sBuffer.append(" = :");
+			sBuffer.append(param.getKey());
+		}
+		String sql = sBuffer.toString();
+		System.out.println(sql);
+		int i = -1;
+		try {
+			i = jdbcTemplate.queryForObject(sql , paramMap, Integer.class);
+		} catch (Exception ex) {
+			
+		}
+		return i;
+	}
 
 	@Override
 	public String getCenterUrl() {
@@ -264,6 +338,10 @@ public class CommonDaoImpl implements CommonDaoIntf {
 		}
 		return url;
 	}
+
+	
+
+	
 
 	
 

@@ -265,7 +265,12 @@ public class resourceCatalogController {
 			modelDataAttributes.remove(0);
 		}
 		
-		String json = modelDataIntf.getOfficialModelData(modelId);
+		String json = "";
+		try {
+			json = modelDataIntf.getOfficialModelData(modelId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("modelDataAttributes", modelDataAttributes);

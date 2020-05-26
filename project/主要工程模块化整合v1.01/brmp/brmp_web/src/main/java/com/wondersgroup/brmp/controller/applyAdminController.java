@@ -255,17 +255,37 @@ public class applyAdminController {
 		String uname = authInfo.getLoginName();
 		
 		StringBuffer sBuffer = new StringBuffer();
-		sBuffer.append("批量获取数据传参样例，\n");
-		sBuffer.append("PageNo为选定页数，PageSize为选定每页的记录数。\n");
+		sBuffer.append("PageNo为选定第几页数，PageSize为选定每页的记录数。\n");
 		sBuffer.append("数据申请者可根据成功后返回的总记录数算得对应的需要PageNo和PageSize\n\n");
+		sBuffer.append("成功后,返回data属性里包含\n【data】(批量数据内容),【pages】(由申请传参选定的页数,第几页),\n【pageSize】(由申请者选定的每页的记录数,每页大小),【records】(由当前申请模式或传参条件查询条件的总记录数)\n\n");
 		
+		sBuffer.append("批量获取数据传参样例：\n");
 		sBuffer.append("{\n");
 		sBuffer.append("\"modelType\":\"batch\",\n");
 		sBuffer.append("\"paramType\":\"apply\",\n");
-		sBuffer.append("\"params\":\"{\\\"PageNo\\\":1,\\\"PageSize\\\":1}\",\n");
+		sBuffer.append("\"params\":{\"PageNo\":1,\"PageSize\":10},\n");
 		sBuffer.append("\"password\":\"【本接口对应的passkey】\",\n");
 		sBuffer.append("\"username\":\"").append(uname).append("\",\n");
 		sBuffer.append("}\n");
+		
+		sBuffer.append("\n入库日期范围筛选获取数据传参样例：\n");
+		sBuffer.append("{\n");
+		sBuffer.append("\"modelType\":\"date\",\n");
+		sBuffer.append("\"paramType\":\"apply\",\n");
+		sBuffer.append("\"params\":{\"PageNo\":1,\"PageSize\":10,\"bigenDate\":\"2020-05-01\",\"endDate\":\"2020-05-20\"},\n");
+		sBuffer.append("\"password\":\"【本接口对应的passkey】\",\n");
+		sBuffer.append("\"username\":\"").append(uname).append("\",\n");
+		sBuffer.append("}\n");
+		
+		sBuffer.append("\n带查询条件传参获取数据传参样例：\n");
+		sBuffer.append("{\n");
+		sBuffer.append("\"modelType\":\"condition\",\n");
+		sBuffer.append("\"paramType\":\"apply\",\n");
+		sBuffer.append("\"params\":{\"PageNo\":1,\"PageSize\":10,\"paramMap\":{\"【申请字段名】\":\"testString\",\"【数字格式申请字段名】\":8,\"【日期格式申请字段名】ChuShengRiQi\":\"1988-04-10\"}},\n");
+		sBuffer.append("\"password\":\"【本接口对应的passkey】\",\n");
+		sBuffer.append("\"username\":\"").append(uname).append("\",\n");
+		sBuffer.append("}\n");
+		
 		return sBuffer.toString();
 	}
 	

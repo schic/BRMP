@@ -11,22 +11,6 @@
 $(function(){
 	$('#model_col_table').datagrid().datagrid('enableCellEditing');//加载模型修改框的可修改程序
 	
-	/*
-	$('#model').datagrid({
-	    url:'model_admin/datatype/ajax/querySelect',
-	    method:'post',
-	    columns:[[
-			{field:'originSystemId',width:80,align:'center',title:'系统编号'},
-			{field:'modelId',width:220,align:'center',title:'模型编号'},
-			{field:'modelName',width:120,align:'center',title:'模型名称'},
-			{field:'modelCreateTime',width:160,align:'center',title:'创建时间'},
-			{field:'modelUpdeteTime',width:160,align:'center',title:'更新时间'},
-			{field:'status',formatter:getStatus,width:60,align:'center',title:'状态'},
-			{field:'auditStatus',formatter:getAuditStatus,width:60,align:'center',title:'审核状态'},
-	    ]],
-	});
-	*/
-	
 	$.ajax({//初始化加载dataTypes，用于选择不同字段类型
 		type : "post",
 		url : "model_admin/datatype/ajax/2",
@@ -77,6 +61,9 @@ $(function(){
 		$('a#auditPass').remove();
 		$('a#auditReject').remove();
 	}
+	
+	
+	
 	
 })
 
@@ -272,6 +259,40 @@ $.extend($.fn.datagrid.methods, {
         });
     }
 });
+/**
+ * 分页数据前端分页
+ * loadFilter:partPurchasePagerFilter
+ */
+function partPurchasePagerFilter(data) {  
+    if (typeof data.length == 'number' && typeof data.splice == 'function') { 
+        data = {  
+            total: data.length,  
+            rows: data  
+        }  
+    }  
+    var dg = $(this);  
+    var opts = dg.datagrid('options');  
+    var pager = dg.datagrid('getPager');  
+    pager.pagination({  
+        onSelectPage: function (pageNum, pageSize) {  
+            opts.pageNumber = pageNum;  
+            opts.pageSize = pageSize;  
+            pager.pagination('refresh', {  
+                pageNumber: pageNum,  
+                pageSize: pageSize  
+            });  
+            dg.datagrid('loadData', data);  
+        }  
+    });  
+    if (!data.originalRows) {  
+        data.originalRows = (data.rows);  
+    }  
+    var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);  
+    var end = start + parseInt(opts.pageSize);  
+    data.rows = (data.originalRows.slice(start, end));  
+    return data;  
+}
+
 
 //停用模型按钮
 function disabledModel(){

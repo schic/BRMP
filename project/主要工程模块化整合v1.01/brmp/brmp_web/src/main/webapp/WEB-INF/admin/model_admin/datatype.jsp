@@ -102,10 +102,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
               </div>
           </div>
-        <div class="mainTwo mainSame">
+        <div id="mainTwo" class="mainTwo mainSame">
         
-       		<table id="model" class="easyui-datagrid" title="数据模型管理" style="width:100%;height:400px"
-			        data-options="rownumbers:true,singleSelect:true,url:'model_admin/datatype/ajax/querySelect',method:'post',toolbar:'#tb',footer:'#ft',pagination:'true',pagePosition:'bottom'">
+       		<table id="model" class="easyui-datagrid" title="数据模型管理" 
+			        data-options="rownumbers:true,singleSelect:true,url:'model_admin/datatype/ajax/querySelect',method:'post',toolbar:'#tb',footer:'#ft',pagination:'true',loadFilter:partPurchasePagerFilter,pagePosition:'bottom'">
 			    <thead>
 			        <tr>
 			        	<!-- status;//状态  0:停用 1:启用 -->

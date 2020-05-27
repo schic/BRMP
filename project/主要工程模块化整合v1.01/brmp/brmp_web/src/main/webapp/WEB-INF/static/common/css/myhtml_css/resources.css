@@ -158,7 +158,7 @@ html,body{
     background: white;
     border-radius: 2px;
     margin-left: 292px;
-    overflow-y: hidden;
+    /*overflow-y: hidden;*/
 }
 
 /* 资源目录 */
@@ -709,7 +709,7 @@ html,body{
 }
 .manage > .right{
     margin-left: 235px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .manage > .right .subTop{
     margin: 20px 20px;
@@ -831,6 +831,7 @@ html,body{
 .data .right{
     margin-left: 199px;
 }
+
 .data .right .mainOne .con{
     margin: 15px 35px 20px 35px;
 }

@@ -77,6 +77,9 @@ public class BrmpCenterGetApplyData implements BrmpCenterService4ws {
 					return ResponsePoMsg.response2Obj(ResponseHead.Error, "params参数的格式错误");
 				}	
 			}
+			if(rParams.getPageSize()>5000){
+				return ResponsePoMsg.response2Obj(ResponseHead.NoSupport, "分页数不能超过5000条记录");
+			}
 			
 			if ("batch".equals(modelName) ){//0:批量数据申请
 				try {

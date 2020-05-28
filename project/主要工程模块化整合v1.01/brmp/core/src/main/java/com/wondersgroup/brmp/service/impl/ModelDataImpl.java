@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.wondersgroup.brmp.dao.daoutil.DaoConfResource;
 import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
 import com.wondersgroup.brmp.dao.intf.ModelDataDaoIntf;
+import com.wondersgroup.brmp.po.dicpo.Dictionary;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
@@ -485,6 +486,51 @@ public class ModelDataImpl implements ModelDataIntf {
 		}
 		
 		return createTableMsg;
+	}
+
+	@Override
+	public List<Dictionary> queryDictionary(String originSystemId, String beginDate, String endDate, String status,
+			String auditStatus) {
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		if (!"".equals(originSystemId) || !"null".equals(originSystemId) || null != originSystemId){
+			if ("1".equals(originSystemId) ) {//不做任何处理不添加查询条件
+				//admin默认系统号 "1"
+			} else {
+				paramMap.put("originSystemId", originSystemId);
+			}
+		} else {
+			return null;
+		}
+		if (!"".equals(status)  && !"null".equals(status) && null != status ){
+			paramMap.put("status", Integer.parseInt(status));
+		}
+		if (!"".equals(auditStatus)  && !"null".equals(auditStatus) && null != auditStatus ){
+			paramMap.put("auditStatus", Integer.parseInt(auditStatus));
+		}
+		Date dBeginDate = null;
+		if (!"".equals(beginDate)  && !"null".equals(beginDate) && null != beginDate ){
+			try {
+				dBeginDate = DateUtils.parseDate(beginDate, "yyyy-MM-dd");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			paramMap.put("beginDate", dBeginDate);
+		}
+		Date dEndDate = null;
+		if (!"".equals(endDate)  && !"null".equals(endDate) && null != endDate ){
+			try {
+				dEndDate = DateUtils.parseDate(endDate, "yyyy-MM-dd");
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			paramMap.put("endDate", dEndDate);
+		}
+		if (null !=dBeginDate && null != dEndDate) {
+			if (dEndDate.before(dBeginDate)){
+				return null;
+			}
+		}
+		return modelDataDaoIntf.queryDictionary(paramMap);
 	}
 
 	

@@ -160,10 +160,10 @@ function updateModel(){
 
 //新建立模型
 function newModel (){
-//	if (userType=='admin') {
-//		$.messager.alert('提示', 'admin用户不需要新建模型，请使用系统接入用户建立模型接入数据');
-//		return; 
-//	}
+	if (userType=='admin') {
+		$.messager.alert('提示', 'admin用户不需要新建模型，请使用系统接入用户建立模型接入数据');
+		return; 
+	}
 	
 	$('#model').datagrid('clearSelections');//取消选择
 	
@@ -820,6 +820,9 @@ function updateModelData(){
  * 新增数据模型
  */
 function insertModelData(){
+	$('a#insertModelData').hide();//隐藏防止重复
+	//$('a#insertModelData').show();//恢复显示
+	
 	var originSystemId = $('input#originSystemId').textbox('getValue');
 	var modelDescription = $('input#modelDescription').textbox('getValue');
 	var modelName = $('input#modelName').textbox('getValue');
@@ -843,10 +846,12 @@ function insertModelData(){
 			$('#model').datagrid('reload',{});
 			if(msg == '新增完成'){
 				$('#model_col').dialog('close');
+				$('a#insertModelData').show();//恢复显示
 			}
 		},
 		error:function(err){
 			$.messager.alert('新增出现错误', err);
+			$('a#insertModelData').show();//恢复显示
         }
 	});
 	

@@ -18,19 +18,30 @@ $(".leftFont .fontBg .fontBg3 span").click(function(){
 });
 
 
-var ownceClick = 0;
+var ownceClickModel = 0;
+var ownceClickDic = 0;
 $(".leftFont .fontBg div").click(function(){
     $(".right .mainSame").eq($(this).index()).show().siblings(".mainSame").hide();
     
     var a = $(this)[0];
     var b = $(".fontBg2")[0];
-    if (ownceClick == 0 && a===b ){
+    if (ownceClickModel == 0 && a===b ){
 	    $('table#model').datagrid({
 	    	fit: true,//初始化查询一次，使table自适应屏幕
 	    	url:'model_admin/datatype/ajax/querySelect',
 			method:'post',
 		});
-	    ownceClick++;
+	    ownceClickModel++;
+    }
+    
+    var c = $(".fontBg3")[0];
+    if (ownceClickDic == 0 && a===c ){
+	    $('table#dic').datagrid({
+	    	fit: true,//初始化查询一次，使table自适应屏幕
+	    	url:'dic_admin/datatype/ajax/dicQuery',
+			method:'post',
+		});
+	    ownceClickDic++;
     }
     
 });

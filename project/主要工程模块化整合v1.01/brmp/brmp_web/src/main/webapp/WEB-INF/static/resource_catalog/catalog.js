@@ -409,6 +409,9 @@ function backApplyData(){
  * 提交申请
  */
 function commitApplyData(){
+	$('a#commitApplyData').hide();//隐藏防止重复
+	//$('a#commitApplyData').show();//恢复显示
+	
 	var rows = $('#table_apply_data_east').datagrid('getRows');
 	
 	var applyName = $('input#apply_name').val();
@@ -430,10 +433,12 @@ function commitApplyData(){
 			$.messager.alert('申请提交完成后请等待平台管理员审核',msg);
 			if (msg == '完成') {
 				$('div#apply_data').dialog('close');
+				$('a#commitApplyData').show();//恢复显示
 			}
 		},
 		error:function(err){
 			$.messager.alert('审批申请提交错误请联系管理员', err);
+			$('a#commitApplyData').show();//恢复显示
         }
 	});
 	

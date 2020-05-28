@@ -17,8 +17,10 @@ import com.wondersgroup.brmp.dao.daoutil.DaoUtil;
 import com.wondersgroup.brmp.dao.daoutil.ModelDataSql;
 import com.wondersgroup.brmp.dao.daoutil.ParamMapUtil;
 import com.wondersgroup.brmp.dao.intf.ModelDataDaoIntf;
+import com.wondersgroup.brmp.po.dicpo.Dictionary;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
+import com.wondersgroup.brmp.util.anotation.Table;
 
 
 @Repository
@@ -60,6 +62,42 @@ public class ModelDataDaoImpl implements ModelDataDaoIntf {
 		System.out.println(sql);
 		List<ModelData> modelDatas = jdbcTemplate.query(sql,paramMap, new BeanPropertyRowMapper<ModelData>(ModelData.class));
 		return modelDatas;
+	}
+	
+	@Override
+	public List<Dictionary> queryDictionary(Map<String, Object> paramMap) {
+		Table table = Dictionary.class.getAnnotation(Table.class);		
+		StringBuffer sBuffer = new StringBuffer();
+		sBuffer.append("select * from ").append(table.name());
+		Iterator<String> it=paramMap.keySet().iterator();
+		String key;
+		if (it.hasNext()) {
+			key = it.next();
+			sBuffer.append(" where ");
+			if("beginDate".equals(key)) {
+				sBuffer.append("dic_update_time >= :").append(key);
+			} else if ("endDate".equals(key)) {
+				sBuffer.append("dic_update_time <= :").append(key);
+			} else {
+				sBuffer.append(DaoUtil.camelToUnderline(key)).append("= :").append(key);
+			}
+		}
+		while(it.hasNext()){
+			sBuffer.append(" and ");
+			key = it.next().toString();
+			if("beginDate".equals(key)) {
+				sBuffer.append("dic_update_time >= :").append(key);
+			} else if ("endDate".equals(key)) {
+				sBuffer.append("dic_update_time <= :").append(key);
+			} else {
+				sBuffer.append(DaoUtil.camelToUnderline(key)).append("= :").append(key);
+			}	
+		}
+		String sql = sBuffer.toString();
+		System.out.println(sql);
+		List<Dictionary> dictionary = jdbcTemplate.query(sql,paramMap, new BeanPropertyRowMapper<Dictionary>(Dictionary.class));
+		return dictionary;
+		
 	}
 	
 	@Override
@@ -117,6 +155,8 @@ public class ModelDataDaoImpl implements ModelDataDaoIntf {
 		//TODO
 		return null;
 	}
+
+	
 
 	
 

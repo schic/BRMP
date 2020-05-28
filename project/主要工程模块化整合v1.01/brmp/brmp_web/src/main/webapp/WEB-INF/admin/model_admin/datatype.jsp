@@ -151,11 +151,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         
         
-        <div class="mainThree mainSame">
-        	<!-- 
-         	<div style="width:202px;height:86px;background:url('static/common/img/my_img/openempi-orig.jpg');"></div>
-         	<iframe style="width:100%;height:400px;" src="static/common/img/my_img/test_openempi_html/OpenEMPI Manager.html"></iframe>
-        	 -->
+        <div id="mainThree" class="mainTwo mainSame">
+        	<table id="dic" class="easyui-datagrid" title="值域字典管理" 
+			        data-options="rownumbers:true,singleSelect:true,url:'dic_admin/datatype/ajax/dicQuery',method:'post',toolbar:'#tb_dic',footer:'#ft_dic',pagination:'true',loadFilter:partPurchasePagerFilter,pagePosition:'bottom'">
+			    <thead>
+			        <tr>
+			            <th data-options="field:'dicId',width:220,align:'center'">字典ID</th>
+			            <th data-options="field:'originSystemId',width:220,align:'center'">系统编号</th>
+			            <th data-options="field:'dicCode',width:120,align:'center'">字典编码名称</th>
+			            <th data-options="field:'dicName',width:320,align:'center'">字典中文名称</th>
+			            <th data-options="field:'status',formatter:getStatus,width:60,align:'center'">状态</th>
+			            <th data-options="field:'auditStatus',formatter:getAuditStatus,width:60,align:'center'">审核状态</th>
+			        </tr>
+			    </thead>
+			</table>
+			<div id="tb_dic" style="padding:2px 5px;">
+				字典更新时间: <input id="beginDicDate" class="easyui-datebox" style="width:110px" editable="false">
+				至: <input id="toDicDate" class="easyui-datebox" style="width:110px" editable="false">
+				状态: 
+			    <select id="status4selectDic" class="easyui-combobox" panelHeight="auto" style="width:100px" editable="false">
+			        <option value="">-请选择-</option><!--状态  0:停用 1:启用-->
+			        <option value="0">停用</option>
+			        <option value="1">启用</option>
+			    </select>
+			            审核状态: 
+			    <select id="auditStatus4selectDic" class="easyui-combobox" panelHeight="auto" style="width:100px" editable="false">
+			        <option value="">-请选择-</option><!-- 0:未设计 1:待审核 2:审核拒绝 9:审核通过 -->
+			        <option value="0">未设计</option>
+			        <option value="1">待审核</option>
+			        <option value="2">审核拒绝</option>
+			        <option value="9">审核通过</option>
+			    </select>
+			    <a class="easyui-linkbutton" iconCls="icon-search" onclick="dicSelect()">查找</a>
+			    <a class="easyui-linkbutton" iconCls="icon-redo" onclick="reSet4dicSelect()">重置</a>
+			</div>
+			<div id="ft_dic" style="padding:2px 5px;">
+				<a id="newDic" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newDic()">新建值域字典</a>
+			    <a id="updateDic" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateDic()">修改值域字典</a>
+			    <a id="disabledDic" class="easyui-linkbutton" iconCls="icon-cancel" plain="true" onclick="disabledDic()">停用值域字典</a>
+			    <a id="enabledDic" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="enabledDic()">启用值域字典</a>
+			</div>
         </div>
         
     </div>

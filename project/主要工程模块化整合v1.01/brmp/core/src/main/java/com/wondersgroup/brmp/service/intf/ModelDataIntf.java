@@ -2,6 +2,7 @@ package com.wondersgroup.brmp.service.intf;
 
 import java.util.List;
 
+import com.wondersgroup.brmp.po.dicpo.Dictionary;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
@@ -137,6 +138,14 @@ public interface ModelDataIntf {
 	String setAudit(String modelId, int i);
 
 	
-	
+	/**
+	 * 通过参选获取 字典表信息
+	 * @param originSystemId 默认"1"为不添加系统筛选条件
+	 * @param beginDate 筛选大于开始日期的创建日期，没有参数为""
+	 * @param endDate 筛选小于结束日期的创建日期，没有参数为""
+	 * @param status 启停状态筛选       状态  0:停用 1:启用
+	 * @param auditStatus 审核状态筛选   审核状态  0:未设计 1:待审核 2:审核拒绝 9:审核通过 
+	 */
+	List<Dictionary> queryDictionary(String originSystemId,String beginDate, String endDate, String status, String auditStatus);
 	
 }

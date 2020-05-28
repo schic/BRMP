@@ -3,6 +3,7 @@ package com.wondersgroup.brmp.dao.intf;
 import java.util.List;
 import java.util.Map;
 
+import com.wondersgroup.brmp.po.dicpo.Dictionary;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
 
@@ -15,6 +16,13 @@ public interface ModelDataDaoIntf {
 	 * @return
 	 */
 	List<ModelData> queryModelData(Map<String, Object> paramMap);
+	
+	/**
+	 * 获取字典表数据List带参数
+	 * @param paramMap
+	 * @return
+	 */
+	List<Dictionary> queryDictionary(Map<String, Object> paramMap);
 
 
 	/**
@@ -44,6 +52,9 @@ public interface ModelDataDaoIntf {
 	 * @return
 	 */
 	String verifyModelTable(ModelData modelData);
+
+
+	
 
 	
 

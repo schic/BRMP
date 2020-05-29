@@ -10,6 +10,7 @@
  ************************************************/
 $(function(){
 	$('#model_col_table').datagrid().datagrid('enableCellEditing');//加载模型修改框的可修改程序
+	$('#dic_col_table').datagrid().datagrid('enableCellEditingDic');//加载模型修改框的可修改程序
 	
 	$.ajax({//初始化加载dataTypes，用于选择不同字段类型
 		type : "post",
@@ -159,7 +160,7 @@ function updateModel(){
 
 
 //新建立模型
-function newModel (){
+function newModel(){
 	if (userType=='admin') {
 		$.messager.alert('提示', 'admin用户不需要新建模型，请使用系统接入用户建立模型接入数据');
 		return; 

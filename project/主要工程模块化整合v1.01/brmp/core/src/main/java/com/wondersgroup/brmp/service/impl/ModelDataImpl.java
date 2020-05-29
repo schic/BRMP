@@ -15,6 +15,7 @@ import com.wondersgroup.brmp.dao.daoutil.DaoConfResource;
 import com.wondersgroup.brmp.dao.intf.CommonDaoIntf;
 import com.wondersgroup.brmp.dao.intf.ModelDataDaoIntf;
 import com.wondersgroup.brmp.po.dicpo.Dictionary;
+import com.wondersgroup.brmp.po.dicpo.DictionaryItem;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
@@ -531,6 +532,41 @@ public class ModelDataImpl implements ModelDataIntf {
 			}
 		}
 		return modelDataDaoIntf.queryDictionary(paramMap);
+	}
+
+	@Override
+	public String updateDictionary(List<DictionaryItem> dictionaryItems, Dictionary dictionary) {
+//		String viewDataVerify = ViewDataVerifyUtil.verifyModelDataAttributes(dictionaryItems);
+//		if (!viewDataVerify.equals("pass")){
+//			return viewDataVerify;
+//		}
+//		
+//		if (null == modelData.getModelId() || "".equals(modelData.getModelId()) ){
+//			return "模型不存在";
+//		}
+//		Map<String,Object> paramMap = new HashMap<String,Object>();
+//		paramMap.put("modelId", modelData.getModelId());
+//		ModelData oldModelData = (ModelData) commonDaoIntf.selectObjByParam(ModelData.class, paramMap);
+//		if (null == oldModelData) {
+//			return "模型不存在";
+//		} else if (oldModelData.getAuditStatus()==9 || oldModelData.getAuditStatus()==1 ){//0:未设计 1:待审核 2:审核拒绝 9:审核通过
+//			return "模型已经审核通过或正在审核，不能再修改";
+//		}
+//		
+//		try {
+//			return modelDataDaoIntf.updateModelData(modelDataAttributes, modelData);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return e.getMessage();
+//		}
+		//TODO
+		return "";
+	}
+
+	@Override
+	public String insertDictionary(List<DictionaryItem> dictionaryItems, Dictionary dictionary) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

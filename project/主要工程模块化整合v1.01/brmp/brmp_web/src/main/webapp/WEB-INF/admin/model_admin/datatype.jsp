@@ -199,7 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
 <!-- 修改和新增模型属性的弹出窗口 -->
-<div id="model_col" class="easyui-dialog" title="模型设计"  closed="true" data-options="iconCls:'icon-save',onClose:afterCloseModelCol,modal:'false',buttons:'#table_model_col'" style="width:590px;height:550px;padding:10px">
+<div id="model_col" class="easyui-dialog" title="模型设计"  closed="true" data-options="iconCls:'icon-save',onClose:afterCloseModelCol,modal:'false',buttons:'#table_model_col'" style="width:620px;height:550px;padding:10px">
 	<div style="width:100%">
 		<label>系统编号:</label>&nbsp;
 		<input id="originSystemId" class="easyui-textbox easyui-validatebox" type="text" name="originSystemId" editable="false" disabled="true" style="width:220px"/>
@@ -217,34 +217,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<input id="modelDescription" class="easyui-textbox easyui-validatebox" type="text" name="modelDescription" style="width:80%"/>
 	</div>
     <table id="model_col_table" class="easyui-datagrid" style="width:560px;height:400px">
-		    <thead>
-		        <tr>
-		            <th data-options="field:'displayOrder',width:30,align:'center'">序号</th>
-		            <th data-options="field:'pk',width:40,align:'center',formatter:getPk,editor:{
-							type:'combobox',
-							options:{
-								data : [{name:'是',value:'1'},{name:'否',value:'0'}], 
-								valueField : 'value',
-								textField : 'name',
-                    			editable: false,
-                    		}	
-						}">主键</th>
-		            <th data-options="field:'modelColName',width:100,align:'center',editor:'text'">表字段名称</th>
-		            <th data-options="field:'modelColDisplayName',width:180,align:'center',editor:'text'">字段通用名称</th>
-		            <th data-options="field:'modelColType',width:70,align:'center',formatter:getModelColType,editor:{
-							type:'combobox',
-							options:{
-								url:'model_admin/datatype/ajax/2',
-								valueField:'modelColType',
-								textField:'javaDatatype',
-								required:true,
-                    			editable: false,
-							}
-						}">字段类型</th>
-		            <th data-options="field:'modelColLenth',width:60,align:'center',formatter:getModelColLenth,editor:'numberbox'">字段长度</th>
-		            <th data-options="field:'modelColDecimalLenth',width:60,align:'center',formatter:getModelColDecimalLenth,editor:'numberbox'">小数长度</th>
-		        </tr>
-		    </thead>
+	    <thead>
+	        <tr>
+	            <th data-options="field:'displayOrder',width:30,align:'center'">序号</th>
+	            <th data-options="field:'pk',width:40,align:'center',formatter:getPk,editor:{
+						type:'combobox',
+						options:{
+							data : [{name:'是',value:'1'},{name:'否',value:'0'}], 
+							valueField : 'value',
+							textField : 'name',
+	                  			editable: false,
+	                  		}	
+					}">主键</th>
+	            <th data-options="field:'modelColName',width:100,align:'center',editor:'text'">表字段名称</th>
+	            <th data-options="field:'modelColDisplayName',width:180,align:'center',editor:'text'">字段通用名称</th>
+	            <th data-options="field:'modelColType',width:70,align:'center',formatter:getModelColType,editor:{
+						type:'combobox',
+						options:{
+							url:'model_admin/datatype/ajax/2',
+							valueField:'modelColType',
+							textField:'javaDatatype',
+							required:true,
+	                  			editable: false,
+						}
+					}">字段类型</th>
+	            <th data-options="field:'modelColLenth',width:60,align:'center',formatter:getModelColLenth,editor:'numberbox'">字段长度</th>
+	            <th data-options="field:'modelColDecimalLenth',width:60,align:'center',formatter:getModelColDecimalLenth,editor:'numberbox'">小数长度</th>
+	        </tr>
+	    </thead>
 	</table>
 	<div id="table_model_col" style="padding:2px 5px;">
 		<a id="updateModelData" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="updateModelData()" hidden="false">保存修改</a>
@@ -292,10 +292,50 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 </div>
 
+
+<!-- 修改和新增值域字典的弹出窗口 -->
+<div id="dic_col" class="easyui-dialog" title="值域字典录入"  closed="true" data-options="iconCls:'icon-save',onClose:afterCloseDicCol,modal:'false',buttons:'#table_dic_col'" style="width:590px;height:550px;padding:10px">
+	<div style="width:100%">
+		<label>系统编号:</label>&nbsp;
+		<input id="originSystemIdDic" class="easyui-textbox easyui-validatebox" type="text" name="originSystemIdDic" editable="false" disabled="true" style="width:220px"/>
+	</div>
+	<div style="width:100%">
+		<label for="name">字典编号:</label>&nbsp;
+		<input id="dicId" class="easyui-textbox easyui-validatebox" type="text" name="dicId" editable="false" disabled="true" style="width:220px"/>
+	</div>
+	<div style="width:100%">
+		<label for="name">字典编码名称:</label>&nbsp;
+		<input id="dicCode" class="easyui-textbox easyui-validatebox" type="text" name="dicCode" required="true" style="width:220px"/>
+	</div>
+	<div style="width:100%">
+		<label for="name">字典中文名称</label>&nbsp;
+		<input id="dicName" class="easyui-textbox easyui-validatebox" type="text" name="dicName" style="width:80%"/>
+	</div>
+    <table id="dic_col_table" class="easyui-datagrid" style="width:530px;height:400px">
+	    <thead>
+	        <tr>
+	            <th data-options="field:'displayOrder',width:30,align:'center'">序号</th>
+	            <th data-options="field:'code',width:100,align:'center',editor:'text'">值域代码</th>
+	            <th data-options="field:'name',width:180,align:'center',editor:'text'">值域名称</th>
+	        </tr>
+	    </thead>
+	</table>
+	<div id="table_dic_col" style="padding:2px 5px;">
+		<a id="updateDicItem" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="updateDicItem()" hidden="false">保存修改</a>
+		<a id="insertDicItem" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="insertDicItem()" hidden="true">确认新增</a>
+	    <a class="easyui-linkbutton" iconCls="icon-clear" plain="true" onclick="cancelDicCol()">关闭修改</a>
+	</div>
+	<div id="toolbar_dic_col" style="padding:2px 5px;">
+		<a id="insertDicCol" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="insertDicCol()">新增字段</a>
+	    <a id="deleteDicCol" class="easyui-linkbutton" iconCls="icon-cut" plain="true" onclick="deleteDicCol()">删除字段</a>
+	</div>
+</div>
+
 </section>
 
 <script type="text/javascript" src="static/model_admin/datatype.js"></script>
 <script type="text/javascript" src="static/model_admin/datatype_view.js"></script>
+<script type="text/javascript" src="static/model_admin/dictionary.js"></script>
 
 </body>
 </html>

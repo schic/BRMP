@@ -3,6 +3,7 @@ package com.wondersgroup.brmp.service.intf;
 import java.util.List;
 
 import com.wondersgroup.brmp.po.dicpo.Dictionary;
+import com.wondersgroup.brmp.po.dicpo.DictionaryItem;
 import com.wondersgroup.brmp.po.empipo.DataType;
 import com.wondersgroup.brmp.po.empipo.ModelData;
 import com.wondersgroup.brmp.po.empipo.ModelDataAttribute;
@@ -148,4 +149,8 @@ public interface ModelDataIntf {
 	 */
 	List<Dictionary> queryDictionary(String originSystemId,String beginDate, String endDate, String status, String auditStatus);
 	
+	String updateDictionary(List<DictionaryItem> dictionaryItems, Dictionary dictionary);
+
+	String insertDictionary(List<DictionaryItem> dictionaryItems, Dictionary dictionary);
+
 }

@@ -18,6 +18,7 @@ html,body,#LAY_app{height:100%;}
 .layadmin-user-display-show{display: block !important;} 
 .layadmin-user-login{position: relative; left: 0; top: 0; padding: 10px 0; min-height: 100%; box-sizing: border-box;}
 .layadmin-user-login-main{width: 375px; margin: 0 auto; box-sizing: border-box;}
+.layadmin-user-login-main1{width: 80%px; margin: 0 auto; box-sizing: border-box;}
 .layadmin-user-login-box{padding: 20px;}
 .layadmin-user-login-header{text-align: center;}
 .layadmin-user-login-header h2{margin-bottom: 10px; font-weight: 300; font-size: 30px; color: #000;}

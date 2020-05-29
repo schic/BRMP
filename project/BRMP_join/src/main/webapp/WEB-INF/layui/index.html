@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>导航页</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link type="text/css"  rel="stylesheet" href="style/css/layui.css">
+  <link type="text/css"  rel="stylesheet" href="style/css/login.css">
+  <link type="text/css"  rel="stylesheet" href="style/css/admin.css">
+<script>"undefined"==typeof CODE_LIVE&&(!function(e){var t={nonSecure:"65161",secure:"65166"},c={nonSecure:"http://",secure:"https://"},r={nonSecure:"127.0.0.1",secure:"gapdebug.local.genuitec.com"},n="https:"===window.location.protocol?"secure":"nonSecure";script=e.createElement("script"),script.type="text/javascript",script.async=!0,script.src=c[n]+r[n]+":"+t[n]+"/codelive-assets/bundle.js",e.getElementsByTagName("head")[0].appendChild(script)}(document),CODE_LIVE=!0);</script></head>
+<script src="style/layui.js"></script>
+<!-- <script src="style/admin.js"></script>
+<script src="style/view.js"></script> -->
+
+<body>
+<div  class="layadmin-user-login layadmin-user-display-show">
+  <div style="padding-top：15px;margin-top:10px;" class="layadmin-user-login-main1">
+    <div class="layadmin-user-login-box layadmin-user-login-header">
+      <h2>导航页</h2>
+      <p><font style="color: red"></font></p>
+    </div>
+    
+     <div class="layadmin-user-login-box layadmin-user-login-body layui-form">  	
+     	
+     	<div class="layui-card-body">
+          <div class="layui-row layui-col-space10">
+            <div class="layui-col-xs12 layui-col-sm4">
+              <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-water"></i><a href="#">注册</a></div>
+                <p class="layui-text-center"><a style="font-size:16px;margin-top: 20px;padding-top:20px;" href="#">点击注册新用户</a></p>
+                <p class="layui-text-bottom">
+                	<button class="layui-btn layui-btn-fluid site-demo-active" lay-submit lay-filter="LAY-user-reg-submit">注 册</button>
+                </p>
+              </div>
+            </div>
+            <div class="layui-col-xs12 layui-col-sm4">
+              <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-upload-circle"></i><a href="#">登录</a></div>
+                <p class="layui-text-center"><a style="font-size:16px;margin-top: 20px;padding-top:20px;" href="#">先注册用户，再点击登录系统</a></p>
+              	<p class="layui-text-bottom">
+                	<button class="layui-btn layui-btn-fluid site-demo-active" lay-submit lay-filter="LAY-user-login-submit">登 录</button>
+                </p>
+              </div>
+            </div>
+            <div class="layui-col-xs12 layui-col-sm4">
+              <div class="layuiadmin-card-text">
+                <div class="layui-text-top"><i class="layui-icon layui-icon-form"></i><a href="#">机构查询</a></div>
+                <p class="layui-text-center"><a style="font-size:16px;margin-top: 20px;padding-top:20px;" target="_blank">选择机构生成二维码信息</a></p>
+              	<p>
+              		<select id="jg" name="jg" lay-filter="LAY-user-reg-jg" class="layui-input" lay-search>
+      	 				<option value="">请选择机构</option>
+      	 			</select>  
+              	</p>
+              	<p style="margin-top:20px;" class="layui-text-bottom">
+              		   
+      	 			<button id="btnzc" class="layui-btn layui-btn-fluid site-demo-active" lay-submit lay-filter="LAY-user-code-submit">查看二维码</button>	 			
+              	</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>         
+     
+     </div>  
+     
+     <div class="layui-trans layadmin-user-login-footer">
+    	<p >© 2020 <a href="#">四川省卫生健康信息中心中心提供</a></p>
+  	</div>
+    
+  </div>
+
+<script>
+
+layui.use(['layer', 'form'], function(){
+  var $ = layui.$
+  ,laydate = layui.laydate
+  ,form = layui.form;
+  
+  $.post('getOrgInfoByCon', null, function(data,status){
+  	  	
+  	if(data.code=='200')
+  	{
+  		var result = data.data;
+	  	for (var i in result.children) {
+	  	
+	  		var object = result.children[i];
+	  		$('#jg').append(new Option(object.name, object.id));
+	  	}
+  		
+  		layui.form.render("select");
+  	}  	
+    	
+  });
+  
+  form.on('submit(LAY-user-reg-submit)', function(obj){
+
+	
+	window.open('userRegPage', '_blank');
+ });
+ 
+ form.on('submit(LAY-user-login-submit)', function(obj){
+
+	window.open('http://fw.scwjxx.cn:10010/brs', '_blank');
+ });
+ 
+ form.on('submit(LAY-user-code-submit)', function(obj){
+ 
+ 	var field = obj.field;
+ 
+ 	if(!field.jg){
+      return layer.msg('请先选择机构!');
+    }
+	
+	window.open('showOrgQr?id='+field.jg+'&name='+$("#jg option:selected").text(), '_blank');
+
+ });
+ 	
+});
+
+</script>
+
+</body>
+
+</html>

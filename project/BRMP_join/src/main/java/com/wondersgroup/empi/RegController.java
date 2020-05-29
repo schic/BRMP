@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.dom4j.DocumentException;
@@ -41,6 +42,8 @@ public class RegController {
 	@Value("${EMPIDHIS2ADDUSER}")
 	private String EMPIDHIS2ADDUSER;	
 	
+	@Value("${GETCONDITIONORGQR}")
+	private String GETCONDITIONORGQR;
 	
 	@Value("${READ_TIME_OUT}")
 	private String READ_TIME_OUT;
@@ -69,7 +72,7 @@ public class RegController {
 		// reqEMPICenterIntf.ReqGir2ForModel();
 		//reqEMPIJoinIntf.reqEMPPersion();
 
-		return "userReg";
+		return "index";
 	}
 	
 	@RequestMapping("/index")
@@ -79,7 +82,7 @@ public class RegController {
 		// reqEMPICenterIntf.ReqGir2ForModel();
 		//reqEMPIJoinIntf.reqEMPPersion();
 
-		return "userReg";
+		return "index";
 	}
 
 	@RequestMapping({ "/docRegPage" })
@@ -87,11 +90,48 @@ public class RegController {
 		return "docReg";
 	}
 	
+	@RequestMapping({ "/showOrgQr" })
+	public String showOrgQr(HttpServletRequest request) {
+		
+		return "orgQr";
+	}
+	
+	@RequestMapping({"/getOrgQr"})
+	@ResponseBody
+	public HttpResult getOrgQr(HttpServletRequest request) {
+		
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+				
+		HttpResult result = new HttpResult();
+		
+		try {
+			
+			String r= apiService.doGetString(GETCONDITIONORGQR+"&id="+id+"&ssd&name="+name);
+			
+			if(StringUtils.isNotBlank(r)) {
+				
+				result.setCode(200);			
+				result.setDesc(r);
+			}
+			
+			return result;
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new HttpResult(HttpStatus.SC_INTERNAL_SERVER_ERROR,READ_TIME_OUT,null);
+		
+	}
+	
 	@RequestMapping({"/getOrgInfoByCon"})
 	@ResponseBody
 	public HttpResult getOrgInfoByCon() {
 		
-		HttpResult result = null;
+		HttpResult result = null;		
+		
 		try {
 			result  = apiService.doGet(EMPICENTERDHIS2ADRESS+EMPIDHIS2GETCONDITIONORGINFO, USERNAME, PASSWORD);			
 			return result;

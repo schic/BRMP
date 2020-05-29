@@ -46,16 +46,51 @@ public class ApiService implements BeanFactoryAware {
 	private String NOT_FOUND_SERVIER;
 	@Autowired(required = false)
 	private RequestConfig requestConfig;
+		
+	/**
+     * 执行GET请求，响应200返回内容，404返回null
+     * 
+     * @param url
+     * @return
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    public String doGetString(String url) throws ClientProtocolException, IOException {
+        // 创建http GET请求
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.setConfig(requestConfig);
+        CloseableHttpResponse response = null;
+        try {
+            // 执行请求
+            response = getHttpClient().execute(httpGet);
+            // 判断返回状态是否为200
+            if (response.getStatusLine().getStatusCode() == 200) {
+                return EntityUtils.toString(response.getEntity(), "UTF-8");
+            }
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+        return null;
+    }
 
-	public String doGet(String url) throws ClientProtocolException, IOException {
+	public HttpResult doGet(String url) throws ClientProtocolException, IOException {
+		
+		HttpResult result = null;
+		
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.setConfig(this.requestConfig);
 		CloseableHttpResponse response = null;
 		try {
 			response = getHttpClient().execute(httpGet);
-			if (response.getStatusLine().getStatusCode() == 200) {
-				return EntityUtils.toString(response.getEntity(), "UTF-8");
-			}
+			
+			int code=response.getStatusLine().getStatusCode();
+		      
+		    String entry =EntityUtils.toString(response.getEntity(), "UTF-8");
+		      
+		    result = new  HttpResult(code, JSONObject.parseObject(entry));			
+			
 		} finally {
 			if (response != null) {
 				response.close();
@@ -64,7 +99,7 @@ public class ApiService implements BeanFactoryAware {
 		if (response != null) {
 			response.close();
 		}
-		return null;
+		return result;
 	}
 
 	public HttpResult doGet(String url, String username, String password)
@@ -101,14 +136,15 @@ public class ApiService implements BeanFactoryAware {
     return result;
   }
 
-	public String doGet(String url, Map<String, String> params)
-			throws ClientProtocolException, IOException, URISyntaxException {
-		URIBuilder builder = new URIBuilder(url);
-		for (Map.Entry<String, String> entry : params.entrySet()) {
-			builder.setParameter((String) entry.getKey(), (String) entry.getValue());
-		}
-		return doGet(builder.build().toString());
-	}
+//	public String doGet(String url, Map<String, String> params)
+//			throws ClientProtocolException, IOException, URISyntaxException {
+//		URIBuilder builder = new URIBuilder(url);
+//		for (Map.Entry<String, String> entry : params.entrySet()) {
+//			builder.setParameter((String) entry.getKey(), (String) entry.getValue());
+//		}
+//		
+//		return doGet(builder.build().toString());
+//	}
 	
 	 /**
      * 执行post请求，发送xml数据

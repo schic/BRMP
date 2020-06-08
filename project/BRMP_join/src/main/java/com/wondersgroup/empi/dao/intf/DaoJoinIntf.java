@@ -11,7 +11,9 @@ public interface DaoJoinIntf {
 	long selectJoinPersonCount() throws IllegalArgumentException, IllegalAccessException, ParseException;
 	
 	List<Person> selectJoinPerson(long s , long e) throws IllegalArgumentException, IllegalAccessException, ParseException;	
-	
+		
+	long selectPersonCount() throws IllegalArgumentException, IllegalAccessException, ParseException;
+//	int batchUpdateOrgs(List<>);
 	
 	long selectJoinOrgCount() throws IllegalArgumentException, IllegalAccessException, ParseException;
 	

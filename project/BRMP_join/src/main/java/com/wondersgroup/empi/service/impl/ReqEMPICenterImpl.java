@@ -2,50 +2,89 @@ package com.wondersgroup.empi.service.impl;
 
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
 
+import com.wondersgroup.empi.dao.intf.CommonDaoIntf;
 import com.wondersgroup.empi.dao.intf.Dao4PersonIntf;
+import com.wondersgroup.empi.dao.intf.DaoJoinIntf;
+import com.wondersgroup.empi.po.medicalOrgCertificate;
 import com.wondersgroup.empi.po.empipo.EMPIObj;
 import com.wondersgroup.empi.po.webservicepo.RequestPo;
 import com.wondersgroup.empi.service.intf.ReqEMPICenterIntf;
+import com.wondersgroup.empi.util.anotation.Table;
+import com.wondersgroup.empi.util.common.BaseJunit;
 import com.wondersgroup.empi.util.common.BaseResource;
 import com.wondersgroup.empi.util.common.CommonUtil;
 import com.wondersgroup.empi.util.common.RestCXFClient;
 
 @Service
-public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
+public class ReqEMPICenterImpl extends BaseJunit implements ReqEMPICenterIntf {
 	
 	@Autowired
 	private BaseResource baseResource;
 	
+//	@Autowired
+//	private Dao4PersonIntf dao4PersonIntf;
+	
 	@Autowired
-	private Dao4PersonIntf dao4PersonIntf;
-
+	private DaoJoinIntf daoJoinIntf;
+	
+	@Autowired 
+	private CommonDaoIntf commonDaoIntf;
+	
+//	@Value("${EMPICenterProvincialPlatformPersionAdress}")
+//	private String reqCenterProvincialPlatformPersionAdress;
+	
+	@Value("${pageSize}")
+	private int size;
+	
+	@Test	
+	@Rollback(true)  //标明使用完此方法后事务不回滚,true时为回滚  
 	@Override
-	public String ReqEMPICenter() {
+	public void ReqEMPICenter() {
 		
 		RequestPo reqPo = new RequestPo();
 		//reqPo.setUsername("testSystem1");
-		reqPo.setUsername("test_system1");
-		reqPo.setPassword("1234567890");
+		reqPo.setUsername(baseResource.getBRMPUsername());
+		reqPo.setPassword(baseResource.getBRMPPassword());
 		//reqPo.setParamType("测试错误Type");
-		reqPo.setParamType("AddEMPI");
-		reqPo.setModelType("model1");
+		reqPo.setParamType("model");
 		
-		List<EMPIObj> list = null;
-		try {
-			list = dao4PersonIntf.selectPerson();
-		} catch (Exception e) {
-			e.printStackTrace();
+		Class clazz = medicalOrgCertificate.class;
+		
+		Table table = (Table) clazz.getAnnotation(Table.class);
+		
+		reqPo.setModelType(table.cName());
+		
+		int records = commonDaoIntf.getRecords(table.name());//总记录数
+		
+		int pageSize = size;//分页数
+		int totalPage;//总页数
+		if(records % pageSize == 0){
+			totalPage = records / pageSize;
+		}else{
+			totalPage = records / pageSize + 1;
 		}
-		reqPo.setParams(CommonUtil.toJSONString(list));
 		
-		String json = CommonUtil.toJSONString(reqPo);
-		System.out.println(json);
-		String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-		System.out.println(string);
-		return null;
+		for (int i=0;i<1;i++) {
+			
+			List<medicalOrgCertificate> lists = commonDaoIntf.selectObj(clazz, table.name(), i+1, pageSize);
+			
+//			commonDaoIntf.saveObj(list, tableName);
+			
+			System.out.println(lists.size());
+			
+//			reqPo.setParams(CommonUtil.toJSONString(lists));
+//			String json = CommonUtil.toJSONString(reqPo);
+			//System.out.println(json);
+//			String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
+//			System.out.println(string);			
+		}
+		
 	}
 
 	@Override

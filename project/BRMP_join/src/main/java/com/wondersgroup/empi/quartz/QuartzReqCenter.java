@@ -16,7 +16,7 @@ public class QuartzReqCenter {
 		System.out.println("Quartz输出定时法方123");
 		
 		//new RestCXFClient().reqEMPICenterGet();
-		reqEMPICenterIntf.ReqEMPICenter();
+//		reqEMPICenterIntf.ReqEMPICenter();
 		
 	}
 

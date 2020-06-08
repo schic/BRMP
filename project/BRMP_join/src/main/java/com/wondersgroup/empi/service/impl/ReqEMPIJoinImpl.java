@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.Rollback;
+
+import com.wondersgroup.empi.dao.intf.CommonDaoIntf;
 import com.wondersgroup.empi.dao.intf.DaoJoinIntf;
 import com.wondersgroup.empi.po.Dept;
 import com.wondersgroup.empi.po.Org;
@@ -26,6 +28,9 @@ public class ReqEMPIJoinImpl extends BaseJunit implements ReqEMPIJoinIntf {
 	@Autowired
 	private BaseResource baseResource;
 	
+//	@Autowired 
+//	private CommonDaoIntf commonDaoIntf;
+	
 	@Autowired
 	private DaoJoinIntf daoJoinIntf;
 	
@@ -33,11 +38,52 @@ public class ReqEMPIJoinImpl extends BaseJunit implements ReqEMPIJoinIntf {
 	private String reqCenterProvincialPlatformPersionAdress;
 	
 	@Value("${pageSize}")
-	private long size;	
+	private long size;
+	
+	@Test	
+	@Rollback(true)  //标明使用完此方法后事务不回滚,true时为回滚  
+	@Override
+	public void reqTest() {
+		
+		try {
+			
+			long count = daoJoinIntf.selectPersonCount();
+			
+			if(count>0)
+			{
+				long totalPage;
+		        totalPage = (count / size);
+		        if (totalPage * size < count) {
+		            totalPage++;
+		        }
+		        
+				for(int i=0;i<totalPage;i++) {
+					
+					List<Person> listP =  daoJoinIntf.selectJoinPerson(i*size+1,(i+1)*size);
+					
+					if(listP.size() >0 ){			
+						
+//						RestCXFClient.reqEMPICenterPerson(reqCenterProvincialPlatformPersionAdress, json);
+						
+						
+					}
+					
+				}	
+				
+			}
+			
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 	
 //	@Test	
 //	@Rollback(true)  //标明使用完此方法后事务不回滚,true时为回滚  
-	@Override
+//	@Override
 	public void reqEMPPersion() {
 		
 		RequestPo reqPo = new RequestPo();
@@ -46,6 +92,8 @@ public class ReqEMPIJoinImpl extends BaseJunit implements ReqEMPIJoinIntf {
 //		reqPo.setParamType("AddEMPI");
 		reqPo.setParamType("model");
 		reqPo.setModelType("医护人员信息");
+		
+//		System.out.println("commonDaoIntf:"+commonDaoIntf);
 		
 		try {
 						
@@ -75,7 +123,7 @@ public class ReqEMPIJoinImpl extends BaseJunit implements ReqEMPIJoinIntf {
 						
 						String json = CommonUtil.toJSONString(reqPo);				
 						
-						RestCXFClient.reqEMPICenterPerson(reqCenterProvincialPlatformPersionAdress, json);
+//						RestCXFClient.reqEMPICenterPerson(reqCenterProvincialPlatformPersionAdress, json);
 						
 						
 					}
@@ -231,4 +279,6 @@ public class ReqEMPIJoinImpl extends BaseJunit implements ReqEMPIJoinIntf {
 		}
 		
 	}
+
+
 }

@@ -1,9 +1,10 @@
 package com.wondersgroup.empi.service.impl;
 
 import java.util.List;
-
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
 
 import com.wondersgroup.empi.dao.intf.CommonDaoIntf;
 import com.wondersgroup.empi.po.RequestPo;
@@ -20,7 +21,9 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 	private BaseResource baseResource;
 	
 	@Autowired CommonDaoIntf commonDaoIntf;
-
+	
+	@Test	
+	@Rollback(true)  //标明使用完此方法后事务不回滚,true时为回滚 
 	@Override
 	public <T> String ReqEMPICenter4Model(Class<T> clazz) {
 		//System.out.println(baseResource.getBRMPUsername());
@@ -46,12 +49,16 @@ public class ReqEMPICenterImpl implements ReqEMPICenterIntf {
 		}
 		
 		for (int i=0;i<totalPage;i++) {
+			
 			List<T> lists = commonDaoIntf.selectObj(clazz, table.name(), i+1, pageSize);
-			reqPo.setParams(CommonUtil.toJSONString(lists));
-			String json = CommonUtil.toJSONString(reqPo);
-			//System.out.println(json);
-			String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
-			System.out.println(string);
+			
+			System.out.println(lists.size());
+			
+			
+//			reqPo.setParams(CommonUtil.toJSONString(lists));
+//			String json = CommonUtil.toJSONString(reqPo);
+//			String string = RestCXFClient.reqEMPICenter(baseResource.getEMPICenterAdress(), json);
+//			System.out.println(string);
 			
 		}
 		return "";

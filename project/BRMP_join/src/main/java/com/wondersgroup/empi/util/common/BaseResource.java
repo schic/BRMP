@@ -28,4 +28,39 @@ public class BaseResource {
 		this.EMPICenterAdress = EMPICenterAdress;
 	}
 	
+	@Value("${jdbc.driverClassName}")
+	private String jdbcDriverClassName;
+	/**
+	 * 驱动名称--得知连接数据库的类型
+	 */
+	public String getJdbcDriverClassName() {
+		return jdbcDriverClassName;
+	}
+	public void setJdbcDriverClassName(String jdbcDriverClassName) {
+		this.jdbcDriverClassName = jdbcDriverClassName;
+	}
+	
+	@Value("${BRMP.username}")
+	private String BRMPUsername;
+	@Value("${BRMP.password}")
+	private String BRMPPassword;
+	/**
+	 * 请求接口用户名
+	 */
+	public String getBRMPUsername() {
+		return BRMPUsername;
+	}
+	public void setBRMPUsername(String BRMPUsername) {
+		this.BRMPUsername = BRMPUsername;
+	}
+	/**
+	 * 请求接口密码
+	 */
+	public String getBRMPPassword() {
+		return BRMPPassword;
+	}
+	public void setBRMPPassword(String BRMPPassword) {
+		this.BRMPPassword = BRMPPassword;
+	}
+	
 }

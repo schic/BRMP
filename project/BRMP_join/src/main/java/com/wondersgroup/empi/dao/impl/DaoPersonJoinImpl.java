@@ -21,6 +21,18 @@ public class DaoPersonJoinImpl implements DaoJoinIntf{
 	
 	@Resource(name = "jdbcTemplate_join")
 	private NamedParameterJdbcTemplate jdbcTemplate_join;
+	
+	@Override
+	public long selectPersonCount() throws IllegalArgumentException,
+			IllegalAccessException, ParseException {
+		
+		String sql ="select count(*) from rl_jbxxb";
+		
+		Long l = jdbcTemplate_join.queryForObject(sql,new HashMap<String, Object>(),Long.class);		
+		
+		return l;
+	}
+	
 
 	@Override
 	public List<Person> selectJoinPerson(long s,long e) throws IllegalArgumentException, IllegalAccessException, ParseException {

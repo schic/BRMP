@@ -7,5 +7,7 @@ public interface ReqEMPIJoinIntf {
 	public void reqEMPOrg();
 	
 	public void reqEMPDept();
+	
+	public void reqTest();
 
 }
